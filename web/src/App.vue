@@ -1,6 +1,6 @@
 <template>
     <div id="app">
-      Test boebahtje
+      This App is Alive
     </div>
 </template>
 

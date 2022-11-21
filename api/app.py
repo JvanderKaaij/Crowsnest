@@ -12,4 +12,4 @@ def hello():
         for row in result:
             print("username:", row['ID'])
 
-    return 'test hello 123'
+    return 'This App is Alive'
