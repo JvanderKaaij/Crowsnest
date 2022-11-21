@@ -1,3 +1,4 @@
 CREATE DATABASE IF NOT EXISTS test_db;
 USE test_db;
 CREATE TABLE users (ID int);
+INSERT INTO users (ID) VALUES (2);
