@@ -5,7 +5,7 @@ ENV VIRTUAL_ENV=/opt/venv
 RUN python3 -m venv $VIRTUAL_ENV
 ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 
-ENV FLASK_APP=app.py
+ENV FLASK_APP=runtime.py
 ENV FLASK_RUN_HOST=0.0.0.0
 ENV FLASK_DEBUG=true
 
