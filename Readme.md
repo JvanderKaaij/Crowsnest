@@ -24,6 +24,12 @@ python setup.py
 ```
 This will create a database structure that relates to your SQLAlchemy models and 
 
+#### Authentication
+It's important to mention that nothing of this project is safe to use in production without changing.
+- The MySQL root password in docker-compose should be changed.
+- The setup.py username and password should be changed.
+- The secret key in the runtime module should be changed.
+
 ### Frontend
 
 Start a webpack dev-server with a hotreload Vuejs framework.
