@@ -2,7 +2,8 @@ from runtime import db
 
 class Users(db.Model):
     __tablename__ = "users"
-    ID = db.Column(db.Integer, primary_key=True)
-
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(60))
+    password = db.Column(db.String(60))
     def __repr__(self):
-        return f"{self.ID}"
+        return f"{self.id} - {self.username}"

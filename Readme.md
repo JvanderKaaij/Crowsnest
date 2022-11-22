@@ -10,16 +10,29 @@ Alexandria
 
 How to run in development mode
 ----------
+
+### Backend
+Start the database and Flask backend.
 ```
 docker-compose up
 ```
-Start the database and Flask backend.
+If you run this application for the first time and want to setup the database. Make sure you shell into the api container and run:
+
+
+```
+python setup.py
+```
+This will create a database structure that relates to your SQLAlchemy models and 
+
+### Frontend
+
+Start a webpack dev-server with a hotreload Vuejs framework.
 
 ```
 npm install
 npm run dev
 ```
-Start a webpack dev-server with a hotreload Vuejs framework.
+
 
 How to run in production mode
 ----------
