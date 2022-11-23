@@ -4,7 +4,6 @@ from flask import request
 from flask_login import login_user, login_required
 from datetime import date
 
-
 @app.route('/')
 def root():
     return "welcome"
@@ -28,7 +27,7 @@ def students():
     students = Student.query.all()
     result = []
     for s in students:
-        result.append(s.__repr__())
+        result.append(s._asdict())
     return result
 
 
@@ -61,7 +60,7 @@ def hardware():
     hardware = Hardware.query.all()
     result = []
     for h in hardware:
-        result.append(h.__repr__())
+        result.append(h._asdict())
     return result
 
 
