@@ -4,6 +4,7 @@ from flask import request
 from flask_login import login_user, login_required
 from datetime import date
 
+
 @app.route('/')
 def root():
     return "welcome"

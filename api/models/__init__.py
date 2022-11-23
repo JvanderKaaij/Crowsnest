@@ -1,6 +1,13 @@
 from runtime import db, login_manager
 from flask_login import UserMixin
 import json
+
+class ExportMixin(object):
+    def _asdict(self):
+        return {c.key: getattr(self, c.key)
+                for c in db.inspect(self).mapper.column_attrs}
+
+
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
@@ -12,11 +19,8 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(60))
     password = db.Column(db.String(60))
 
-    def __repr__(self):
-        return f"{self.id} - {self.username}"
 
-
-class Student(db.Model):
+class Student(db.Model, ExportMixin):
     __tablename__ = "student"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(60))
@@ -25,11 +29,6 @@ class Student(db.Model):
     estimated_end_date = db.Column(db.DateTime(timezone=True))
     onboarding = db.relationship("Onboarding")
     borrowed_hardware = db.relationship("Hardware")
-
-    def _asdict(self):
-        return {c.key: getattr(self, c.key)
-                for c in db.inspect(self).mapper.column_attrs}
-
 
 
 class Onboarding(db.Model):
@@ -41,7 +40,7 @@ class Onboarding(db.Model):
     git_lfs = db.Column(db.Boolean, default=False)
 
 
-class Hardware(db.Model):
+class Hardware(db.Model, ExportMixin):
     __tablename__ = "hardware"
     id = db.Column(db.Integer, primary_key=True)
     student_id = db.Column(db.Integer, db.ForeignKey("student.id"))
@@ -51,6 +50,5 @@ class Hardware(db.Model):
     comment = db.Column(db.Text)
     active = db.Column(db.Boolean, default=False)
 
-    def _asdict(self):
-        return {c.key: getattr(self, c.key)
-                for c in db.inspect(self).mapper.column_attrs}
+
+
