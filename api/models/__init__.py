@@ -26,6 +26,9 @@ class Student(db.Model):
     onboarding = db.relationship("Onboarding")
     borrowed_hardware = db.relationship("Hardware")
 
+    def __repr__(self):
+        return f"{self.id} - {self.name} - {self.email} - {self.onboarding.__repr__()}"
+
 
 class Onboarding(db.Model):
     __tablename__ = "onboarding"
@@ -34,6 +37,9 @@ class Onboarding(db.Model):
     door = db.Column(db.Boolean, default=False)
     git = db.Column(db.Boolean, default=False)
     git_lfs = db.Column(db.Boolean, default=False)
+
+    def __repr__(self):
+        return f"{self.id} - {self.door}"
 
 
 class Hardware(db.Model):
@@ -45,3 +51,5 @@ class Hardware(db.Model):
     purchase_date = db.Column(db.DateTime(timezone=True))
     comment = db.Column(db.Text)
     active = db.Column(db.Boolean, default=False)
+    def __repr__(self):
+        return f"{self.name} - {self.identity}"
