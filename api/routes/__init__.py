@@ -40,7 +40,6 @@ def students():
 @login_required
 def add_student():
     form = StudentForm(request.form)
-    # logging.exception(f'>>> {form.name.data}')
     if form.validate():
         new_student = Student(
             name=form.name.data,
@@ -55,9 +54,7 @@ def add_student():
         db.session.add(new_student)
         db.session.commit()
         return "added student"
-    logging.exception(f'>>> {form.errors}')
-
-    return f'{form.validate()}'
+    return f'{form.errors}'
 
 @app.route("/hardware", methods=['GET'])
 @login_required
