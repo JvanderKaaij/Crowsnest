@@ -28,9 +28,10 @@ class Student(db.Model, ExportMixin):
     start_date = db.Column(db.DateTime(timezone=True))
     estimated_end_date = db.Column(db.DateTime(timezone=True))
     borrowed_hardware = db.relationship("Hardware")
-    has_door_access = db.Column(db.Boolean, default=False)
-    has_git_access = db.Column(db.Boolean, default=False)
-    has_git_lfs_access = db.Column(db.Boolean, default=False)
+    has_door_access = db.Column(db.Integer, default=False)
+    has_git_access = db.Column(db.Integer, default=False)
+    has_git_lfs_access = db.Column(db.Integer, default=False)
+    active = db.Column(db.Integer, default=True)
 
 class Hardware(db.Model, ExportMixin):
     __tablename__ = "hardware"
@@ -40,7 +41,7 @@ class Hardware(db.Model, ExportMixin):
     identity = db.Column(db.String(90))
     purchase_date = db.Column(db.DateTime(timezone=True))
     comment = db.Column(db.Text)
-    active = db.Column(db.Boolean, default=False)
+    active = db.Column(db.Integer, default=True)
 
 
 
