@@ -12,14 +12,14 @@ def root():
 
 @app.route('/login', methods=['POST'])
 def login():
-    username = request.form["username"]
-    password = request.form["password"]
+    username = request.json["username"]
+    password = request.json["password"]
     user = User.query.filter_by(username=username).first()
     if user and bcrypt.check_password_hash(user.password, password):
         login_user(user)
-        return "user logged in"
+        return 'true'
 
-    return f'{username} not found'
+    return 'false'
 
 
 @app.route("/students", methods=['GET'])
@@ -56,7 +56,7 @@ def add_onboarding():
 
 
 @app.route("/hardware", methods=['GET'])
-# @login_required
+@login_required
 def hardware():
     hardware = Hardware.query.all()
     result = []
