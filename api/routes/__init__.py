@@ -1,8 +1,11 @@
 from runtime import app, db, bcrypt
 from models import User, Student, Hardware
+from forms import StudentForm
+import logging
+
 from flask import request
 from flask_login import login_user, login_required
-from datetime import date
+from datetime import datetime
 
 
 @app.route('/')
@@ -22,6 +25,7 @@ def login():
     return 'false'
 
 
+
 @app.route("/students", methods=['GET'])
 @login_required
 def students():
@@ -35,14 +39,25 @@ def students():
 @app.route("/add_student", methods=['POST'])
 @login_required
 def add_student():
-    name = request.form["name"]
-    email = request.form["email"]
-    start_date = request.form["start_date"]
-    end_date = request.form["end_date"]
-    new_student = Student(name=name, email=email)
-    db.session.add(new_student)
-    db.session.commit()
-    return "added student"
+    form = StudentForm(request.form)
+    # logging.exception(f'>>> {form.name.data}')
+    if form.validate():
+        new_student = Student(
+            name=form.name.data,
+            email=form.email.data,
+            start_date=form.start_date.data,
+            estimated_end_date=form.end_date.data,
+            has_door_access=form.has_door_access.data,
+            has_git_access=form.has_git_access.data,
+            has_git_lfs_access=form.has_git_lfs_access.data,
+        )
+
+        db.session.add(new_student)
+        db.session.commit()
+        return "added student"
+    logging.exception(f'>>> {form.errors}')
+
+    return f'{form.validate()}'
 
 @app.route("/hardware", methods=['GET'])
 @login_required
