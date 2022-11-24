@@ -1,14 +1,16 @@
 <template>
-    <div id="">
-      Home
+    <div id="home-page">
+      <div class="header">Home</div>
+      <Hardware></Hardware>
+      <Students></Students>
     </div>
 </template>
 
 <script>
-    import Hardware from './Hardware.vue'
-    import Login from './Login.vue'
+    import Hardware from "./components/Hardware.vue";
+    import Students from "./components/Students.vue";
     export default {
         name: 'Home',
-        components: {}
+        components: {Hardware, Students}
     }
 </script>

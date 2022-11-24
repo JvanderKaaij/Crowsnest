@@ -27,18 +27,10 @@ class Student(db.Model, ExportMixin):
     email = db.Column(db.String(60))
     start_date = db.Column(db.DateTime(timezone=True))
     estimated_end_date = db.Column(db.DateTime(timezone=True))
-    onboarding = db.relationship("Onboarding")
     borrowed_hardware = db.relationship("Hardware")
-
-
-class Onboarding(db.Model):
-    __tablename__ = "onboarding"
-    id = db.Column(db.Integer, primary_key=True)
-    student_id = db.Column(db.Integer, db.ForeignKey("student.id"))
-    door = db.Column(db.Boolean, default=False)
-    git = db.Column(db.Boolean, default=False)
-    git_lfs = db.Column(db.Boolean, default=False)
-
+    has_door_access = db.Column(db.Boolean, default=False)
+    has_git_access = db.Column(db.Boolean, default=False)
+    has_git_lfs_access = db.Column(db.Boolean, default=False)
 
 class Hardware(db.Model, ExportMixin):
     __tablename__ = "hardware"

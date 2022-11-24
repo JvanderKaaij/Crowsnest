@@ -1,4 +1,5 @@
 <template>
+    <div>HARDWARE</div>
     <div id="hardware-list">
       <table>
         <tr>
@@ -27,7 +28,7 @@
         },
       mounted(){
           axios
-            .get('http://localhost:8000/hardware', {withCredentials: true})
+            .get('http://localhost:8000/hardware')
             .then(response => {
               this.hardware = response.data
             })

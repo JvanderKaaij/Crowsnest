@@ -1,5 +1,5 @@
 from runtime import app, db, bcrypt
-from models import User, Student, Onboarding, Hardware
+from models import User, Student, Hardware
 from flask import request
 from flask_login import login_user, login_required
 from datetime import date
@@ -43,17 +43,6 @@ def add_student():
     db.session.add(new_student)
     db.session.commit()
     return "added student"
-
-
-@app.route("/add_onboarding", methods=['POST'])
-@login_required
-def add_onboarding():
-    student_id = request.form["student_id"]
-    new_onboarding = Onboarding(student_id=student_id, door=False, git=False, git_lfs=False)
-    db.session.add(new_onboarding)
-    db.session.commit()
-    return "added onboarding"
-
 
 @app.route("/hardware", methods=['GET'])
 @login_required

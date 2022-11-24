@@ -6,7 +6,6 @@
          <input v-model="passwordLogin" type="password" class="form-control" placeholder="Password" required>
          <input type="submit" class="btn btn-primary" @click="doLogin">
        </div>
-       <router-link to="/hardware">Hardware</router-link>
     </div>
 </template>
 
@@ -35,15 +34,12 @@
                 })
                 .then(response => {
                   if(response.data == true){
-                    console.log(response);
-                    console.log('logged in');
+                    localStorage.logged_in = true;
+                    this.$router.push('/')
                   }
                 })
            }
         }
-      },
-      mounted(){
-
       }
     }
 </script>
