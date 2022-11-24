@@ -1,11 +1,12 @@
 <template>
-    <div id="login-page" v-if="!loggedIn">
+    <div id="login-page">
       Login:
        <div class="form-group">
          <input v-model="usernameLogin" type="username" class="form-control" placeholder="Username" required>
          <input v-model="passwordLogin" type="password" class="form-control" placeholder="Password" required>
          <input type="submit" class="btn btn-primary" @click="doLogin">
        </div>
+       <router-link to="/hardware">Hardware</router-link>
     </div>
 </template>
 
@@ -33,8 +34,8 @@
                   password: this.passwordLogin
                 })
                 .then(response => {
-                  this.loggedIn = response.data;
                   if(response.data == true){
+                    console.log(response);
                     console.log('logged in');
                   }
                 })

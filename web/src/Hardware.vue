@@ -1,5 +1,5 @@
 <template>
-    <div id="hardware-list" v-if="loggedIn">
+    <div id="hardware-list">
       <table>
         <tr>
           <td>Name</td>
@@ -27,7 +27,7 @@
         },
       mounted(){
           axios
-            .get('http://localhost:8000/hardware')
+            .get('http://localhost:8000/hardware', {withCredentials: true})
             .then(response => {
               this.hardware = response.data
             })
