@@ -56,7 +56,7 @@ def add_onboarding():
 
 
 @app.route("/hardware", methods=['GET'])
-@login_required
+# @login_required
 def hardware():
     hardware = Hardware.query.all()
     result = []
