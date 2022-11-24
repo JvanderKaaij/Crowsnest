@@ -66,6 +66,7 @@ def edit_student():
     if "has_door_access" in request.form: student.has_door_access = request.form['has_door_access']
     if "has_git_access" in request.form: student.has_git_access = request.form['has_git_access']
     if "has_git_lfs_access" in request.form: student.has_git_lfs_access = request.form['has_git_lfs_access']
+    if "active" in request.form: student.active = request.form['active']
     db.session.commit()
     return "changed student"
 
@@ -75,7 +76,9 @@ def hardware():
     hardware = Hardware.query.all()
     result = []
     for h in hardware:
-        result.append(h._asdict())
+        as_dict = h._asdict()
+        if h.student is not None: as_dict['lend_to_student'] = h.student._asdict()
+        result.append(as_dict)
     return result
 
 @app.route("/add_hardware", methods=['POST'])

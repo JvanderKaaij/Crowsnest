@@ -27,7 +27,6 @@ class Student(db.Model, ExportMixin):
     email = db.Column(db.String(60))
     start_date = db.Column(db.DateTime(timezone=True))
     estimated_end_date = db.Column(db.DateTime(timezone=True))
-    borrowed_hardware = db.relationship("Hardware")
     has_door_access = db.Column(db.Integer, default=False)
     has_git_access = db.Column(db.Integer, default=False)
     has_git_lfs_access = db.Column(db.Integer, default=False)
@@ -36,6 +35,7 @@ class Student(db.Model, ExportMixin):
 class Hardware(db.Model, ExportMixin):
     __tablename__ = "hardware"
     id = db.Column(db.Integer, primary_key=True)
+    student = db.relationship("Student", uselist=False)
     student_id = db.Column(db.Integer, db.ForeignKey("student.id"))
     name = db.Column(db.String(90))
     identity = db.Column(db.String(90))
