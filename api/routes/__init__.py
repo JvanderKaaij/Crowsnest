@@ -101,11 +101,17 @@ def add_hardware():
 @app.route("/edit_hardware", methods=['POST'])
 @login_required
 def edit_hardware():
+    logging.error(request.json['purchase_date'])
     hardware = db.session.query(Hardware).get(request.json['id'])
     if "name" in request.json: hardware.name = request.json['name']
     if "student_id" in request.json: hardware.student_id = request.json['student_id']
     if "identity" in request.json: hardware.identity = request.json['identity']
-    if "purchase_date" in request.json: hardware.purchase_date = request.json['purchase_date']
+    if "purchase_date" in request.json:
+        format_date = datetime.strptime(request.json['purchase_date'], '%Y-%m-%d').strftime('%Y-%m-%d 00:00:00')
+        logging.error(request.json['purchase_date'])
+        logging.error(format_date)
+        hardware.purchase_date = format_date
+
     if "comment" in request.json: hardware.comment = request.json['comment']
     if "active" in request.json: hardware.active = request.json['active']
     db.session.commit()

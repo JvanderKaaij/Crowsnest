@@ -12,7 +12,7 @@
         <tr v-for="(item, index) in hardware">
           <td><ValueInputField :id=item.id url='/edit_hardware' value_endpoint_type="name"               :value=item.name /></td>
           <td><ValueInputField :id=item.id url='/edit_hardware' value_endpoint_type="identity"           :value=item.identity /></td>
-          <td><ValueInputField :id=item.id url='/edit_hardware' value_endpoint_type="purchase_date"      :value=item.purchase_date /></td>
+          <td><ValueDatePicker :id=item.id url='/edit_hardware' value_endpoint_type="purchase_date"      :value=item.purchase_date /></td>
           <td><ValueInputField :id=item.id url='/edit_hardware' value_endpoint_type="comment"            :value=item.comment /></td>
           <td>{{item.lend_to_student.name}}</td>
         </tr>
@@ -21,11 +21,13 @@
 </template>
 
 <script>
-    import ValueInputField from './ValueInputField.vue'
     import axios from 'axios'
+    import ValueInputField from './ValueInputField.vue'
+    import ValueDatePicker from "./ValueDatePicker.vue";
+
     export default {
         name: 'Hardware',
-        components: {ValueInputField},
+        components: {ValueDatePicker, ValueInputField},
         data () {
           return {
             hardware: null
