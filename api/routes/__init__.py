@@ -101,12 +101,12 @@ def add_hardware():
 @app.route("/edit_hardware", methods=['POST'])
 @login_required
 def edit_hardware():
-    hardware = db.session.query(Hardware).get(request.form['id'])
-    if "name" in request.form: hardware.name = request.form['name']
-    if "student_id" in request.form: hardware.student_id = request.form['student_id']
-    if "identity" in request.form: hardware.identity = request.form['identity']
-    if "purchase_date" in request.form: hardware.purchase_date = request.form['purchase_date']
-    if "comment" in request.form: hardware.comment = request.form['comment']
-    if "active" in request.form: hardware.active = request.form['active']
+    hardware = db.session.query(Hardware).get(request.json['id'])
+    if "name" in request.json: hardware.name = request.json['name']
+    if "student_id" in request.json: hardware.student_id = request.json['student_id']
+    if "identity" in request.json: hardware.identity = request.json['identity']
+    if "purchase_date" in request.json: hardware.purchase_date = request.json['purchase_date']
+    if "comment" in request.json: hardware.comment = request.json['comment']
+    if "active" in request.json: hardware.active = request.json['active']
     db.session.commit()
     return "hardware changed"

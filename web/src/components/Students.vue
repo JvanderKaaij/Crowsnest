@@ -3,7 +3,6 @@
     <div id="students-list">
       <table>
         <tr>
-          <td class="t-header">Id</td>
           <td class="t-header">Name</td>
           <td class="t-header">Email</td>
           <td class="t-header">Start Date</td>
@@ -13,7 +12,6 @@
           <td class="t-header">Has Git LFS Access</td>
         </tr>
         <tr v-for="(item, index) in students">
-          <td>{{item.id}}</td>
           <td><ValueInputField :id=item.id url='/edit_student' value_endpoint_type="name"               :value=item.name /></td>
           <td><ValueInputField :id=item.id url='/edit_student' value_endpoint_type="email"              :value=item.email /></td>
           <td><ValueInputField :id=item.id url='/edit_student' value_endpoint_type="start_date"         :value=item.start_date /></td>

@@ -10,10 +10,10 @@
           <td class="t-header">Lend out to</td>
         </tr>
         <tr v-for="(item, index) in hardware">
-          <td>{{item.name}}</td>
-          <td>{{item.identity}}</td>
-          <td>{{item.purchase_date}}</td>
-          <td>{{item.comment}}</td>
+          <td><ValueInputField :id=item.id url='/edit_hardware' value_endpoint_type="name"               :value=item.name /></td>
+          <td><ValueInputField :id=item.id url='/edit_hardware' value_endpoint_type="identity"           :value=item.identity /></td>
+          <td><ValueInputField :id=item.id url='/edit_hardware' value_endpoint_type="purchase_date"      :value=item.purchase_date /></td>
+          <td><ValueInputField :id=item.id url='/edit_hardware' value_endpoint_type="comment"            :value=item.comment /></td>
           <td>{{item.lend_to_student.name}}</td>
         </tr>
       </table>
@@ -21,10 +21,11 @@
 </template>
 
 <script>
+    import ValueInputField from './ValueInputField.vue'
     import axios from 'axios'
     export default {
         name: 'Hardware',
-        components: {},
+        components: {ValueInputField},
         data () {
           return {
             hardware: null
