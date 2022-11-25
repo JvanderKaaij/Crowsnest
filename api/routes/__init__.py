@@ -58,15 +58,15 @@ def add_student():
 @app.route("/edit_student", methods=['POST'])
 @login_required
 def edit_student():
-    student = db.session.query(Student).get(request.form['id'])
-    if "name" in request.form: student.name = request.form['name']
-    if "email" in request.form: student.email = request.form['email']
-    if "start_date" in request.form: student.start_date = request.form['start_date']
-    if "end_date" in request.form: student.estimated_end_date = request.form['end_date']
-    if "has_door_access" in request.form: student.has_door_access = request.form['has_door_access']
-    if "has_git_access" in request.form: student.has_git_access = request.form['has_git_access']
-    if "has_git_lfs_access" in request.form: student.has_git_lfs_access = request.form['has_git_lfs_access']
-    if "active" in request.form: student.active = request.form['active']
+    student = db.session.query(Student).get(request.json['id'])
+    if "name" in request.json: student.name = request.json['name']
+    if "email" in request.json: student.email = request.json['email']
+    if "start_date" in request.json: student.start_date = request.json['start_date']
+    if "end_date" in request.json: student.estimated_end_date = request.json['end_date']
+    if "has_door_access" in request.json: student.has_door_access = request.json['has_door_access']
+    if "has_git_access" in request.json: student.has_git_access = request.json['has_git_access']
+    if "has_git_lfs_access" in request.json: student.has_git_lfs_access = request.json['has_git_lfs_access']
+    if "active" in request.json: student.active = request.json['active']
     db.session.commit()
     return "changed student"
 

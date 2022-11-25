@@ -1,6 +1,5 @@
 <template>
     <div id="home-page">
-      <div class="header">Home</div>
       <Hardware></Hardware>
       <Students></Students>
     </div>
