@@ -16,9 +16,9 @@
           <td><ValueInputField :id=item.id url='/edit_student' value_endpoint_type="email"              :value=item.email /></td>
           <td><ValueInputField :id=item.id url='/edit_student' value_endpoint_type="start_date"         :value=item.start_date /></td>
           <td><ValueInputField :id=item.id url='/edit_student' value_endpoint_type="estimated_end_date" :value=item.estimated_end_date /></td>
-          <td><ValueInputField :id=item.id url='/edit_student' value_endpoint_type="has_door_access"    :value=item.has_door_access /></td>
-          <td><ValueInputField :id=item.id url='/edit_student' value_endpoint_type="has_git_access"     :value=item.has_git_access /></td>
-          <td><ValueInputField :id=item.id url='/edit_student' value_endpoint_type="has_git_lfs_access" :value=item.has_git_lfs_access /></td>
+          <td><ValueCheckBox   :id=item.id url='/edit_student' value_endpoint_type="has_door_access"    :value=item.has_door_access /></td>
+          <td><ValueCheckBox   :id=item.id url='/edit_student' value_endpoint_type="has_git_access"     :value=item.has_git_access /></td>
+          <td><ValueCheckBox   :id=item.id url='/edit_student' value_endpoint_type="has_git_lfs_access" :value=item.has_git_lfs_access /></td>
         </tr>
       </table>
     </div>
@@ -27,9 +27,10 @@
 <script>
     import axios from 'axios'
     import ValueInputField from './ValueInputField.vue'
+    import ValueCheckBox from "./ValueCheckBox.vue";
     export default {
         name: 'Students',
-        components: {ValueInputField},
+        components: {ValueCheckBox, ValueInputField},
         data () {
           return {
             students: null
