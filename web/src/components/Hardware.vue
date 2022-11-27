@@ -14,7 +14,7 @@
           <td><ValueInputField :id=item.id url='/edit_hardware' value_endpoint_type="identity"           :value=item.identity /></td>
           <td><ValueDatePicker :id=item.id url='/edit_hardware' value_endpoint_type="purchase_date"      :value=item.purchase_date /></td>
           <td><ValueInputField :id=item.id url='/edit_hardware' value_endpoint_type="comment"            :value=item.comment /></td>
-          <td>{{item.lend_to_student.name}}</td>
+          <td><ValueDropDown/></td>
         </tr>
       </table>
     </div>
@@ -24,22 +24,15 @@
     import axios from 'axios'
     import ValueInputField from './ValueInputField.vue'
     import ValueDatePicker from "./ValueDatePicker.vue";
+    import ValueDropDown from "./ValueDropDown.vue";
+    import {mapState} from "vuex";
 
     export default {
         name: 'Hardware',
-        components: {ValueDatePicker, ValueInputField},
-        data () {
-          return {
-            hardware: null
-          }
-        },
-      mounted(){
-          axios
-            .get('http://localhost:8000/hardware')
-            .then(response => {
-              this.hardware = response.data
-            })
-      }
+        components: {ValueDropDown, ValueDatePicker, ValueInputField},
+        computed: {
+            ...mapState(['hardware', 'students'])
+        }
     }
 </script>
 

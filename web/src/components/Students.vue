@@ -29,22 +29,20 @@
     import ValueInputField from './ValueInputField.vue'
     import ValueCheckBox from "./ValueCheckBox.vue";
     import ValueDatePicker from "./ValueDatePicker.vue";
+    import { mapMutations, mapState, mapActions } from "vuex"
     export default {
         name: 'Students',
         components: {ValueCheckBox, ValueInputField, ValueDatePicker},
         data () {
           return {
-            students: null
+
           }
         },
-      mounted(){
-          axios
-            .get('http://localhost:8000/students')
-            .then(response => {
-              this.students = response.data
-              console.log(response.data)
-            })
-      }
+        computed: {
+            ...mapState(['students'])
+        },
+        mounted(){
+        }
     }
 </script>
 
