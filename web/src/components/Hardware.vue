@@ -10,11 +10,11 @@
           <td class="t-header">Lend out to</td>
         </tr>
         <tr v-for="(item, index) in hardware">
-          <td><ValueInputField :id=item.id url='/edit_hardware' value_endpoint_type="name"               :value=item.name /></td>
-          <td><ValueInputField :id=item.id url='/edit_hardware' value_endpoint_type="identity"           :value=item.identity /></td>
-          <td><ValueDatePicker :id=item.id url='/edit_hardware' value_endpoint_type="purchase_date"      :value=item.purchase_date /></td>
-          <td><ValueInputField :id=item.id url='/edit_hardware' value_endpoint_type="comment"            :value=item.comment /></td>
-          <td><ValueDropDown :map=students url='/edit_hardware' value_endpoint_type="student_id"         :value=item.student_id /></td>
+          <td><ValueInputField :id=item.id mutation='EditHardware' value_endpoint_type="name"               :value=item.name /></td>
+          <td><ValueInputField :id=item.id mutation='EditHardware' value_endpoint_type="identity"           :value=item.identity /></td>
+          <td><ValueDatePicker :id=item.id mutation='EditHardware' value_endpoint_type="purchase_date"      :value=item.purchase_date /></td>
+          <td><ValueInputField :id=item.id mutation='EditHardware' value_endpoint_type="comment"            :value=item.comment /></td>
+          <td><ValueDropDown :id=item.id mutation='EditHardware' :map=students value_endpoint_type="student_id" :value=item.student_id /></td>
         </tr>
       </table>
     </div>

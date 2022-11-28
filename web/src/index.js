@@ -23,10 +23,30 @@ const store = createStore({
         };
     },
     mutations:{
-        UpdateStudents(state, data){
+        EditStudents(state, data){
+            var send_obj = {};
+            send_obj["id"] = data.id;
+            send_obj[data.value_endpoint_type] = data.value;
+            axios
+              .post('http://localhost:8000/edit_student', send_obj)
+              .then(response => {
+                  console.log(response);
+              })
+        },
+        EditHardware(state, data){
+            var send_obj = {};
+            send_obj["id"] = data.id;
+            send_obj[data.value_endpoint_type] = data.value;
+            axios
+              .post('http://localhost:8000/edit_hardware', send_obj)
+              .then(response => {
+                  console.log(response);
+              })
+        },
+        CreateStudents(state, data){
             state.students = data;
         },
-        UpdateHardware(state, data){
+        CreateHardware(state, data){
             state.hardware = data;
         }
     },
@@ -35,14 +55,14 @@ const store = createStore({
             axios
             .get('http://localhost:8000/students')
             .then(response => {
-              context.commit('UpdateStudents', response.data);
+              context.commit('CreateStudents', response.data);
             });
         },
         async InitHardware(context){
             axios
             .get('http://localhost:8000/hardware')
             .then(response => {
-                context.commit('UpdateHardware', response.data);
+                context.commit('CreateHardware', response.data);
             });
         }
     },

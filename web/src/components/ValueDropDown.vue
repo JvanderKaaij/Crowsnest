@@ -9,12 +9,19 @@
     export default {
       name: 'ValueDropDown',
       components: {},
-      props:['map', 'url', 'value_endpoint_type', 'value'],
+      props:['id', 'map', 'mutation', 'value_endpoint_type', 'value'],
       data () {
-        console.log(this.value);
         return {
           selected: this.value
         }
+      },
+      methods:{
+          signalChange: function(evt){
+            console.log(this.id);
+            console.log(this.value_endpoint_type);
+            console.log(this.selected);
+            this.$store.commit(this.mutation, {id:this.id, value_endpoint_type:this.value_endpoint_type, value:this.selected});
+          }
       },
       mounted(){
         this.computed = {...mapState([this.map])}; //take this out of computed to dynamically map this.map

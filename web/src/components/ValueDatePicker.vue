@@ -9,20 +9,12 @@
     export default {
       name: 'ValueDatePicker',
       components: {Datepicker},
-      props: ['value', 'value_endpoint_type', 'url', 'id'],
+      props: ['value', 'mutation', 'value_endpoint_type', 'url', 'id'],
       methods:{
           signalChange: function(evt){
             this.datetime = new Date(this.my_value);
             var date = this.datetime.toJSON().split('T')[0]
-
-            var send_obj = {};
-            send_obj["id"] = this.id;
-            send_obj[this.value_endpoint_type] = date;
-            axios
-              .post('http://localhost:8000'+this.url, send_obj)
-              .then(response => {
-                  console.log(response);
-              })
+            this.$store.commit(this.mutation, {id:this.id, value_endpoint_type:this.value_endpoint_type, value:date});
           }
       },
       data () {

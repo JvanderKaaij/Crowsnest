@@ -7,19 +7,10 @@
     export default {
       name: 'ValueInputField',
       components: {},
-      props: ['value', 'value_endpoint_type', 'url', 'id'],
+      props: ['value', 'value_endpoint_type', 'mutation', 'id'],
       methods:{
           signalChange: function(evt){
-            var send_obj = {};
-            send_obj["id"] = this.id;
-            send_obj[this.value_endpoint_type] = this.my_value;
-
-            console.log(send_obj)
-            axios
-              .post('http://localhost:8000'+this.url, send_obj)
-              .then(response => {
-                  console.log(response);
-              })
+            this.$store.commit(this.mutation, {id:this.id, value_endpoint_type:this.value_endpoint_type, value:this.my_value});
           }
       },
       data () {

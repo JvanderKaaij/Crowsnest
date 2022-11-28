@@ -3,22 +3,14 @@
 </template>
 
 <script>
-    import axios from 'axios'
     export default {
       name: 'ValueCheckBox',
       components: {},
-      props: ['value', 'value_endpoint_type', 'url', 'id'],
+      props: ['value', 'value_endpoint_type', 'mutation', 'id'],
       methods:{
-          signalChange: function(evt){
-            var send_obj = {};
-            send_obj["id"] = this.id;
-            send_obj[this.value_endpoint_type] = this.my_value;
-            axios
-              .post('http://localhost:8000'+this.url, send_obj)
-              .then(response => {
-                  console.log(response);
-              })
-          }
+        signalChange(evt){
+          this.$store.commit(this.mutation, {id:this.id, value_endpoint_type:this.value_endpoint_type, value:this.my_value});
+        }
       },
       data () {
         return {
