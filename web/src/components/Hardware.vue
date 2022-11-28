@@ -10,8 +10,8 @@
           <td class="t-header">Lend out to</td>
           <td class="t-header">Actions</td>
         </tr>
-        <tr v-for="(item, index) in hardware">
-          <HardwareItem :item="item"/>
+        <tr v-for="item in hardware">
+          <HardwareItem v-if=item.active :item="item"/>
         </tr>
         <tr><HardwareNewItem/></tr>
       </table>
@@ -27,13 +27,8 @@
       name: 'Hardware',
       components: {HardwareItem, HardwareNewItem},
       computed: {
-          ...mapState(['hardware', 'students'])
-      },
-        methods:{
-          AddNew(){
-            console.log("Add Hardware")
-          }
-        }
+          ...mapState(['hardware'])
+      }
     }
 </script>
 

@@ -57,6 +57,7 @@ const store = createStore({
         },
         AddHardware(state, data){
             state.hardware.push(data);
+            console.log(data);
             var form_data = new FormData();
             for ( var key in data ) {
                 form_data.append(key, data[key]);
@@ -77,7 +78,11 @@ const store = createStore({
             send_obj["id"] = data.id;
             send_obj[data.value_endpoint_type] = data.value;
             axios.post('http://localhost:8000/edit_hardware', send_obj);
-        }
+        },
+        RemoveHardware(state, hardware){
+            state.hardware.find(e => e.id === hardware.id)['active'] = 0
+            this.commit('EditHardware', {id:hardware.id, value_endpoint_type: 'active', value:0});
+        },
     },
     actions:{
         async InitStudents(context){

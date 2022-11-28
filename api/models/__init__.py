@@ -36,7 +36,7 @@ class Hardware(db.Model, ExportMixin):
     __tablename__ = "hardware"
     id = db.Column(db.Integer, primary_key=True)
     student = db.relationship("Student", uselist=False)
-    student_id = db.Column(db.Integer, db.ForeignKey("student.id"))
+    student_id = db.Column(db.Integer, db.ForeignKey("student.id"), nullable=True)
     name = db.Column(db.String(90))
     identity = db.Column(db.String(90))
     purchase_date = db.Column(db.DateTime(timezone=True))

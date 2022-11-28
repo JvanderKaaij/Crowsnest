@@ -25,7 +25,7 @@
           identity:null,
           purchase_date:"2020-1-1",
           comment:null,
-          student_id:false
+          student_id:null
         }
       },
       computed: {
@@ -36,20 +36,23 @@
           this.purchase_date = this.purchase_date.toJSON().split('T')[0]
         },
         AddNew(){
+
+          console.log(this.student_id);
+
           this.$store.commit('AddHardware', {
             name:this.name,
             identity:this.identity,
             purchase_date:this.purchase_date,
             comment:this.comment,
             student_id:this.student_id,
+            active:1
           });
 
           this.name = null;
           this.identity = null;
-          this.purchase_date = null;
+          this.purchase_date = "2020-1-1";
           this.comment = null;
-          this.student_id = false;
-
+          this.student_id = null;
         }
       }
     }
