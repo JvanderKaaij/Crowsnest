@@ -17,9 +17,6 @@
       },
       methods:{
           signalChange: function(evt){
-            console.log(this.id);
-            console.log(this.value_endpoint_type);
-            console.log(this.selected);
             this.$store.commit(this.mutation, {id:this.id, value_endpoint_type:this.value_endpoint_type, value:this.selected});
           }
       },

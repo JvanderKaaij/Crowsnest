@@ -23,31 +23,29 @@ const store = createStore({
         };
     },
     mutations:{
+         InitStudents(state, data){
+            state.students = data;
+        },
+        AddStudent(state, data){
+
+        },
         EditStudents(state, data){
             var send_obj = {};
             send_obj["id"] = data.id;
             send_obj[data.value_endpoint_type] = data.value;
-            axios
-              .post('http://localhost:8000/edit_student', send_obj)
-              .then(response => {
-                  console.log(response);
-              })
+            axios.post('http://localhost:8000/edit_student', send_obj);
+        },
+        InitHardware(state, data){
+            state.hardware = data;
+        },
+        AddHardware(state, data){
+
         },
         EditHardware(state, data){
             var send_obj = {};
             send_obj["id"] = data.id;
             send_obj[data.value_endpoint_type] = data.value;
-            axios
-              .post('http://localhost:8000/edit_hardware', send_obj)
-              .then(response => {
-                  console.log(response);
-              })
-        },
-        CreateStudents(state, data){
-            state.students = data;
-        },
-        CreateHardware(state, data){
-            state.hardware = data;
+            axios.post('http://localhost:8000/edit_hardware', send_obj);
         }
     },
     actions:{
@@ -55,14 +53,14 @@ const store = createStore({
             axios
             .get('http://localhost:8000/students')
             .then(response => {
-              context.commit('CreateStudents', response.data);
+              context.commit('InitStudents', response.data);
             });
         },
         async InitHardware(context){
             axios
             .get('http://localhost:8000/hardware')
             .then(response => {
-                context.commit('CreateHardware', response.data);
+                context.commit('InitHardware', response.data);
             });
         }
     },
