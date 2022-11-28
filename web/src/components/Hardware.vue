@@ -14,7 +14,7 @@
           <td><ValueInputField :id=item.id url='/edit_hardware' value_endpoint_type="identity"           :value=item.identity /></td>
           <td><ValueDatePicker :id=item.id url='/edit_hardware' value_endpoint_type="purchase_date"      :value=item.purchase_date /></td>
           <td><ValueInputField :id=item.id url='/edit_hardware' value_endpoint_type="comment"            :value=item.comment /></td>
-          <td><ValueDropDown/></td>
+          <td><ValueDropDown :map=students url='/edit_hardware' value_endpoint_type="student_id"         :value=item.student_id /></td>
         </tr>
       </table>
     </div>
@@ -28,11 +28,11 @@
     import {mapState} from "vuex";
 
     export default {
-        name: 'Hardware',
-        components: {ValueDropDown, ValueDatePicker, ValueInputField},
-        computed: {
-            ...mapState(['hardware', 'students'])
-        }
+      name: 'Hardware',
+      components: {ValueDropDown, ValueDatePicker, ValueInputField},
+      computed: {
+          ...mapState(['hardware', 'students'])
+      }
     }
 </script>
 
