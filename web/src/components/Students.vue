@@ -13,7 +13,7 @@
           <td class="t-header">Actions</td>
         </tr>
         <tr v-for="(item, index) in students">
-          <StudentItem :item="item"/>
+          <StudentItem v-if=item.active :item="item"/>
         </tr>
         <tr class="new-item">
           <StudentNewItem/>

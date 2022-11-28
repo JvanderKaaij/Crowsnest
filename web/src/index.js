@@ -32,7 +32,6 @@ const store = createStore({
             for ( var key in data ) {
                 form_data.append(key, data[key]);
             }
-
             axios
             .post('http://localhost:8000/add_student', form_data, {
                 headers: {
@@ -48,6 +47,10 @@ const store = createStore({
             send_obj["id"] = data.id;
             send_obj[data.value_endpoint_type] = data.value;
             axios.post('http://localhost:8000/edit_student', send_obj);
+        },
+        RemoveStudent(state, student){
+            state.students.find(e => e.id === student.id)['active'] = 0
+            this.commit('EditStudents', {id:student.id, value_endpoint_type: 'active', value:0});
         },
         InitHardware(state, data){
             state.hardware = data;

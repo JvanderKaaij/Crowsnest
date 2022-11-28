@@ -45,6 +45,7 @@
             has_door_access:this.has_door_access? 1:0,
             has_git_access:this.has_git_access? 1:0,
             has_git_lfs_access:this.has_git_lfs_access? 1:0,
+            active:1
           });
           this.name=null;
           this.email=null;
