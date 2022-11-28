@@ -30,6 +30,7 @@ body{
 }
 
 table{
+  min-width: 70rem;
   border-collapse: collapse;
 }
 
