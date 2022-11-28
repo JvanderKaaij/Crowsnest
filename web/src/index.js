@@ -82,8 +82,6 @@ const store = createStore({
             .get('http://localhost:8000/students')
             .then(response => {
               context.commit('InitStudents', response.data);
-              console.log(response.request.headers);
-
             });
         },
         async InitHardware(context){

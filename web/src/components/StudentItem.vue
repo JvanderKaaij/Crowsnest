@@ -13,7 +13,7 @@
     import ValueInputField from './ValueInputField.vue'
     import ValueCheckBox from "./ValueCheckBox.vue";
     import ValueDatePicker from "./ValueDatePicker.vue";
-    import {mapState, mapMutations} from "vuex"
+    import {mapState} from "vuex"
 
     export default {
       name: 'StudentItem',
@@ -26,9 +26,6 @@
         DeleteMe(){
           console.log("Delete me");
         }
-      },
-      mounted(){
-        console.log(this.add);
       }
     }
 </script>
