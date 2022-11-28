@@ -5,6 +5,8 @@ from datetime import date, datetime
 
 
 class StudentForm(FlaskForm):
+    class Meta:
+        csrf = False
     name = StringField('name', validators=[validators.DataRequired(), validators.Length(min=3, max=90)])
     email = StringField('email', validators=[validators.DataRequired(), validators.Length(min=3, max=90)])
     start_date = DateField('start_date',default=datetime(1970, 1, 1))
@@ -15,6 +17,8 @@ class StudentForm(FlaskForm):
     active = IntegerField('active', default=True)
 
 class HardwareForm(FlaskForm):
+    class Meta:
+        csrf = False
     name = StringField('name', validators=[validators.DataRequired(), validators.Length(min=3, max=90)])
     identity = StringField('identity', validators=[validators.Length(min=1, max=90)])
     purchase_date = DateField('purchase_date',default=datetime(1970, 1, 1))

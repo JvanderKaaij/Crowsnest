@@ -41,6 +41,10 @@ tr{
   background-color: var(--beau-blue);
 }
 
+td.new{
+  background-color: var(--blue-yonder);
+}
+
 td{
   margin:0;
   padding: 10px;

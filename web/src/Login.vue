@@ -34,6 +34,7 @@
                 })
                 .then(response => {
                   if(response.data == true){
+                    console.log(response.data);
                     localStorage.logged_in = true;
                     this.$router.push('/')
                   }

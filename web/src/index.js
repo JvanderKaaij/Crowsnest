@@ -18,16 +18,37 @@ const router = createRouter({
 const store = createStore({
     state(){
         return {
-            students: {},
-            hardware: {}
-        };
+            students: [],
+            hardware: []
+        }
     },
     mutations:{
-         InitStudents(state, data){
+        InitStudents(state, data){
             state.students = data;
         },
         AddStudent(state, data){
+            // state.students.push(data);
 
+            var form_data = new FormData();
+
+
+
+            // form_data['csrf_token'] = '';
+
+
+            for ( var key in data ) {
+                form_data.append(key, data[key]);
+            }
+
+            axios
+            .post('http://localhost:8000/add_student', form_data, {
+                headers: {
+                  'Content-Type': 'multipart/form-data'
+                }
+              })
+            .then(response => {
+              console.log(response.data);
+            });
         },
         EditStudents(state, data){
             var send_obj = {};
@@ -39,7 +60,7 @@ const store = createStore({
             state.hardware = data;
         },
         AddHardware(state, data){
-
+            state.hardware.push(data);
         },
         EditHardware(state, data){
             var send_obj = {};
@@ -54,6 +75,8 @@ const store = createStore({
             .get('http://localhost:8000/students')
             .then(response => {
               context.commit('InitStudents', response.data);
+              console.log(response.request.headers);
+
             });
         },
         async InitHardware(context){

@@ -7,37 +7,35 @@
           <td class="t-header">Email</td>
           <td class="t-header">Start Date</td>
           <td class="t-header">End Date</td>
-          <td class="t-header">Has Door Access</td>
-          <td class="t-header">Has Git Access</td>
-          <td class="t-header">Has Git LFS Access</td>
+          <td class="t-header">Door</td>
+          <td class="t-header">Git</td>
+          <td class="t-header">Git LFS</td>
+          <td class="t-header">Actions</td>
         </tr>
         <tr v-for="(item, index) in students">
           <StudentItem :item="item"/>
         </tr>
-        <button @click="AddNew">Add New</button>
+        <tr class="new-item">
+          <StudentNewItem/>
+        </tr>
       </table>
-
     </div>
 </template>
 
 <script>
     import { mapMutations, mapState, mapActions } from "vuex"
     import StudentItem from "./StudentItem.vue";
+    import StudentNewItem from "./StudentNewItem.vue";
     export default {
         name: 'Students',
-        components: {StudentItem},
+        components: {StudentItem, StudentNewItem},
         data () {
           return {
-
+            show_new:false
           }
         },
         computed: {
             ...mapState(['students'])
-        },
-        methods:{
-          AddNew(){
-            console.log("Add Student")
-          }
         }
     }
 </script>
