@@ -4,6 +4,7 @@
     <td><ValueDatePicker :id=item.id mutation='EditHardware' value_endpoint_type="purchase_date"      :value=item.purchase_date /></td>
     <td><ValueInputField :id=item.id mutation='EditHardware' value_endpoint_type="comment"            :value=item.comment /></td>
     <td><ValueDropDown :id=item.id mutation='EditHardware' :map=students value_endpoint_type="student_id" :value=item.student_id /></td>
+    <td></td>
 </template>
 
 <script>

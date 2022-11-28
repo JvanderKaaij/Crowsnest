@@ -27,15 +27,8 @@ const store = createStore({
             state.students = data;
         },
         AddStudent(state, data){
-            // state.students.push(data);
-
+            state.students.push(data);
             var form_data = new FormData();
-
-
-
-            // form_data['csrf_token'] = '';
-
-
             for ( var key in data ) {
                 form_data.append(key, data[key]);
             }
@@ -61,6 +54,20 @@ const store = createStore({
         },
         AddHardware(state, data){
             state.hardware.push(data);
+            var form_data = new FormData();
+            for ( var key in data ) {
+                form_data.append(key, data[key]);
+            }
+
+            axios
+            .post('http://localhost:8000/add_hardware', form_data, {
+                headers: {
+                  'Content-Type': 'multipart/form-data'
+                }
+              })
+            .then(response => {
+              console.log(response.data);
+            });
         },
         EditHardware(state, data){
             var send_obj = {};

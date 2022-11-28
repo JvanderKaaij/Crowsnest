@@ -1,6 +1,6 @@
 <template>
   <td class="new"><input type="text" class="val-input" id="field-name" name="field-name" v-model="name"></td>
-  <td class="new"><input type="text" class="val-input" id="field-name" name="field-name" v-model="email"></td>
+  <td class="new"><input type="text" class="val-input" id="field-email" name="field-email" v-model="email"></td>
   <td class="new"><datepicker v-model="start_date" format="dd-MM-yyyy"></datepicker></td>
   <td class="new"><datepicker v-model="end_date" format="dd-MM-yyyy"></datepicker></td>
   <td class="new"><input type="checkbox" id="checkbox" v-model="has_door_access"/></td>

@@ -8,22 +8,24 @@
           <td class="t-header">Purchase date</td>
           <td class="t-header">Comment</td>
           <td class="t-header">Lend out to</td>
+          <td class="t-header">Actions</td>
         </tr>
         <tr v-for="(item, index) in hardware">
           <HardwareItem :item="item"/>
         </tr>
-        <button @click="AddNew">Add New</button>
+        <tr><HardwareNewItem/></tr>
       </table>
     </div>
 </template>
 
 <script>
     import HardwareItem from "./HardwareItem.vue";
+    import HardwareNewItem from "./HardwareNewItem.vue";
     import {mapState} from "vuex";
 
     export default {
       name: 'Hardware',
-      components: {HardwareItem},
+      components: {HardwareItem, HardwareNewItem},
       computed: {
           ...mapState(['hardware', 'students'])
       },
