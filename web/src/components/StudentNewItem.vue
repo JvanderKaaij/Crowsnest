@@ -36,7 +36,7 @@
           has_git_access:false,
           has_git_lfs_access:false,
           name_error_msg:null,
-          email_error_msg:null,
+          email_error_msg:null
         }
       },
       methods:{
@@ -70,6 +70,8 @@
           this.has_door_access=false;
           this.has_git_access=false;
           this.has_git_lfs_access=false;
+          this.name_error_msg=null;
+          this.email_error_msg=null;
         },
         OnErrors(errors){
           Object.entries(errors).forEach((e)=>{
@@ -83,12 +85,5 @@
 </script>
 
 <style scoped>
-  .error{
-    color:white;
-    max-width:150px;
-    font-size:9pt;
-    margin-top:2px;
-    padding:2px;
-    background-color: var(--orange-red-crayola);
-  }
+
 </style>

@@ -52,9 +52,18 @@ td{
 }
 
 .val-input{
-  border:0;
-  border-radius: 2px;
-  padding:5px;
+  border-radius: 5px;
+  padding: 13px 15px;
+  border: 1px solid;
 }
+
+.error{
+    color:white;
+    max-width:150px;
+    font-size:9pt;
+    margin-top:2px;
+    padding:2px;
+    background-color: var(--orange-red-crayola);
+  }
 
 </style>
