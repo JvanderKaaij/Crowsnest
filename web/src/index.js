@@ -144,7 +144,12 @@ const store = createStore({
             axios
             .get('http://localhost:8000/students')
             .then(response => {
-              context.commit('InitStudents', response.data);
+                console.log(response);
+                context.commit('InitStudents', response.data);
+            }).catch(error =>{
+                if(error.response.status === 401){
+                    router.push('/login');
+                }
             });
         },
         async InitHardware(context){
@@ -152,6 +157,10 @@ const store = createStore({
             .get('http://localhost:8000/hardware')
             .then(response => {
                 context.commit('InitHardware', response.data);
+            }).catch(error =>{
+                if(error.response.status === 401){
+                    router.push('/login');
+                }
             });
         }
     },
