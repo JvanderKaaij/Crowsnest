@@ -36,17 +36,15 @@
           this.purchase_date = this.purchase_date.toJSON().split('T')[0]
         },
         AddNew(){
-
-          console.log(this.student_id);
-
           this.$store.commit('AddHardware', {
             name:this.name,
             identity:this.identity,
             purchase_date:this.purchase_date,
             comment:this.comment,
-            student_id:this.student_id,
             active:1
           });
+
+          if(this.student_id != null) data["student_id"] = this.student_id;
 
           this.name = null;
           this.identity = null;

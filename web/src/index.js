@@ -15,6 +15,17 @@ const router = createRouter({
     ]
 });
 
+function ToFormDate(data){
+    var form_data = new FormData();
+    for ( var key in data ) {
+        if(data[key] != null){
+            form_data.append(key, data[key]);
+        }
+    }
+    return form_data;
+}
+
+
 const store = createStore({
     state(){
         return {
@@ -27,11 +38,8 @@ const store = createStore({
             state.students = data;
         },
         AddStudent(state, data){
-            state.students.push(data);
-            var form_data = new FormData();
-            for ( var key in data ) {
-                form_data.append(key, data[key]);
-            }
+
+            var form_data = ToFormDate(data);
             axios
             .post('http://localhost:8000/add_student', form_data, {
                 headers: {
@@ -39,7 +47,10 @@ const store = createStore({
                 }
               })
             .then(response => {
-              console.log(response.data);
+                console.log(response.data.success);
+                if(response.data.success){
+                    state.students.push(data);
+                }
             });
         },
         EditStudents(state, data){
@@ -56,13 +67,7 @@ const store = createStore({
             state.hardware = data;
         },
         AddHardware(state, data){
-            state.hardware.push(data);
-            console.log(data);
-            var form_data = new FormData();
-            for ( var key in data ) {
-                form_data.append(key, data[key]);
-            }
-
+            var form_data = ToFormDate(data);
             axios
             .post('http://localhost:8000/add_hardware', form_data, {
                 headers: {
@@ -70,7 +75,10 @@ const store = createStore({
                 }
               })
             .then(response => {
-              console.log(response.data);
+                console.log(response.data.success);
+                if(response.data.success){
+                    state.hardware.push(data);
+                }
             });
         },
         EditHardware(state, data){

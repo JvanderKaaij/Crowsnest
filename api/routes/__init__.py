@@ -87,6 +87,7 @@ def hardware():
 @login_required
 def add_hardware():
     form = HardwareForm(request.form)
+    response = {'success':False, 'message':'', 'errors': {}}
     if form.validate():
         new_hardware = Hardware(
             name=form.name.data,
@@ -98,8 +99,13 @@ def add_hardware():
 
         db.session.add(new_hardware)
         db.session.commit()
-        return "hardware added"
-    return f'{form.errors}'
+        response['success'] = True
+        response['message'] = 'hardware added'
+    else:
+        response['message'] = 'failed'
+        response['errors'] = form.errors
+
+    return response
 
 @app.route("/edit_hardware", methods=['POST'])
 @login_required
