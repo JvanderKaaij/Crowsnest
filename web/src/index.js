@@ -35,7 +35,12 @@ const store = createStore({
     },
     mutations:{
         InitStudents(state, data){
-            console.log(data);
+            data.forEach(x=>{
+                const temp = new Date(x.start_date);
+                x.start_date = temp.toJSON().split('T')[0]
+                const temp2 = new Date(x.estimated_end_date);
+                x.estimated_end_date = temp2.toJSON().split('T')[0]
+            })
             state.students = data;
         },
         AddStudent(state, data){
@@ -55,11 +60,9 @@ const store = createStore({
                 }
             });
         },
-        EditStudents(state, data){
-            var send_obj = {};
-            send_obj["id"] = data.id;
-            send_obj[data.value_endpoint_type] = data.value;
-            axios.post('http://localhost:8000/edit_student', send_obj);
+        EditStudent(state, data){
+            var form_data = ToFormData(data.data);
+            axios.post('http://localhost:8000/edit_student', form_data);
         },
         RemoveStudent(state, student){
             state.modal_popup_active = 'Are you sure?';
@@ -104,7 +107,6 @@ const store = createStore({
         },
         EditHardware(state, data){
             var form_data = ToFormData(data.data);
-            console.log(data.data);
             axios.post('http://localhost:8000/edit_hardware', form_data);
         },
         RemoveHardware(state, hardware){

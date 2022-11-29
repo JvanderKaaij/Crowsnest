@@ -8,9 +8,6 @@
         <option value="remove">{Remove User}</option>
         <option v-for="(stud, index) in GetActive" :value=stud.id >{{stud.name}}</option>
       </select>
-
-<!--      <ValueDropDown :id=item.id mutation='EditHardware' :map=students value_endpoint_type="student_id" :value=item.student_id />-->
-
     </td>
     <td><button @click="RemoveHardware(item)">Delete</button></td>
 </template>

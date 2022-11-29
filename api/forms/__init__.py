@@ -7,6 +7,7 @@ from datetime import date, datetime
 class StudentForm(FlaskForm):
     class Meta:
         csrf = False
+    id = IntegerField('id')
     name = StringField('name', validators=[validators.DataRequired(), validators.Length(min=3, max=90)])
     email = StringField('email', validators=[validators.DataRequired(), validators.Length(min=3, max=90)])
     start_date = DateField('start_date',default=datetime(1970, 1, 1))
