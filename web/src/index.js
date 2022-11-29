@@ -61,8 +61,21 @@ const store = createStore({
             axios.post('http://localhost:8000/edit_student', send_obj);
         },
         RemoveStudent(state, student){
-            state.students.find(e => e.id === student.id)['active'] = 0
-            this.commit('EditStudents', {id:student.id, value_endpoint_type: 'active', value:0});
+            state.modal_popup_active = 'Are you sure?';
+
+            //student is selected in hardware
+            if(state.hardware.find(x => x.student_id === student.id)){
+                state.modal_popup_active = 'Are you sure? This student has hardware assigned!';
+            }
+
+            state.modal_popup_agree = () => {
+                state.students.find(e => e.id === student.id)['active'] = 0
+                this.commit('EditStudents', {id:student.id, value_endpoint_type: 'active', value:0});
+                state.modal_popup_active = null;
+            }
+            state.modal_popup_deny = () => {
+                state.modal_popup_active = null;
+            }
         },
         InitHardware(state, data){
             state.hardware = data;
@@ -91,8 +104,14 @@ const store = createStore({
             axios.post('http://localhost:8000/edit_hardware', send_obj);
         },
         RemoveHardware(state, hardware){
-            state.hardware.find(e => e.id === hardware.id)['active'] = 0
-            this.commit('EditHardware', {id:hardware.id, value_endpoint_type: 'active', value:0});
+            state.modal_popup_active = 'Are you sure?';
+            state.modal_popup_agree = () => {
+                state.hardware.find(e => e.id === hardware.id)['active'] = 0
+                this.commit('EditHardware', {id:hardware.id, value_endpoint_type: 'active', value:0});
+            }
+            state.modal_popup_deny = () => {
+                state.modal_popup_active = null;
+            }
         },
     },
     actions:{
