@@ -2,13 +2,12 @@
     <div id="home-page">
       <Hardware></Hardware>
       <Students></Students>
-
-      <div v-if="modal_popup_active" class="popup">{{ modal_popup_active }}
-        <button @click="modal_popup_agree()">Yes</button>
-        <button @click="modal_popup_deny()">No</button>
-
+      <div class="modal-container">
+        <div  class="popup">{{ modal_popup_active }}
+          <button @click="modal_popup_agree()">Yes</button>
+          <button @click="modal_popup_deny()">No</button>
+        </div>
       </div>
-
     </div>
 </template>
 
@@ -36,3 +35,22 @@
         }
     }
 </script>
+
+<style scoped>
+  .modal-container{
+    position:absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    background-color: rgba(22,22,22,0.5); /* complimenting your modal colors */
+  }
+
+  .popup{
+    position: relative;
+    display:inline-block;
+    margin: 0 auto;
+    top: 25%;
+  }
+
+
+</style>

@@ -80,6 +80,8 @@ select{
     margin-top:2px;
     padding:4px;
     background-color: var(--orange-red-crayola);
-  }
+}
+
+
 
 </style>
