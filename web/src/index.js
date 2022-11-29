@@ -91,7 +91,7 @@ const store = createStore({
               })
             .then(response => {
                 if(response.data.success){
-                    state.students.push(data.data);
+                    state.hardware.push(data.data);
                     data.success();
                 }else{
                     data.onError(response.data.errors);
