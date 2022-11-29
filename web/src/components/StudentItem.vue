@@ -10,15 +10,12 @@
 </template>
 
 <script>
-    import ValueInputField from './ValueInputField.vue'
-    import ValueCheckBox from "./ValueCheckBox.vue";
-    import ValueDatePicker from "./ValueDatePicker.vue";
     import Datepicker from 'vuejs3-datepicker';
     import {mapState, mapMutations} from "vuex"
 
     export default {
       name: 'StudentItem',
-      components: {ValueCheckBox, ValueInputField, ValueDatePicker, Datepicker},
+      components: {Datepicker},
       props:['item','add'],
       methods:{
         ...mapMutations(['RemoveStudent']),

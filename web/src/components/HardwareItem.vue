@@ -13,15 +13,12 @@
 </template>
 
 <script>
-    import ValueInputField from './ValueInputField.vue'
-    import ValueDatePicker from "./ValueDatePicker.vue";
-    import ValueDropDown from "./ValueDropDown.vue";
     import Datepicker from 'vuejs3-datepicker';
     import {mapMutations, mapState} from "vuex";
 
     export default {
       name: 'HardwareItem',
-      components: {ValueDropDown, ValueDatePicker, ValueInputField, Datepicker},
+      components: {Datepicker},
       props:['item'],
       computed: {
         ...mapState(['hardware', 'students']),
