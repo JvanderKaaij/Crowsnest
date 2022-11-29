@@ -3,7 +3,15 @@
     <td><input type="text" class="val-input" id="field-identity" name="field-identity" v-model="item.identity"    v-on:change="signalChange"></td>
     <datepicker v-model="item.purchase_date" @closed="signalChange" format="dd-MM-yyyy"></datepicker>
     <td><input type="text" class="val-input" id="field-comment" name="field-identity" v-model="item.comment"    v-on:change="signalChange"></td>
-    <td><ValueDropDown :id=item.id mutation='EditHardware' :map=students value_endpoint_type="student_id" :value=item.student_id /></td>
+    <td>
+      <select v-model="item.student_id" @change="signalChange">
+        <option value="remove">{Remove User}</option>
+        <option v-for="(stud, index) in GetActive" :value=stud.id >{{stud.name}}</option>
+      </select>
+
+<!--      <ValueDropDown :id=item.id mutation='EditHardware' :map=students value_endpoint_type="student_id" :value=item.student_id />-->
+
+    </td>
     <td><button @click="RemoveHardware(item)">Delete</button></td>
 </template>
 
@@ -19,7 +27,10 @@
       components: {ValueDropDown, ValueDatePicker, ValueInputField, Datepicker},
       props:['item'],
       computed: {
-          ...mapState(['hardware', 'students'])
+        ...mapState(['hardware', 'students']),
+        GetActive() {
+          return this.students.filter(x => x['active']);
+        }
       },
       methods:{
         ...mapMutations(['RemoveHardware']),
