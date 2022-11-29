@@ -1,5 +1,6 @@
 <template>
   <select v-model="selected" @change="signalChange">
+    <option value="remove">{Remove User}</option>
     <option v-for="(item, index) in GetActive" :value=item.id>{{item.name}}</option>
   </select>
 </template>
@@ -22,6 +23,9 @@
       },
       methods:{
           signalChange: function(evt){
+            if(this.selected === 'remove'){
+              this.selected = null;
+            }
             this.$store.commit(this.mutation, {id:this.id, value_endpoint_type:this.value_endpoint_type, value:this.selected});
           }
       },
@@ -32,5 +36,4 @@
 </script>
 
 <style scoped>
-
 </style>

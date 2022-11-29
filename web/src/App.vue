@@ -51,6 +51,10 @@ td{
   padding: 10px;
 }
 
+select{
+  min-width:110px;
+}
+
 .val-input{
   border-radius: 5px;
   padding: 13px 15px;

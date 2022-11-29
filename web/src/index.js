@@ -35,6 +35,7 @@ const store = createStore({
     },
     mutations:{
         InitStudents(state, data){
+            console.log(data);
             state.students = data;
         },
         AddStudent(state, data){

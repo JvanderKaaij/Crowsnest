@@ -27,7 +27,7 @@ def login():
 @app.route("/students", methods=['GET'])
 @login_required
 def students():
-    students = Student.query.all()
+    students = Student.query.filter(Student.active==True)
     result = []
     for s in students:
         result.append(s._asdict())
@@ -78,7 +78,7 @@ def edit_student():
 @app.route("/hardware", methods=['GET'])
 @login_required
 def hardware():
-    hardware = Hardware.query.all()
+    hardware = Hardware.query.filter(Hardware.active==True)
     result = []
     for h in hardware:
         as_dict = h._asdict()
