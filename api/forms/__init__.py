@@ -20,7 +20,7 @@ class HardwareForm(FlaskForm):
     class Meta:
         csrf = False
     name = StringField('name', validators=[validators.DataRequired(), validators.Length(min=3, max=90)])
-    identity = StringField('identity', validators=[validators.Length(min=1, max=90)])
+    identity = StringField('identity')
     purchase_date = DateField('purchase_date',default=datetime(1970, 1, 1))
     student_id = IntegerField('student_id')
     comment = TextAreaField('comment')
