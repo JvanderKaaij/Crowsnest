@@ -73,8 +73,9 @@ const store = createStore({
             }
 
             state.modal_popup_agree = () => {
-                state.students.find(e => e.id === student.id)['active'] = 0
-                this.commit('EditStudents', {id:student.id, value_endpoint_type: 'active', value:0});
+                var stud = state.students.find(e => e.id === student.id);
+                stud['active'] = 0;
+                this.commit('EditStudent', {data:stud});
                 state.modal_popup_active = null;
             }
             state.modal_popup_deny = () => {
@@ -112,8 +113,9 @@ const store = createStore({
         RemoveHardware(state, hardware){
             state.modal_popup_active = 'Are you sure?';
             state.modal_popup_agree = () => {
-                state.hardware.find(e => e.id === hardware.id)['active'] = 0
-                this.commit('EditHardware', {id:hardware.id, value_endpoint_type: 'active', value:0});
+                var hard = state.hardware.find(e => e.id === hardware.id);
+                hard['active'] = 0;
+                this.commit('EditHardware', {data:hard});
             }
             state.modal_popup_deny = () => {
                 state.modal_popup_active = null;

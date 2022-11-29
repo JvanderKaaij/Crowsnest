@@ -76,7 +76,8 @@ def edit_student():
             'estimated_end_date':form.estimated_end_date.data,
             'has_door_access':form.has_door_access.data,
             'has_git_access':form.has_git_access.data,
-            'has_git_lfs_access':form.has_git_lfs_access.data
+            'has_git_lfs_access':form.has_git_lfs_access.data,
+            'active':form.active.data
         }
 
         logging.error(form.id.data)
@@ -139,7 +140,8 @@ def edit_hardware():
             'identity':form.identity.data,
             'student_id':form.student_id.data,
             'purchase_date':form.purchase_date.data,
-            'comment':form.comment.data
+            'comment':form.comment.data,
+            'active': form.active.data
         }
 
         logging.error(form.id.data)
