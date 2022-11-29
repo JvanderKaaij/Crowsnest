@@ -39,6 +39,7 @@ table{
 }
 
 tr{
+  vertical-align: top;
   background-color: var(--beau-blue);
 }
 

@@ -25,6 +25,11 @@ function ToFormData(data){
     return form_data;
 }
 
+function ParseDate(date){
+     const temp = new Date(date);
+     return temp.toJSON().split('T')[0]
+}
+
 
 const store = createStore({
     state(){
@@ -36,10 +41,8 @@ const store = createStore({
     mutations:{
         InitStudents(state, data){
             data.forEach(x=>{
-                const temp = new Date(x.start_date);
-                x.start_date = temp.toJSON().split('T')[0]
-                const temp2 = new Date(x.estimated_end_date);
-                x.estimated_end_date = temp2.toJSON().split('T')[0]
+                x.start_date = ParseDate(x.start_date);
+                x.estimated_end_date = ParseDate(x.estimated_end_date);
             })
             state.students = data;
         },
@@ -61,6 +64,8 @@ const store = createStore({
             });
         },
         EditStudent(state, data){
+            data.data.start_date = ParseDate(data.data.start_date);
+            data.data.estimated_end_date = ParseDate(data.data.estimated_end_date);
             var form_data = ToFormData(data.data);
             axios.post('http://localhost:8000/edit_student', form_data).then(response => {
                 if(response.data.success){
@@ -90,8 +95,7 @@ const store = createStore({
         },
         InitHardware(state, data){
             data.forEach(x=>{
-                const temp = new Date(x.purchase_date);
-                x.purchase_date = temp.toJSON().split('T')[0]
+                x.purchase_date = ParseDate(x.purchase_date);
             })
             state.hardware = data;
         },
@@ -113,6 +117,7 @@ const store = createStore({
             });
         },
         EditHardware(state, data){
+            data.data.purchase_date = ParseDate(data.data.purchase_date);
             var form_data = ToFormData(data.data);
             axios.post('http://localhost:8000/edit_hardware', form_data).then(response => {
                 if(response.data.success){
