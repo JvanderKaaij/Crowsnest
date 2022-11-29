@@ -38,8 +38,8 @@ def students():
 @login_required
 def add_student():
     logging.error(request.form)
-
     form = StudentForm(request.form)
+    response = {'success': False, 'message': '', 'errors': {}}
     if form.validate():
         logging.error(form.active.data)
         new_student = Student(
@@ -54,8 +54,12 @@ def add_student():
 
         db.session.add(new_student)
         db.session.commit()
-        return "added student"
-    return f'{form.errors}'
+        response['success'] = True
+        response['message'] = 'student added'
+    else:
+        response['message'] = 'failed'
+        response['errors'] = form.errors
+    return response
 
 @app.route("/edit_student", methods=['POST'])
 @login_required

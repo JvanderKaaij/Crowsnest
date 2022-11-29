@@ -15,9 +15,7 @@
         <tr v-for="(item, index) in students">
           <StudentItem v-if=item.active :item="item"/>
         </tr>
-        <tr class="new-item">
           <StudentNewItem/>
-        </tr>
       </table>
     </div>
 </template>

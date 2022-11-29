@@ -38,8 +38,7 @@ const store = createStore({
             state.students = data;
         },
         AddStudent(state, data){
-
-            var form_data = ToFormDate(data);
+            var form_data = ToFormDate(data.data);
             axios
             .post('http://localhost:8000/add_student', form_data, {
                 headers: {
@@ -47,9 +46,11 @@ const store = createStore({
                 }
               })
             .then(response => {
-                console.log(response.data.success);
                 if(response.data.success){
-                    state.students.push(data);
+                    state.students.push(data.data);
+                    data.success();
+                }else{
+                    data.onError(response.data.errors);
                 }
             });
         },
@@ -75,7 +76,6 @@ const store = createStore({
                 }
               })
             .then(response => {
-                console.log(response.data.success);
                 if(response.data.success){
                     state.hardware.push(data);
                 }
