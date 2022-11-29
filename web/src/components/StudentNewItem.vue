@@ -1,12 +1,11 @@
 <template>
   <tr class="new-item">
     <td class="new">
-      <input type="text" class="val-input" id="name" name="field-name" v-model="name">
+      <input type="text" placeholder="name" class="val-input" id="name" name="field-name" v-model="name">
       <div v-if='name_error_msg' class='error' ref="name_error">{{name_error_msg}}</div>
     </td>
     <td class="new">
-      <input type="text" class="val-input" id="email" name="field-email" v-model="email">
-      <div v-if='email_error_msg' class='error' ref="email_error">{{email_error_msg}}</div>
+      <input type="text" placeholder="email" class="val-input" id="email" name="field-email" v-model="email">
     </td>
     <td class="new"><datepicker v-model="start_date" format="dd-MM-yyyy" @closed="StartDateChanged"></datepicker></td>
     <td class="new"><datepicker v-model="estimated_end_date" format="dd-MM-yyyy" @closed="EndDateChanged"></datepicker></td>
@@ -36,7 +35,6 @@
           has_git_access:false,
           has_git_lfs_access:false,
           name_error_msg:null,
-          email_error_msg:null
         }
       },
       methods:{
@@ -71,7 +69,6 @@
           this.has_git_access=false;
           this.has_git_lfs_access=false;
           this.name_error_msg=null;
-          this.email_error_msg=null;
         },
         OnErrors(errors){
           Object.entries(errors).forEach((e)=>{

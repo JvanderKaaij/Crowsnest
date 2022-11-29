@@ -1,11 +1,11 @@
 <template>
     <td class="new">
-      <input type="text" class="val-input" id="field-name" name="field-name" v-model="name">
+      <input type="text" placeholder="name" class="val-input" id="field-name" v-model="name">
       <div v-if='name_error_msg' class='error'>{{name_error_msg}}</div>
     </td>
-    <td class="new"><input type="text" class="val-input" id="field-identity" name="field-name" v-model="identity"></td>
+    <td class="new"><input type="text" placeholder="identity" class="val-input" id="field-identity" v-model="identity"></td>
     <td class="new"><datepicker v-model="purchase_date" format="dd-MM-yyyy" @closed="PurchaseDateChanged"></datepicker></td>
-    <td class="new"><input type="text" class="val-input" id="field-comment" name="field-comment" v-model="comment"></td>
+    <td class="new"><input type="text" placeholder="comment" class="val-input" id="field-comment" name="field-comment" v-model="comment"></td>
     <td class="new">
       <select v-model="student_id">
         <option v-for="(item, key) in GetActive" :value=item.id>{{item.name}}</option>

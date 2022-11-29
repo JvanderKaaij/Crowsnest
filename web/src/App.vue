@@ -14,8 +14,10 @@
   --black-coral: #495867ff;
   --blue-yonder: #577399ff;
   --beau-blue: #bdd5eaff;
+  --fargo-blue: #d8eff5;
   --ghost-white: #f9ffff;
   --orange-red-crayola: #fe5f55ff;
+  --md-green: #93fe55;
 }
 
 body{
@@ -36,6 +38,7 @@ table{
 
 .t-header{
   color:var(--ghost-white);
+  background-color: var(--blue-yonder);
 }
 
 tr{
@@ -44,7 +47,7 @@ tr{
 }
 
 td.new{
-  background-color: var(--blue-yonder);
+  background-color: var(--fargo-blue);
 }
 
 td{
@@ -58,16 +61,24 @@ select{
 
 .val-input{
   border-radius: 5px;
-  padding: 13px 15px;
+  box-sizing: border-box;
+  padding-left:10px;
+  width:100%;
+  height: 48px;
+  font-size: 15px;
   border: 1px solid;
 }
 
 .error{
     color:white;
-    max-width:150px;
+    min-height: 24px;
+    width: 100%;
+    max-width:180px;
+    border-radius: 5px;
+    box-sizing: border-box;
     font-size:9pt;
     margin-top:2px;
-    padding:2px;
+    padding:4px;
     background-color: var(--orange-red-crayola);
   }
 

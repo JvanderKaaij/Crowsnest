@@ -4,7 +4,7 @@
       <div v-if='name_error_msg' class='error' ref="email_error">{{name_error_msg}}</div>
     </td>
     <td><input type="text" class="val-input" id="field-identity" name="field-identity" v-model="item.identity"    v-on:change="signalChange"></td>
-    <datepicker v-model="item.purchase_date" @closed="signalChange" format="dd-MM-yyyy"></datepicker>
+    <td><datepicker v-model="item.purchase_date" @closed="signalChange" format="dd-MM-yyyy"></datepicker></td>
     <td><input type="text" class="val-input" id="field-comment" name="field-identity" v-model="item.comment"    v-on:change="signalChange"></td>
     <td>
       <select v-model="item.student_id" @change="signalChange">

@@ -9,7 +9,7 @@ class StudentForm(FlaskForm):
         csrf = False
     id = IntegerField('id')
     name = StringField('name', validators=[validators.DataRequired(), validators.Length(min=3, max=90)])
-    email = StringField('email', validators=[validators.DataRequired(), validators.Length(min=3, max=90)])
+    email = StringField('email')
     start_date = DateField('start_date',default=datetime(1970, 1, 1))
     estimated_end_date = DateField('estimated_end_date',default=datetime(1970, 1, 1))
     has_door_access = IntegerField('has_door_access',default=False)
