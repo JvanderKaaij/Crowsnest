@@ -24,6 +24,6 @@ class HardwareForm(FlaskForm):
     name = StringField('name', validators=[validators.DataRequired(), validators.Length(min=3, max=90)])
     identity = StringField('identity')
     purchase_date = DateField('purchase_date',default=datetime(1970, 1, 1))
-    student_id = IntegerField('student_id')
+    student_id = IntegerField('student_id', validators=[validators.Optional()])
     comment = TextAreaField('comment')
     active = IntegerField('active', default=True)

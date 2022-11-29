@@ -29,6 +29,9 @@
       methods:{
         ...mapMutations(['RemoveHardware']),
         signalChange: function(evt){
+          if(this.item.student_id === 'remove'){
+            this.item.student_id = null;
+          }
           this.$store.commit('EditHardware', {data:this.item});
         }
       },
