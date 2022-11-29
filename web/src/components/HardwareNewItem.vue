@@ -1,7 +1,7 @@
 <template>
     <td class="new">
       <input type="text" class="val-input" id="field-name" name="field-name" v-model="name">
-      <div v-if='name_error_msg' class='error' ref="email_error">{{name_error_msg}}</div>
+      <div v-if='name_error_msg' class='error'>{{name_error_msg}}</div>
     </td>
     <td class="new"><input type="text" class="val-input" id="field-identity" name="field-name" v-model="identity"></td>
     <td class="new"><datepicker v-model="purchase_date" format="dd-MM-yyyy" @closed="PurchaseDateChanged"></datepicker></td>

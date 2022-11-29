@@ -62,7 +62,13 @@ const store = createStore({
         },
         EditStudent(state, data){
             var form_data = ToFormData(data.data);
-            axios.post('http://localhost:8000/edit_student', form_data);
+            axios.post('http://localhost:8000/edit_student', form_data).then(response => {
+                if(response.data.success){
+                    data.success();
+                }else{
+                    data.onError(response.data.errors);
+                }
+            });
         },
         RemoveStudent(state, student){
             state.modal_popup_active = 'Are you sure?';
@@ -108,7 +114,13 @@ const store = createStore({
         },
         EditHardware(state, data){
             var form_data = ToFormData(data.data);
-            axios.post('http://localhost:8000/edit_hardware', form_data);
+            axios.post('http://localhost:8000/edit_hardware', form_data).then(response => {
+                if(response.data.success){
+                    data.success();
+                }else{
+                    data.onError(response.data.errors);
+                }
+            });
         },
         RemoveHardware(state, hardware){
             state.modal_popup_active = 'Are you sure?';
