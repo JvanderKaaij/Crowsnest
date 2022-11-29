@@ -47,8 +47,8 @@
             comment:this.comment,
             active:1
           },
-            success:this.OnSuccess,
-            onError:this.OnErrors
+          success:this.OnSuccess,
+          onError:this.OnErrors
           });
           if(this.student_id != null) data["student_id"] = this.student_id;
         },
@@ -61,7 +61,6 @@
           this.name_error_msg=null;
         },
         OnErrors(errors){
-          console.log(errors);
           Object.entries(errors).forEach((e)=>{
             const [key, value] = e;
             const select = key+'_error_msg';
