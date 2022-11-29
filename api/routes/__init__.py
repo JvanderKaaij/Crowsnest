@@ -113,12 +113,28 @@ def add_hardware():
 @app.route("/edit_hardware", methods=['POST'])
 @login_required
 def edit_hardware():
-    hardware = db.session.query(Hardware).get(request.json['id'])
-    if "name" in request.json: hardware.name = request.json['name']
-    if "student_id" in request.json: hardware.student_id = request.json['student_id']
-    if "identity" in request.json: hardware.identity = request.json['identity']
-    if "purchase_date" in request.json: hardware.purchase_date = request.json['purchase_date']
-    if "comment" in request.json: hardware.comment = request.json['comment']
-    if "active" in request.json: hardware.active = request.json['active']
-    db.session.commit()
-    return "hardware changed"
+    logging.error(request.form)
+    form = HardwareForm(request.form)
+    response = {'success': False, 'message': '', 'errors': {}}
+    if form.validate():
+        logging.error(form)
+
+        hardware = {
+            'id':form.id.data,
+            'name':form.name.data,
+            'identity':form.identity.data,
+            'student_id':form.student_id.data,
+            'purchase_date':form.purchase_date.data,
+            'comment':form.comment.data
+        }
+
+        logging.error(form.id.data)
+        db.session.query(Hardware).filter(Hardware.id == form.id.data).update(hardware)
+        db.session.commit()
+        response['success'] = True
+        response['message'] = 'hardware changed'
+    else:
+        response['message'] = 'failed'
+        response['errors'] = form.errors
+
+    return response

@@ -15,7 +15,7 @@ const router = createRouter({
     ]
 });
 
-function ToFormDate(data){
+function ToFormData(data){
     var form_data = new FormData();
     for ( var key in data ) {
         if(data[key] != null){
@@ -39,7 +39,7 @@ const store = createStore({
             state.students = data;
         },
         AddStudent(state, data){
-            var form_data = ToFormDate(data.data);
+            var form_data = ToFormData(data.data);
             axios
             .post('http://localhost:8000/add_student', form_data, {
                 headers: {
@@ -79,10 +79,14 @@ const store = createStore({
             }
         },
         InitHardware(state, data){
+            data.forEach(x=>{
+                const temp = new Date(x.purchase_date);
+                x.purchase_date = temp.toJSON().split('T')[0]
+            })
             state.hardware = data;
         },
         AddHardware(state, data){
-            var form_data = ToFormDate(data.data);
+            var form_data = ToFormData(data.data);
             axios
             .post('http://localhost:8000/add_hardware', form_data, {
                 headers: {
@@ -99,10 +103,9 @@ const store = createStore({
             });
         },
         EditHardware(state, data){
-            var send_obj = {};
-            send_obj["id"] = data.id;
-            send_obj[data.value_endpoint_type] = data.value;
-            axios.post('http://localhost:8000/edit_hardware', send_obj);
+            var form_data = ToFormData(data.data);
+            console.log(data.data);
+            axios.post('http://localhost:8000/edit_hardware', form_data);
         },
         RemoveHardware(state, hardware){
             state.modal_popup_active = 'Are you sure?';
