@@ -37,7 +37,6 @@ def students():
 @app.route("/add_student", methods=['POST'])
 @login_required
 def add_student():
-    logging.error(request.form)
     form = StudentForm(request.form)
     response = {'success': False, 'message': '', 'errors': {}}
     if form.validate():

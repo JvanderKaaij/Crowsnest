@@ -16,6 +16,11 @@
           ...mapActions(["InitStudents", "InitHardware"])
         },
         mounted() {
+
+          if(!localStorage.logged_in){
+            this.$router.push('/login');
+          }
+
           this.$store.dispatch('InitStudents')
           this.$store.dispatch('InitHardware')
         }

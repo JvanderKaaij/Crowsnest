@@ -8,7 +8,7 @@
     <td class="new"><input type="text" class="val-input" id="field-comment" name="field-comment" v-model="comment"></td>
     <td class="new">
       <select v-model="student_id">
-        <option v-for="(item, key) in students" :value=item.id>{{item.name}}</option>
+        <option v-for="(item, key) in GetActive" :value=item.id>{{item.name}}</option>
       </select>
     </td>
     <td class="new"><button @click="AddNew">Add</button></td>
@@ -33,7 +33,10 @@
         }
       },
       computed: {
-          ...mapState(['hardware', 'students'])
+          ...mapState(['hardware', 'students']),
+          GetActive() {
+            return this.students.filter(x => x['active']);
+          }
       },
       methods:{
         PurchaseDateChanged(){

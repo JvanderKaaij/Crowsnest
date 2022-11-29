@@ -1,6 +1,6 @@
 <template>
   <select v-model="selected" @change="signalChange">
-    <option v-for="(item, index) in map" :value=item.id>{{item.name}}</option>
+    <option v-for="(item, index) in GetActive" :value=item.id>{{item.name}}</option>
   </select>
 </template>
 
@@ -13,6 +13,11 @@
       data () {
         return {
           selected: this.value
+        }
+      },
+      computed: {
+        GetActive() {
+          return this.map.filter(x => x['active']);
         }
       },
       methods:{

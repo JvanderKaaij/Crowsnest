@@ -27,7 +27,4 @@
 </script>
 
 <style scoped>
-  #hardware-list{
-
-  }
 </style>
