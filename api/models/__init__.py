@@ -33,6 +33,27 @@ class Student(db.Model, ExportMixin):
     has_git_lfs_access = db.Column(db.Integer, default=False)
     active = db.Column(db.Integer, default=True)
 
+
+class StudentAttribute(db.Model, ExportMixin):
+    __tablename__ = "student_attribute"
+    id = db.Column(db.Integer, primary_key=True)
+    student_id = db.Column(db.Integer, db.ForeignKey("student.id"), nullable=True)
+    attribute_id = db.Column(db.Integer, db.ForeignKey("attribute.id"), nullable=True)
+
+
+class Attribute(db.Model, ExportMixin):
+    __tablename__ = "attribute"
+    id = db.Column(db.Integer, primary_key=True)
+    content = db.Column(db.String(60))
+    type = db.Column(db.Integer, db.ForeignKey("attribute_type.id"), nullable=True)
+
+
+class AttributeType(db.Model, ExportMixin):
+    __tablename__ = "attribute_type"
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(60))
+
+
 class Hardware(db.Model, ExportMixin):
     __tablename__ = "hardware"
     id = db.Column(db.Integer, primary_key=True)

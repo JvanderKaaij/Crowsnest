@@ -1,10 +1,10 @@
 from runtime import app, db, bcrypt
-from models import User, Student, Hardware
+from models import User, Student, Hardware, StudentAttribute
 from forms import StudentForm, HardwareForm
 import logging
 
 from flask import request
-from flask_login import login_user, login_required
+from flask_login import login_user, login_required, current_user
 from datetime import datetime
 
 
@@ -59,6 +59,20 @@ def add_student():
         response['message'] = 'failed'
         response['errors'] = form.errors
     return response
+
+
+@app.route("/student_attributes", methods=['POST'])
+@login_required
+def student_attributes():
+    s_id = request.json["student_id"]
+    attribute_for_student = StudentAttribute.query.filter(StudentAttribute.student_id==s_id).all()
+
+
+
+    result = []
+    for s in attribute_for_student:
+        result.append(s._asdict())
+    return result
 
 @app.route("/edit_student", methods=['POST'])
 @login_required
