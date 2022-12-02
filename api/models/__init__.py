@@ -18,6 +18,7 @@ class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(60))
     password = db.Column(db.String(60))
+    type = db.Column(db.String(60))
 
 
 class Student(db.Model, ExportMixin):
