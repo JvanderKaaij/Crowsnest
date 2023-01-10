@@ -62,4 +62,7 @@ with app.app_context():
     std_attr_one = StudentAttribute(student_id=1, attribute_id=1)
     db.session.add(std_attr_one)
 
+    std_attr_one = StudentAttribute(student_id=1, attribute_id=2)
+    db.session.add(std_attr_one)
+
     db.session.commit()

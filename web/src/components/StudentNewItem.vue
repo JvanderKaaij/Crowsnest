@@ -9,7 +9,11 @@
     </td>
     <td class="new"><datepicker v-model="start_date" format="dd-MM-yyyy" @closed="StartDateChanged"></datepicker></td>
     <td class="new"><datepicker v-model="estimated_end_date" format="dd-MM-yyyy" @closed="EndDateChanged"></datepicker></td>
-    <td class="new">Add Attributes</td>
+
+    <td v-for="type in types" class="new">
+      <span> </span>
+    </td>
+
     <td class="new"><button @click="AddNew">Add</button></td>
   </tr>
 </template>
@@ -21,7 +25,7 @@
     export default {
       name: 'StudentNewItem',
       components:{Datepicker},
-
+      props:['types'],
       data () {
         return {
           inputRef:ref(null),

@@ -39,7 +39,7 @@ def student_attributes(id):
     result = []
     for s in attribute_for_student:
         attr = s.attribute._asdict()
-        if s.attribute.type is not None: attr['type_name'] = s.attribute.type._asdict()['name']
+        if s.attribute.type is not None: attr['type'] = s.attribute.type._asdict()
         result.append(attr)
     return result
 

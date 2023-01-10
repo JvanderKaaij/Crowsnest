@@ -13,7 +13,7 @@
         <tr v-for="(item, index) in students">
           <StudentItem v-if=item.active :item="item"/>
         </tr>
-          <StudentNewItem/>
+          <StudentNewItem :types="attribute_types"/>
       </table>
     </div>
 </template>

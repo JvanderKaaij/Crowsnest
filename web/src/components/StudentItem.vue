@@ -12,7 +12,7 @@
 
   <td v-for="type in attribute_types">
     <div v-for="attribute in item.attributes">
-        {{attribute.content}}
+         <div v-if="attribute.attribute_type_id === type.id "><AttributeItem :item="attribute"/></div>
     </div>
   </td>
 
@@ -23,10 +23,11 @@
 <script>
     import Datepicker from 'vuejs3-datepicker';
     import {mapState, mapMutations, mapActions} from "vuex"
+    import AttributeItem from "./AttributeItem.vue";
 
     export default {
       name: 'StudentItem',
-      components: {Datepicker},
+      components: {Datepicker, AttributeItem},
       props:['item','add'],
       data(){
         return{
@@ -55,7 +56,6 @@
       },
       computed: {
           ...mapState(['students','attribute_types'])
-
       }
     }
 </script>
