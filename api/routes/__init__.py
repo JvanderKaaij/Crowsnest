@@ -28,7 +28,19 @@ def students():
     students = Student.query.filter(Student.active==True)
     result = []
     for s in students:
-        result.append(s._asdict())
+        stud = s._asdict()
+        stud['attributes'] = student_attributes(stud['id'])
+        result.append(stud)
+    return result
+
+
+def student_attributes(id):
+    attribute_for_student = StudentAttribute.query.filter(StudentAttribute.student_id==id).all()
+    result = []
+    for s in attribute_for_student:
+        attr = s.attribute._asdict()
+        if s.attribute.type is not None: attr['type_name'] = s.attribute.type._asdict()['name']
+        result.append(attr)
     return result
 
 
@@ -57,19 +69,6 @@ def add_student():
         response['message'] = 'failed'
         response['errors'] = form.errors
     return response
-
-
-@app.route("/student_attributes", methods=['POST'])
-@login_required
-def student_attributes():
-    s_id = request.json["student_id"]
-    attribute_for_student = StudentAttribute.query.filter(StudentAttribute.student_id==s_id).all()
-    result = []
-    for s in attribute_for_student:
-        attr = s.attribute._asdict()
-        if s.attribute.type is not None: attr['type_name'] = s.attribute.type._asdict()['name']
-        result.append(attr)
-    return result
 
 
 @app.route("/edit_student", methods=['POST'])

@@ -138,6 +138,9 @@ const store = createStore({
                 state.modal_popup_active = null;
             }
         },
+        InitAttributes(state, data){
+            state.attributes = data;
+        },
     },
     actions:{
         async InitStudents(context){
