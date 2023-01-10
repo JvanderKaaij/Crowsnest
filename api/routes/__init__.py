@@ -5,8 +5,6 @@ import logging
 
 from flask import request
 from flask_login import login_user, login_required, current_user
-from datetime import datetime
-
 
 @app.route('/')
 def root():
@@ -66,13 +64,13 @@ def add_student():
 def student_attributes():
     s_id = request.json["student_id"]
     attribute_for_student = StudentAttribute.query.filter(StudentAttribute.student_id==s_id).all()
-
-
-
     result = []
     for s in attribute_for_student:
-        result.append(s._asdict())
+        attr = s.attribute._asdict()
+        if s.attribute.type is not None: attr['type_name'] = s.attribute.type._asdict()['name']
+        result.append(attr)
     return result
+
 
 @app.route("/edit_student", methods=['POST'])
 @login_required

@@ -9,9 +9,13 @@
   </td>
   <td><datepicker v-model="item.start_date" @closed="signalChange" format="dd-MM-yyyy"></datepicker></td>
   <td><datepicker v-model="item.estimated_end_date" @closed="signalChange" format="dd-MM-yyyy"></datepicker></td>
+
+
+
   <td><input type="checkbox" id="checkbox" v-model="item.has_door_access" true-value="1" false-value="0" v-on:change="signalChange"/></td>
   <td><input type="checkbox" id="checkbox" v-model="item.has_git_access" true-value="1" false-value="0" v-on:change="signalChange"/></td>
   <td><input type="checkbox" id="checkbox" v-model="item.has_git_lfs_access" true-value="1" false-value="0" v-on:change="signalChange"/></td>
+
   <td><button @click="RemoveStudent(item)">Delete</button></td>
 </template>
 
