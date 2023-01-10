@@ -1,5 +1,5 @@
 from runtime import app, db, bcrypt
-from models import User, Student, Hardware, StudentAttribute
+from models import User, Student, Hardware, StudentAttribute, AttributeType
 from forms import StudentForm, HardwareForm
 import logging
 
@@ -165,3 +165,13 @@ def edit_hardware():
         response['errors'] = form.errors
 
     return response
+
+
+@app.route("/attribute_types", methods=['GET'])
+@login_required
+def attribute_types():
+    all_attribute_types = AttributeType.query.all()
+    result = []
+    for s in all_attribute_types:
+        result.append(s._asdict())
+    return result

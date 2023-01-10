@@ -43,8 +43,8 @@ class Student(db.Model, ExportMixin):
 class StudentAttribute(db.Model, ExportMixin):
     __tablename__ = "student_attribute"
     id = db.Column(db.Integer, primary_key=True)
-    student_id = db.Column(db.ForeignKey("student.id"), primary_key=True)
-    attribute_id = db.Column(db.ForeignKey("attribute.id"), primary_key=True)
+    student_id = db.Column(db.ForeignKey("student.id"))
+    attribute_id = db.Column(db.ForeignKey("attribute.id"))
     student = db.relationship('Student')
     attribute = db.relationship('Attribute')
 
@@ -53,7 +53,7 @@ class Attribute(db.Model, ExportMixin):
     __tablename__ = "attribute"
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.String(60))
-    attribute_type_id = db.Column(db.Integer, db.ForeignKey("attribute_type.id"), primary_key=True)
+    attribute_type_id = db.Column(db.Integer, db.ForeignKey("attribute_type.id"))
     type = db.relationship('AttributeType')
 
 
@@ -61,6 +61,8 @@ class AttributeType(db.Model, ExportMixin):
     __tablename__ = "attribute_type"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(60))
+    multiple = db.Column(db.Integer, default=False)
+    element_type = db.Column(db.String(60))
     user_type_id = db.Column(db.Integer, db.ForeignKey("user_type.id"), nullable=True)
 
 

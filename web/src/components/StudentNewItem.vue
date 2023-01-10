@@ -9,9 +9,7 @@
     </td>
     <td class="new"><datepicker v-model="start_date" format="dd-MM-yyyy" @closed="StartDateChanged"></datepicker></td>
     <td class="new"><datepicker v-model="estimated_end_date" format="dd-MM-yyyy" @closed="EndDateChanged"></datepicker></td>
-    <td class="new"><input type="checkbox" id="has_door_access" v-model="has_door_access"/></td>
-    <td class="new"><input type="checkbox" id="has_git_access" v-model="has_git_access"/></td>
-    <td class="new"><input type="checkbox" id="has_git_lfs_access" v-model="has_git_lfs_access"/></td>
+    <td class="new">Add Attributes</td>
     <td class="new"><button @click="AddNew">Add</button></td>
   </tr>
 </template>

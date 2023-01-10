@@ -7,9 +7,7 @@
           <td class="t-header">Email</td>
           <td class="t-header">Start Date</td>
           <td class="t-header">End Date</td>
-          <td class="t-header">Door</td>
-          <td class="t-header">Git</td>
-          <td class="t-header">Git LFS</td>
+          <td v-for="type in attribute_types" class="t-header">{{type.name}}</td>
           <td class="t-header">Actions</td>
         </tr>
         <tr v-for="(item, index) in students">
@@ -33,7 +31,13 @@
           }
         },
         computed: {
-            ...mapState(['students'])
+            ...mapState(['students', 'attribute_types'])
+        },
+        methods:{
+            ...mapActions(["InitAttributeTypes"]),
+        },
+        mounted() {
+          this.$store.dispatch('InitAttributeTypes')
         }
     }
 </script>

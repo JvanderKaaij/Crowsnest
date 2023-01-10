@@ -138,8 +138,9 @@ const store = createStore({
                 state.modal_popup_active = null;
             }
         },
-        InitAttributes(state, data){
-            state.attributes = data;
+        InitAttributeTypes(state, data){
+            state.attribute_types = data;
+            console.log(state.attribute_types);
         },
     },
     actions:{
@@ -165,7 +166,18 @@ const store = createStore({
                     router.push('/login');
                 }
             });
-        }
+        },
+        async InitAttributeTypes(context){
+            axios
+            .get('http://localhost:8000/attribute_types')
+            .then(response => {
+                context.commit('InitAttributeTypes', response.data);
+            }).catch(error =>{
+                if(error.response.status === 401){
+                    router.push('/login');
+                }
+            });
+        },
     },
     getters:{
         //can be used as a return state with extra functionality

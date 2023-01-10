@@ -39,13 +39,25 @@ with app.app_context():
 
     db.session.commit()
 
-    attr_type = AttributeType(name="Port", user_type_id=1)
+    attr_type = AttributeType(name="Ports", multiple=True, element_type="int", user_type_id=1)
+    db.session.add(attr_type)
+
+    attr_type = AttributeType(name="Git", multiple=False, element_type="bool", user_type_id=1)
+    db.session.add(attr_type)
+
+    attr_type = AttributeType(name="Servers", multiple=True, element_type="string", user_type_id=1)
+    db.session.add(attr_type)
+
+    attr_type = AttributeType(name="Work Stations", multiple=True, element_type="string", user_type_id=1)
     db.session.add(attr_type)
 
     db.session.commit()
 
     attr_one = Attribute(content="8042", attribute_type_id=1)
     db.session.add(attr_one)
+
+    attr_two = Attribute(content="9042", attribute_type_id=1)
+    db.session.add(attr_two)
 
     std_attr_one = StudentAttribute(student_id=1, attribute_id=1)
     db.session.add(std_attr_one)
