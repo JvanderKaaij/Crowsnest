@@ -63,12 +63,26 @@ def add_student():
 
         db.session.add(new_student)
         db.session.commit()
+        db.session.refresh(new_student)
+        add_empty_attributes(new_student.id)
         response['success'] = True
         response['message'] = 'student added'
     else:
         response['message'] = 'failed'
         response['errors'] = form.errors
     return response
+
+
+def add_empty_attributes(student_id):
+    types = AttributeType.query.all()
+    for t in types:
+        attribute = Attribute(content="", attribute_type_id=t.id)
+        db.session.add(attribute)
+        db.session.commit()
+        db.session.refresh(attribute)
+        attr_student = StudentAttribute(student_id=student_id, attribute_id=attribute.id)
+        db.session.add(attr_student)
+        db.session.commit()
 
 
 @app.route("/edit_student", methods=['POST'])

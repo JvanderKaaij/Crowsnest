@@ -69,8 +69,8 @@ const store = createStore({
             var form_data = ToFormData(data.data);
             axios.post('http://localhost:8000/edit_student', form_data).then(response => {
                 if(response.data.success){
-                    data.success();
-                }else{
+                    // data.success();
+                }else{``
                     data.onError(response.data.errors);
                 }
             });
@@ -141,7 +141,6 @@ const store = createStore({
         },
         InitAttributeTypes(state, data){
             state.attribute_types = data;
-            console.log(state.attribute_types);
         },
         EditAttribute(state, data){
             var form_data = ToFormData(data.data);

@@ -53,9 +53,6 @@
               email:this.email,
               start_date:this.start_date,
               estimated_end_date:this.estimated_end_date,
-              has_door_access:this.has_door_access? 1:0,
-              has_git_access:this.has_git_access? 1:0,
-              has_git_lfs_access:this.has_git_lfs_access? 1:0,
               active:1
             },
             success:this.OnSuccess,
@@ -71,6 +68,7 @@
           this.has_git_access=false;
           this.has_git_lfs_access=false;
           this.name_error_msg=null;
+          this.$store.dispatch('InitStudents')
         },
         OnErrors(errors){
           Object.entries(errors).forEach((e)=>{

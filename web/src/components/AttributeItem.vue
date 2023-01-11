@@ -1,7 +1,7 @@
 <template>
   <input v-if="item.type.element_type == 'int'" v-model="item.content" v-on:change="signalChange">
   <input v-if="item.type.element_type == 'string'" v-model="item.content" v-on:change="signalChange">
-  <input type="checkbox" v-if="item.type.element_type == 'bool'" v-model="checked">
+  <input type="checkbox" v-if="item.type.element_type == 'bool'" v-model="checked" v-on:change="signalChange">
 </template>
 
 <script>
@@ -16,7 +16,12 @@
       },
       methods:{
         signalChange: function(evt){
-            this.$store.commit('EditAttribute', {data:this.item, success:this.OnSuccess, onError:this.OnErrors});
+
+          if(this.item.type.element_type == 'bool'){
+            this.item.content = this.checked ? 1 : 0;
+          }
+
+          this.$store.commit('EditAttribute', {data:this.item, success:this.OnSuccess, onError:this.OnErrors});
         },
         OnSuccess(){
           console.log("Success");
