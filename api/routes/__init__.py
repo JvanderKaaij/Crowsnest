@@ -1,6 +1,6 @@
 from runtime import app, db, bcrypt
-from models import User, Student, Hardware, StudentAttribute, AttributeType
-from forms import StudentForm, HardwareForm
+from models import User, Student, Hardware, StudentAttribute, AttributeType, Attribute
+from forms import StudentForm, HardwareForm, AttributeForm
 import logging
 
 from flask import request
@@ -140,7 +140,6 @@ def add_hardware():
 @app.route("/edit_hardware", methods=['POST'])
 @login_required
 def edit_hardware():
-    logging.error(request.form)
     form = HardwareForm(request.form)
     response = {'success': False, 'message': '', 'errors': {}}
     if form.validate():
@@ -175,3 +174,29 @@ def attribute_types():
     for s in all_attribute_types:
         result.append(s._asdict())
     return result
+
+
+@app.route("/edit_attribute", methods=['POST'])
+@login_required
+def edit_attribute():
+    logging.error(request.form)
+    form = AttributeForm(request.form)
+    response = {'success': False, 'message': '', 'errors': {}}
+    if form.validate():
+        logging.error('validated')
+        logging.error(form.content.data)
+
+        attribute = {
+            'content':form.content.data
+        }
+
+        logging.error(form.id.data)
+        db.session.query(Attribute).filter(Attribute.id == form.id.data).update(attribute)
+        db.session.commit()
+        response['success'] = True
+        response['message'] = 'hardware changed'
+    else:
+        response['message'] = 'failed'
+        response['errors'] = form.errors
+
+    return response

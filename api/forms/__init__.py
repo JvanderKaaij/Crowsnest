@@ -27,3 +27,11 @@ class HardwareForm(FlaskForm):
     student_id = IntegerField('student_id', validators=[validators.Optional()])
     comment = TextAreaField('comment')
     active = IntegerField('active', default=True)
+
+
+class AttributeForm(FlaskForm):
+    class Meta:
+        csrf = False
+    id = IntegerField('id')
+    content = StringField('content')
+    attribute_type_id = IntegerField('attribute_type_id', validators=[validators.Optional()])

@@ -119,6 +119,7 @@ const store = createStore({
         EditHardware(state, data){
             data.data.purchase_date = ParseDate(data.data.purchase_date);
             var form_data = ToFormData(data.data);
+            console.log(form_data);
             axios.post('http://localhost:8000/edit_hardware', form_data).then(response => {
                 if(response.data.success){
                     data.success();
@@ -142,6 +143,16 @@ const store = createStore({
             state.attribute_types = data;
             console.log(state.attribute_types);
         },
+        EditAttribute(state, data){
+            var form_data = ToFormData(data.data);
+            axios.post('http://localhost:8000/edit_attribute', form_data).then(response => {
+                if(response.data.success){
+                    data.success();
+                }else{
+                    data.onError(response.data.errors);
+                }
+            });
+        }
     },
     actions:{
         async InitStudents(context){

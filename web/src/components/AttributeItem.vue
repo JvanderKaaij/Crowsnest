@@ -1,6 +1,6 @@
 <template>
-  <input v-if="item.type.element_type == 'int'" :value="item.content">
-  <input v-if="item.type.element_type == 'string'" :value="item.content">
+  <input v-if="item.type.element_type == 'int'" v-model="item.content" v-on:change="signalChange">
+  <input v-if="item.type.element_type == 'string'" v-model="item.content" v-on:change="signalChange">
   <input type="checkbox" v-if="item.type.element_type == 'bool'" v-model="checked">
 </template>
 
@@ -12,6 +12,17 @@
       data() {
         return {
           checked: false,
+        }
+      },
+      methods:{
+        signalChange: function(evt){
+            this.$store.commit('EditAttribute', {data:this.item, success:this.OnSuccess, onError:this.OnErrors});
+        },
+        OnSuccess(){
+          console.log("Success");
+        },
+        OnErrors(errors) {
+          console.log("Error");
         }
       },
       created() {

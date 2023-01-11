@@ -56,13 +56,7 @@ with app.app_context():
     attr_one = Attribute(content="8042", attribute_type_id=1)
     db.session.add(attr_one)
 
-    attr_two = Attribute(content="9042", attribute_type_id=1)
-    db.session.add(attr_two)
-
     std_attr_one = StudentAttribute(student_id=1, attribute_id=1)
-    db.session.add(std_attr_one)
-
-    std_attr_one = StudentAttribute(student_id=1, attribute_id=2)
     db.session.add(std_attr_one)
 
     db.session.commit()
