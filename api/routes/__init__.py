@@ -1,3 +1,5 @@
+import json
+
 from runtime import app, db, bcrypt
 from models import User, Student, Hardware, StudentAttribute, AttributeType, Attribute
 from forms import StudentForm, HardwareForm, AttributeForm
@@ -50,7 +52,6 @@ def add_student():
     form = StudentForm(request.form)
     response = {'success': False, 'message': '', 'errors': {}}
     if form.validate():
-        logging.error(form.active.data)
         new_student = Student(
             name=form.name.data,
             email=form.email.data,
@@ -64,6 +65,8 @@ def add_student():
         db.session.add(new_student)
         db.session.commit()
         db.session.refresh(new_student)
+
+        # this should be done differently; every item should just be present on the front-end and only updated in the backend when not empty
         add_empty_attributes(new_student.id)
         response['success'] = True
         response['message'] = 'student added'
@@ -88,7 +91,6 @@ def add_empty_attributes(student_id):
 @app.route("/edit_student", methods=['POST'])
 @login_required
 def edit_student():
-    logging.error(request.form)
     form = StudentForm(request.form)
     response = {'success': False, 'message': '', 'errors': {}}
     if form.validate():
@@ -157,8 +159,6 @@ def edit_hardware():
     form = HardwareForm(request.form)
     response = {'success': False, 'message': '', 'errors': {}}
     if form.validate():
-        logging.error(form)
-
         hardware = {
             'name':form.name.data,
             'identity':form.identity.data,
@@ -189,17 +189,26 @@ def attribute_types():
         result.append(s._asdict())
     return result
 
+@app.route("/attributes", methods=['POST'])
+@login_required
+def attributes():
+    sid = request.args.get("student_id")
+    attributes = StudentAttribute.query.filter(StudentAttribute.student_id == sid)
+
+    result = []
+    for attr in attributes:
+        as_dict = attr._asdict()
+        if attr.attribute is not None: as_dict['attribute'] = attr.attribute._asdict()
+        result.append(as_dict)
+
+    return result
 
 @app.route("/edit_attribute", methods=['POST'])
 @login_required
 def edit_attribute():
-    logging.error(request.form)
     form = AttributeForm(request.form)
     response = {'success': False, 'message': '', 'errors': {}}
     if form.validate():
-        logging.error('validated')
-        logging.error(form.content.data)
-
         attribute = {
             'content':form.content.data
         }

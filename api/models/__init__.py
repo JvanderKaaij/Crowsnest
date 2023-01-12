@@ -45,8 +45,8 @@ class StudentAttribute(db.Model, ExportMixin):
     id = db.Column(db.Integer, primary_key=True)
     student_id = db.Column(db.ForeignKey("student.id"))
     attribute_id = db.Column(db.ForeignKey("attribute.id"))
-    student = db.relationship('Student')
-    attribute = db.relationship('Attribute')
+    student = db.relationship('Student', uselist=False)
+    attribute = db.relationship('Attribute', uselist=False)
 
 
 class Attribute(db.Model, ExportMixin):

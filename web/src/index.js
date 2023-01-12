@@ -188,6 +188,17 @@ const store = createStore({
                 }
             });
         },
+        async GetAttributes(context, data){
+            axios
+            .post('http://localhost:8000/attributes?student_id='+data.student_id)
+            .then(response => {
+                data.success(response)
+            }).catch(error =>{
+                if(error.response.status === 401){
+                    router.push('/login');
+                }
+            });
+        },
     },
     getters:{
         //can be used as a return state with extra functionality

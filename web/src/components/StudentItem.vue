@@ -11,9 +11,7 @@
   <td><datepicker v-model="item.estimated_end_date" @closed="signalChange" format="dd-MM-yyyy"></datepicker></td>
 
   <td v-for="type in attribute_types">
-    <div v-for="attribute in item.attributes">
-         <div v-if="attribute.attribute_type_id === type.id "><AttributeItem :item="attribute"/></div>
-    </div>
+    <div><AttributeItem :type="type" :attribute="GetPossibleAttribute(type.id)"/></div>
   </td>
 
   <td><button @click="RemoveStudent(item)">Delete</button></td>
@@ -45,17 +43,26 @@
             this.name_error_msg=null;
             this.email_error_msg=null;
           },
-          OnErrors(errors){
+          OnErrors(errors) {
             console.log("Error");
-            Object.entries(errors).forEach((e)=>{
+            Object.entries(errors).forEach((e) => {
               const [key, value] = e;
-              const select = key+'_error_msg';
+              const select = key + '_error_msg';
               this[select] = value[0];
             });
+          },
+          OnAttributesSuccess(results){
+            console.log("Success");
+          },
+          GetPossibleAttribute(type_id){
+              return this.item?.attributes?.find(x => x.attribute_type_id === type_id);
           }
       },
       computed: {
           ...mapState(['students','attribute_types'])
+      },
+      created(){
+        this.$store.dispatch('GetAttributes', {student_id: this.item.id, success:this.OnAttributesSuccess});
       }
     }
 </script>

@@ -1,38 +1,41 @@
 <template>
-  <input v-if="item.type.element_type == 'int'" v-model="item.content" v-on:change="signalChange">
-  <input v-if="item.type.element_type == 'string'" v-model="item.content" v-on:change="signalChange">
-  <input type="checkbox" v-if="item.type.element_type == 'bool'" v-model="checked" v-on:change="signalChange">
+  <input v-if="type.element_type == 'int'" v-model="content" v-on:change="signalChange">
+  <input v-if="type.element_type == 'string'" v-model="content" v-on:change="signalChange">
+  <input type="checkbox" v-if="type.element_type == 'bool'" v-model="checked" v-on:change="signalChange">
 </template>
 
 <script>
     export default {
       name: 'AttributeItem',
-      props:['item'],
+      props:['type', 'attribute'],
       components: {},
       data() {
         return {
           checked: false,
+          content: ""
         }
       },
       methods:{
         signalChange: function(evt){
+          // if(this.type.element_type == 'bool'){
+          //   this.val = this.checked ? 1 : 0;
+          // }
+          console.log(this.content);
 
-          if(this.item.type.element_type == 'bool'){
-            this.item.content = this.checked ? 1 : 0;
-          }
+          this.attribute.content = this.content;
 
-          this.$store.commit('EditAttribute', {data:this.item, success:this.OnSuccess, onError:this.OnErrors});
+          this.$store.commit('EditAttribute', {data:this.attribute, success:this.OnSuccess, onError:this.OnErrors});
         },
-        OnSuccess(){
-          console.log("Success");
+        OnSuccess(response){
+          console.log(response);
         },
         OnErrors(errors) {
           console.log("Error");
         }
       },
       created() {
-        if(this.item.type.element_type == 'bool'){
-          this.checked = this.item.content == 1;
+        if(this.attribute){
+          this.content = this.attribute.content;
         }
       }
     }
