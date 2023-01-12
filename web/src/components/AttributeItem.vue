@@ -17,14 +17,13 @@
       },
       methods:{
         signalChange: function(evt){
-          // if(this.type.element_type == 'bool'){
-          //   this.val = this.checked ? 1 : 0;
-          // }
-          console.log(this.content);
+          if(this.type.element_type == 'bool'){
+            this.content = this.checked ? 1 : 0;
+          }
 
           this.attribute.content = this.content;
-
           this.$store.commit('EditAttribute', {data:this.attribute, success:this.OnSuccess, onError:this.OnErrors});
+
         },
         OnSuccess(response){
           console.log(response);
@@ -36,7 +35,9 @@
       created() {
         if(this.attribute){
           this.content = this.attribute.content;
+          this.checked = this.content == 1 ? true : false;
         }
+
       }
     }
 </script>
