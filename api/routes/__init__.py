@@ -1,12 +1,16 @@
 import json
+import os
+import logging
+import datetime
 
 from runtime import app, db, bcrypt
 from models import User, Student, Hardware, StudentAttribute, AttributeType, Attribute
 from forms import StudentForm, HardwareForm, AttributeForm
-import logging
 
 from flask import request
 from flask_login import login_user, login_required, current_user
+from mailjet_rest import Client
+from datetime import date
 
 @app.route('/')
 def root():
@@ -223,3 +227,42 @@ def edit_attribute():
         response['errors'] = form.errors
 
     return response
+
+@app.cli.command("check_expired_users")
+def check_expired_users():
+    current = datetime.datetime.today()
+    expired = Student.query.filter(Student.active == True and Student.estimated_end_date <= current).all()
+    if len(expired) > 0:
+        send_mail(expired)
+
+
+def format_message(expired_students):
+    result = "Expired Students: <br> \n \n "
+    for st in expired_students:
+        result += "{name} expired on {end_date} <br>\n".format(name=st.name, mail=st.email, end_date=st.estimated_end_date)
+    return result
+
+def send_mail(expired_students):
+    api_key = os.environ['MJ_APIKEY_PUBLIC']
+    api_secret = os.environ['MJ_APIKEY_PRIVATE']
+    mailjet = Client(auth=(api_key, api_secret), version='v3.1')
+    data = {
+      'Messages': [
+            {
+                "From": {
+                        "Email": "j.g.vanderkaaij@uva.nl",
+                        "Name": "Crowsnest"
+                },
+                "To": [
+                        {
+                                "Email": "j.g.vanderkaaij@uva.nl",
+                                "Name": "Joey"
+                        }
+                ],
+                "Subject": "Crowsnest Expired Students",
+                "TextPart": format_message(expired_students),
+                "HTMLPart": format_message(expired_students)
+            }
+        ]
+    }
+    result = mailjet.send.create(data=data)

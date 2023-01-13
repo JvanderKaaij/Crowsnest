@@ -48,9 +48,6 @@ with app.app_context():
     attr_type = AttributeType(name="Servers", multiple=True, element_type="string", user_type_id=1)
     db.session.add(attr_type)
 
-    attr_type = AttributeType(name="Work Stations", multiple=True, element_type="string", user_type_id=1)
-    db.session.add(attr_type)
-
     db.session.commit()
 
     attr_one = Attribute(content="8042", attribute_type_id=1)
