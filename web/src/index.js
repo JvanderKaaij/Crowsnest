@@ -151,7 +151,23 @@ const store = createStore({
                     data.onError(response.data.errors);
                 }
             });
-        }
+        },
+        AddAttribute(state, data){
+            var form_data = ToFormData(data.data);
+            axios
+            .post('http://localhost:8000/add_attribute', form_data, {
+                headers: {
+                  'Content-Type': 'multipart/form-data'
+                }
+              })
+            .then(response => {
+                if(response.data.success){
+                    data.success();
+                }else{
+                    data.onError(response.data.errors);
+                }
+            });
+        },
     },
     actions:{
         async InitStudents(context){

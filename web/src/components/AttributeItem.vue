@@ -7,7 +7,7 @@
 <script>
     export default {
       name: 'AttributeItem',
-      props:['type', 'attribute'],
+      props:['type', 'attribute', 'student'],
       components: {},
       data() {
         return {
@@ -21,8 +21,16 @@
             this.content = this.checked ? 1 : 0;
           }
 
-          this.attribute.content = this.content;
-          this.$store.commit('EditAttribute', {data:this.attribute, success:this.OnSuccess, onError:this.OnErrors});
+          if(this.attribute){
+            this.attribute.content = this.content;
+            this.$store.commit('EditAttribute', {data:this.attribute, success:this.OnSuccess, onError:this.OnErrors});
+          }else{
+            //attribute didn't exist yet - we need to make it
+            console.log("attribute needs to be created");
+            this.$store.commit('AddAttribute', {data:{student_id:this.student.id, content:this.content, attribute_type_id:this.type.id}, success:this.OnSuccess, onError:this.OnErrors});
+          }
+
+          console.log(this.student);
 
         },
         OnSuccess(response){

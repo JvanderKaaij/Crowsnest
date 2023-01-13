@@ -35,3 +35,10 @@ class AttributeForm(FlaskForm):
     id = IntegerField('id')
     content = StringField('content')
     attribute_type_id = IntegerField('attribute_type_id', validators=[validators.Optional()])
+
+class AddAttributeForm(FlaskForm):
+    class Meta:
+        csrf = False
+    student_id = IntegerField('student_id')
+    content = StringField('content')
+    attribute_type_id = IntegerField('attribute_type_id')

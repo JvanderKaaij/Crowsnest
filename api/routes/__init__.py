@@ -5,7 +5,7 @@ import datetime
 
 from runtime import app, db, bcrypt
 from models import User, Student, Hardware, StudentAttribute, AttributeType, Attribute
-from forms import StudentForm, HardwareForm, AttributeForm
+from forms import StudentForm, HardwareForm, AttributeForm, AddAttributeForm
 
 from flask import request
 from flask_login import login_user, login_required, current_user
@@ -225,6 +225,32 @@ def edit_attribute():
     else:
         response['message'] = 'failed'
         response['errors'] = form.errors
+
+    return response
+
+@app.route("/add_attribute", methods=['POST'])
+@login_required
+def add_attribute():
+    form = AddAttributeForm(request.form)
+    response = {'success': False, 'message': '', 'errors': {}}
+    if form.validate():
+        new_attr = Attribute(
+            content=form.content.data,
+            attribute_type_id=form.attribute_type_id.data
+        )
+        db.session.add(new_attr)
+        db.session.commit()
+        db.session.refresh(new_attr)
+
+        new_stud_attr = StudentAttribute(
+            student_id=form.student_id.data,
+            attribute_id=new_attr.id
+        )
+        db.session.add(new_stud_attr)
+        db.session.commit()
+
+        response['success'] = True
+        response['message'] = 'attribute created'
 
     return response
 

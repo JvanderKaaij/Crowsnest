@@ -11,7 +11,7 @@
   <td><datepicker v-model="item.estimated_end_date" @closed="signalChange" format="dd-MM-yyyy"></datepicker></td>
 
   <td v-for="type in attribute_types">
-    <div><AttributeItem :type="type" :attribute="GetPossibleAttribute(type.id)"/></div>
+    <div><AttributeItem :type="type" :attribute="GetPossibleAttribute(type.id)" :student="item"/></div>
   </td>
 
   <td><button @click="RemoveStudent(item)">Delete</button></td>
