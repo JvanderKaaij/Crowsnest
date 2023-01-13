@@ -29,12 +29,9 @@
             console.log("attribute needs to be created");
             this.$store.commit('AddAttribute', {data:{student_id:this.student.id, content:this.content, attribute_type_id:this.type.id}, success:this.OnSuccess, onError:this.OnErrors});
           }
-
-          console.log(this.student);
-
         },
         OnSuccess(response){
-          console.log(response);
+
         },
         OnErrors(errors) {
           console.log("Error");
