@@ -2,9 +2,17 @@
     <div id="login-page">
       Login:
        <div class="form-group">
-         <input v-model="usernameLogin" type="username" class="form-control" placeholder="Username" required>
-         <input v-model="passwordLogin" type="password" class="form-control" placeholder="Password" required>
-         <input type="submit" class="btn btn-primary" @click="doLogin">
+         <div class="center-group">
+            <div class="container">
+              <div class="grid-container">
+                <div>Username</div>
+                <div><input v-model="usernameLogin" type="username" class="form-control item-user" placeholder="Username" required></div>
+                <div>Password</div>
+                <div><input v-model="passwordLogin" type="password" class="form-control item-password" placeholder="Password" required></div>
+              </div>
+              <input type="submit" class="btn btn-primary" @click="doLogin">
+            </div>
+         </div>
        </div>
     </div>
 </template>
@@ -43,3 +51,26 @@
       }
     }
 </script>
+
+
+<style scoped>
+
+  .center-group{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    min-height: 100vh;
+  }
+
+  .grid-container{
+     display: grid;
+      grid-template-columns: [first] 50% [second] 50%;
+      grid-template-rows: [row1] 50% [row2] 50%;
+  }
+
+  .btn{
+    margin-top:20px;
+  }
+
+</style>
