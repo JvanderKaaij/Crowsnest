@@ -15,6 +15,10 @@ const router = createRouter({
     ]
 });
 
+const port = 8000;
+const host = 'http://localhost';
+const hostURL = host+':'+port;
+
 function ToFormData(data){
     var form_data = new FormData();
     for ( var key in data ) {
@@ -29,7 +33,6 @@ function ParseDate(date){
      const temp = new Date(date);
      return temp.toJSON().split('T')[0]
 }
-
 
 const store = createStore({
     state(){
@@ -49,7 +52,7 @@ const store = createStore({
         AddStudent(state, data){
             var form_data = ToFormData(data.data);
             axios
-            .post('http://localhost:8000/add_student', form_data, {
+            .post(hostURL+'/add_student', form_data, {
                 headers: {
                   'Content-Type': 'multipart/form-data'
                 }
@@ -67,7 +70,7 @@ const store = createStore({
             data.data.start_date = ParseDate(data.data.start_date);
             data.data.estimated_end_date = ParseDate(data.data.estimated_end_date);
             var form_data = ToFormData(data.data);
-            axios.post('http://localhost:8000/edit_student', form_data).then(response => {
+            axios.post(hostURL+'/edit_student', form_data).then(response => {
                 if(response.data.success){
                     // data.success();
                 }else{``
@@ -102,7 +105,7 @@ const store = createStore({
         AddHardware(state, data){
             var form_data = ToFormData(data.data);
             axios
-            .post('http://localhost:8000/add_hardware', form_data, {
+            .post(hostURL+'/add_hardware', form_data, {
                 headers: {
                   'Content-Type': 'multipart/form-data'
                 }
@@ -144,7 +147,7 @@ const store = createStore({
         },
         EditAttribute(state, data){
             var form_data = ToFormData(data.data);
-            axios.post('http://localhost:8000/edit_attribute', form_data).then(response => {
+            axios.post(hostURL+'/edit_attribute', form_data).then(response => {
                 if(response.data.success){
                     data.success();
                 }else{
@@ -155,7 +158,7 @@ const store = createStore({
         AddAttribute(state, data){
             var form_data = ToFormData(data.data);
             axios
-            .post('http://localhost:8000/add_attribute', form_data, {
+            .post(hostURL+'/add_attribute', form_data, {
                 headers: {
                   'Content-Type': 'multipart/form-data'
                 }
@@ -172,7 +175,7 @@ const store = createStore({
     actions:{
         async InitStudents(context){
             axios
-            .get('http://localhost:8000/students')
+            .get(hostURL+'/students')
             .then(response => {
                 console.log(response);
                 context.commit('InitStudents', response.data);
@@ -184,7 +187,7 @@ const store = createStore({
         },
         async InitHardware(context){
             axios
-            .get('http://localhost:8000/hardware')
+            .get(hostURL+'/hardware')
             .then(response => {
                 context.commit('InitHardware', response.data);
             }).catch(error =>{
@@ -195,7 +198,7 @@ const store = createStore({
         },
         async InitAttributeTypes(context){
             axios
-            .get('http://localhost:8000/attribute_types')
+            .get(hostURL+'/attribute_types')
             .then(response => {
                 context.commit('InitAttributeTypes', response.data);
             }).catch(error =>{
@@ -206,7 +209,7 @@ const store = createStore({
         },
         async GetAttributes(context, data){
             axios
-            .post('http://localhost:8000/attributes?student_id='+data.student_id)
+            .post(hostURL+'/attributes?student_id='+data.student_id)
             .then(response => {
                 data.success(response)
             }).catch(error =>{

@@ -14,7 +14,8 @@
     "html-webpack-plugin": "^5.5.0",
     "axios": "^1.2.0",
     "vue-axios": "^3.5.2",
-    "vue-router": "^4.1.6"
+    "vue-router": "^4.1.6",
+    "dotenv-webpack": "8.0.1"
   },
   "devDependencies": {
     "webpack": "^5.1.0",
