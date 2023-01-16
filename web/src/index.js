@@ -15,8 +15,10 @@ const router = createRouter({
     ]
 });
 
-const port = 8000;
+//SETTINGS - Change this for deployment
+const port = 8047;
 const host = 'http://localhost';
+//END SETTINGS
 const hostURL = host+':'+port;
 
 function ToFormData(data){
