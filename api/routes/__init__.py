@@ -19,6 +19,7 @@ def root():
 
 @app.route('/login', methods=['POST'])
 def login():
+    logging.error(request.json)
     username = request.json["username"]
     password = request.json["password"]
     user = User.query.filter_by(username=username).first()

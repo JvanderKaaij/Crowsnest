@@ -18,7 +18,6 @@
 </template>
 
 <script>
-    import axios from 'axios'
     export default {
         name: 'Login',
         components: {},
@@ -35,19 +34,13 @@
            if (this.usernameLogin === "" || this.passwordLogin === "") {
               this.emptyFields = true;
            } else {
-              axios
-                .post('http://localhost:8000/login', {
-                  username: this.usernameLogin,
-                  password: this.passwordLogin
-                })
-                .then(response => {
-                  if(response.data == true){
-                    localStorage.logged_in = true;
-                    this.$router.push('/')
-                  }
-                })
+             this.$store.commit('Login', {data:{username:this.usernameLogin, password:this.passwordLogin}, success:this.OnSuccess});
            }
-        }
+        },
+        OnSuccess(response){
+            localStorage.logged_in = true;
+            this.$router.push('/');
+        },
       }
     }
 </script>

@@ -173,6 +173,18 @@ const store = createStore({
                 }
             });
         },
+        Login(state, data) {
+            axios
+                .post(hostURL + '/login', {
+                    username: data.data.username,
+                    password: data.data.password
+                })
+                .then(response => {
+                    if (response.data == true) {
+                        data.success();
+                    }
+                })
+        }
     },
     actions:{
         async InitStudents(context){
@@ -219,7 +231,7 @@ const store = createStore({
                     router.push('/login');
                 }
             });
-        },
+        }
     },
     getters:{
         //can be used as a return state with extra functionality
