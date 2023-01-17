@@ -163,6 +163,8 @@ def add_hardware():
 def edit_hardware():
     form = HardwareForm(request.form)
     response = {'success': False, 'message': '', 'errors': {}}
+    logging.error("test")
+    logging.error(form.id.data)
     if form.validate():
         hardware = {
             'name':form.name.data,

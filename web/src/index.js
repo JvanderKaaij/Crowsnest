@@ -125,7 +125,7 @@ const store = createStore({
             data.data.purchase_date = ParseDate(data.data.purchase_date);
             var form_data = ToFormData(data.data);
             console.log(form_data);
-            axios.post('http://localhost:8000/edit_hardware', form_data).then(response => {
+            axios.post(hostURL+'/edit_hardware', form_data).then(response => {
                 if(response.data.success){
                     data.success();
                 }else{
