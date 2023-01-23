@@ -7,9 +7,11 @@ from flask_cors import CORS
 from flask_wtf.csrf import generate_csrf
 
 app = Flask(__name__)
-app.config["SECRET_KEY"] = "/|Q`4~n>f}t+N7VcXUQSx+~VkI>>ki"
+app.config["SECRET_KEY"] = os.environ['COOKIE_SECRET']
 app.config["SQLALCHEMY_DATABASE_URI"] = os.environ['DATABASE_URL']
+
 db = SQLAlchemy(app)
+
 login_manager = LoginManager(app)
 bcrypt = Bcrypt(app)
 CORS(app, supports_credentials=True)

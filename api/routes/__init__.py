@@ -10,7 +10,6 @@ from forms import StudentForm, HardwareForm, AttributeForm, AddAttributeForm
 from flask import request
 from flask_login import login_user, login_required, current_user
 from mailjet_rest import Client
-from datetime import date
 
 @app.route('/')
 def root():

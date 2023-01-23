@@ -12,9 +12,13 @@ How to run in development mode
 ----------
 
 ### Backend
+
+Create a folder /config and add a file in there called config.env
+In that config file make sure the following settings are present:
+
 Start the database and Flask backend.
 ```
-docker-compose up
+docker-compose --env-file config/config.env up
 ```
 If you run this application for the first time and want to setup the database. Make sure you shell into the api container and run:
 
@@ -48,12 +52,26 @@ Create a folder /config and add a file in there called config.env
 In that config file make sure the following settings are present:
 ```
 SQL_ROOT_PASS={password}
+COOKIE_SECRET={secret}
 ```
 
 ```
-docker-compose --profile production --env-file config/config.env up
+docker-compose --env-file config/config.env up
 ```
 
+### New Crowsnest Admin User
+
+Login to the the api container
+```
+docker exec -it [container_name] /bin/sh
+```
+
+Run the python script to add a new user:
+```
+python user_setup.py {username} {password} {user_type}
+```
+
+Note that the user_type may already exist - or is created new when it doesn't
 
 ### Frontend
 
