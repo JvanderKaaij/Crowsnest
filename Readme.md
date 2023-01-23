@@ -53,6 +53,8 @@ In that config file make sure the following settings are present:
 ```
 SQL_ROOT_PASS={password}
 COOKIE_SECRET={secret}
+MAIL_APIKEY_PUBLIC={Mailjet Public Key}
+MAIL_APIKEY_PRIVATE={Mailjet Private Key}
 ```
 
 ```
@@ -80,3 +82,9 @@ I use the local Apache server to serve the frontend files. You can build it with
 ```
 npm run dev
 ```
+
+
+### MailJet
+
+TODO:
+Cron job for 

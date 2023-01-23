@@ -8,8 +8,6 @@ ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 ENV FLASK_APP=runtime.py
 ENV FLASK_RUN_HOST=0.0.0.0
 ENV FLASK_DEBUG=true
-ENV MJ_APIKEY_PUBLIC=46b7fb7a382ca67515e32250e3b49e5a
-ENV MJ_APIKEY_PRIVATE=0b744c249c8c1b4efa02cda15bc1555e
 
 # apk is the package manager for alpine images
 # mariadb-connector is needed for installing the mysqlclient pip package
