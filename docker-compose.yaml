@@ -1,16 +1,5 @@
 version: "3.9"
 services:
-  web:
-    image: web/nginx
-    build:
-      context: "./web"
-    volumes:
-      - ./web/dist:/usr/share/nginx/html/
-    profiles: ["production"]
-    ports:
-      - "8048:80"
-    environment:
-      - NGINX_PORT=80
   api:
     image: api/api
     build: ./api
@@ -23,6 +12,7 @@ services:
   db:
     image: db/mysql
     build: ./db
+    profiles: ["frontend"]
     environment:
       - MYSQL_ROOT_PASSWORD=pass
       - MYSQL_ALLOW_EMPTY_PASSWORD=false
