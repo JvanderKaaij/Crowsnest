@@ -43,17 +43,26 @@
           this.purchase_date = this.purchase_date.toJSON().split('T')[0]
         },
         AddNew(){
-          this.$store.commit('AddHardware', {data:{
+
+          var send_data = {
             name:this.name,
             identity:this.identity,
             purchase_date:this.purchase_date,
             comment:this.comment,
-            active:1
-          },
-          success:this.OnSuccess,
-          onError:this.OnErrors
+            active:1,
+            student_id:null
+          }
+
+          if(this.student_id != null) send_data["student_id"] = this.student_id;
+
+          this.$store.commit('AddHardware', {
+            data:send_data,
+            success:this.OnSuccess,
+            onError:this.OnErrors
           });
-          if(this.student_id != null) data["student_id"] = this.student_id;
+
+
+
         },
         OnSuccess(){
           this.name = null;

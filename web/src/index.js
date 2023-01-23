@@ -127,7 +127,9 @@ const store = createStore({
             console.log(form_data);
             axios.post(hostURL+'/edit_hardware', form_data).then(response => {
                 if(response.data.success){
-                    data.success();
+                    if(data.success){
+                        data.success();
+                    }
                 }else{
                     data.onError(response.data.errors);
                 }
@@ -138,7 +140,7 @@ const store = createStore({
             state.modal_popup_agree = () => {
                 var hard = state.hardware.find(e => e.id === hardware.id);
                 hard['active'] = 0;
-                this.commit('EditHardware', {data:hard});
+                this.commit('EditHardware', {data:hard, success:()=>{state.modal_popup_active = null;}});
             }
             state.modal_popup_deny = () => {
                 state.modal_popup_active = null;
