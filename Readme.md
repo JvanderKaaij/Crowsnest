@@ -42,10 +42,23 @@ npm run dev
 
 How to run in production mode
 ----------
+### Backend
 
+Create a folder /config and add a file in there called config.env
+In that config file make sure the following settings are present:
+```
+SQL_ROOT_PASS={password}
+```
 
 ```
-docker-compose --profile production --env-file config.env up
+docker-compose --profile production --env-file config/config.env up
 ```
 
-Make sure that 
+
+### Frontend
+
+I use the local Apache server to serve the frontend files. You can build it with the dev commands and point the Apache server to the /dist folder.
+
+```
+npm run dev
+```

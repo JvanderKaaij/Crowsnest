@@ -12,9 +12,28 @@ services:
   db:
     image: db/mysql
     build: ./db
-    profiles: ["frontend"]
     environment:
       - MYSQL_ROOT_PASSWORD=pass
+      - MYSQL_ALLOW_EMPTY_PASSWORD=false
+    ports:
+      - "6603:3306"
+  api-prod:
+    image: api/api
+    build: ./api
+    profiles: ["production"]
+    volumes:
+      - ./api/:/usr/src/app/
+    environment:
+      - DATABASE_URL=mysql+mysqldb://root:${SQL_ROOT_PASS}@db:3306/test_db #db is name of db host, but points to the local ip
+    ports:
+      - "8047:5000"
+      -
+  db-prod:
+    image: db/mysql
+    build: ./db
+    profiles: ["production"]
+    environment:
+      - MYSQL_ROOT_PASSWORD=${SQL_ROOT_PASS}
       - MYSQL_ALLOW_EMPTY_PASSWORD=false
     ports:
       - "6603:3306"
