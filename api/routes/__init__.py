@@ -35,7 +35,9 @@ def logout():
 @app.route("/students", methods=['GET'])
 @login_required
 def students():
-    students = Student.query.filter(Student.user_type_id == current_user.id and Student.active==True)
+    logging.error("user type id:")
+    logging.error(current_user.user_type_id)
+    students = Student.query.filter(Student.user_type_id == current_user.user_type_id and Student.active==True)
     result = []
     for s in students:
         stud = s._asdict()
@@ -127,7 +129,7 @@ def edit_student():
 @app.route("/hardware", methods=['GET'])
 @login_required
 def hardware():
-    hardware = Hardware.query.filter(Hardware.user_type_id == current_user.id and Hardware.active==True)
+    hardware = Hardware.query.filter(Hardware.user_type_id == current_user.user_type_id and Hardware.active==True)
     result = []
     for h in hardware:
         logging.error("hardware user type id:")
@@ -149,7 +151,7 @@ def add_hardware():
             student_id=form.student_id.data,
             purchase_date=form.purchase_date.data,
             comment=form.comment.data,
-            user_type_id=current_user.id
+            user_type_id=current_user.user_type_id
         )
 
         db.session.add(new_hardware)
