@@ -23,18 +23,18 @@ with app.app_context():
 
     db.session.commit()
 
-    st_one = Student(name="test_student_one", email="student_one@email.com", active=1)
+    st_one = Student(name="test_student_one", email="student_one@email.com", active=1, user_type_id=1)
     db.session.add(st_one)
 
-    st_two = Student(name="test_student_two", email="student_two@email.com", active=1)
+    st_two = Student(name="test_student_two", email="student_two@email.com", active=1, user_type_id=1)
     db.session.add(st_two)
 
     db.session.commit()
 
-    hw_one = Hardware(name="Hammer", identity="0x0x0x0x", comment="comment", active=1)
+    hw_one = Hardware(name="Hammer", identity="0x0x0x0x", comment="comment", active=1, user_type_id=1)
     db.session.add(hw_one)
 
-    hw_two = Hardware(name="Bucket", student_id=1, identity="yxyxyxyxyx", comment="Bucket Comment", active=1)
+    hw_two = Hardware(name="Bucket", student_id=1, identity="yxyxyxyxyx", comment="Bucket Comment", active=1, user_type_id=1)
     db.session.add(hw_two)
 
     db.session.commit()
