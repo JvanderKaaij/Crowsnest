@@ -7,8 +7,8 @@ from runtime import app, db, bcrypt
 from models import User, Student, Hardware, StudentAttribute, AttributeType, Attribute
 from forms import StudentForm, HardwareForm, AttributeForm, AddAttributeForm
 
-from flask import request
-from flask_login import login_user, login_required, current_user
+from flask import request, redirect
+from flask_login import login_user, login_required, current_user, logout_user
 from mailjet_rest import Client
 
 @app.route('/')
@@ -18,7 +18,6 @@ def root():
 
 @app.route('/login', methods=['POST'])
 def login():
-    logging.error(request.json)
     username = request.json["username"]
     password = request.json["password"]
     user = User.query.filter_by(username=username).first()
@@ -28,10 +27,15 @@ def login():
 
     return 'false'
 
+@app.route('/logout', methods=['POST'])
+def logout():
+    logout_user()
+    return redirect('/')
+
 @app.route("/students", methods=['GET'])
 @login_required
 def students():
-    students = Student.query.filter(Student.active==True)
+    students = Student.query.filter(Student.user_type_id == current_user.id and Student.active==True)
     result = []
     for s in students:
         stud = s._asdict()
@@ -61,9 +65,7 @@ def add_student():
             email=form.email.data,
             start_date=form.start_date.data,
             estimated_end_date=form.estimated_end_date.data,
-            has_door_access=form.has_door_access.data,
-            has_git_access=form.has_git_access.data,
-            has_git_lfs_access=form.has_git_lfs_access.data
+            user_type_id=current_user.id
         )
 
         db.session.add(new_student)
@@ -125,9 +127,13 @@ def edit_student():
 @app.route("/hardware", methods=['GET'])
 @login_required
 def hardware():
-    hardware = Hardware.query.filter(Hardware.active==True)
+    logging.error("user type id:")
+    logging.error(current_user.id)
+    hardware = Hardware.query.filter(Hardware.user_type_id == current_user.id and Hardware.active==True)
     result = []
     for h in hardware:
+        logging.error("hardware user type id:")
+        logging.error(h.user_type_id)
         as_dict = h._asdict()
         if h.student is not None: as_dict['lend_to_student'] = h.student._asdict()
         result.append(as_dict)
@@ -144,7 +150,8 @@ def add_hardware():
             identity=form.identity.data,
             student_id=form.student_id.data,
             purchase_date=form.purchase_date.data,
-            comment=form.comment.data
+            comment=form.comment.data,
+            user_type_id=current_user.id
         )
 
         db.session.add(new_hardware)

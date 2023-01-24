@@ -1,5 +1,7 @@
 <template>
     <div id="home-page">
+      <div class="header"><button @click="doLogout()">Logout</button></div>
+
       <Hardware></Hardware>
       <Students></Students>
       <div v-if=modal_popup_active class="modal-container">
@@ -28,6 +30,9 @@
         },
         methods:{
           ...mapActions(["InitStudents", "InitHardware"]),
+          doLogout(){
+            this.$store.commit('Logout');
+          }
         },
         mounted() {
           this.$store.dispatch('InitStudents')

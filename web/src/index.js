@@ -186,6 +186,13 @@ const store = createStore({
                         data.success();
                     }
                 })
+        },
+        Logout(state){
+            axios
+                .post(hostURL + '/logout')
+                .then(response => {
+                    router.push('/');
+                })
         }
     },
     actions:{
@@ -193,11 +200,10 @@ const store = createStore({
             axios
             .get(hostURL+'/students')
             .then(response => {
-                console.log(response);
                 context.commit('InitStudents', response.data);
             }).catch(error =>{
                 if(error.response.status === 401){
-                    router.push('/login');
+                    router.push('/');
                 }
             });
         },
@@ -208,7 +214,7 @@ const store = createStore({
                 context.commit('InitHardware', response.data);
             }).catch(error =>{
                 if(error.response.status === 401){
-                    router.push('/login');
+                    router.push('/');
                 }
             });
         },
@@ -219,7 +225,7 @@ const store = createStore({
                 context.commit('InitAttributeTypes', response.data);
             }).catch(error =>{
                 if(error.response.status === 401){
-                    router.push('/login');
+                    router.push('/');
                 }
             });
         },
@@ -230,7 +236,7 @@ const store = createStore({
                 data.success(response)
             }).catch(error =>{
                 if(error.response.status === 401){
-                    router.push('/login');
+                    router.push('/');
                 }
             });
         }

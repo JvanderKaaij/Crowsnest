@@ -34,10 +34,8 @@ class Student(db.Model, ExportMixin):
     email = db.Column(db.String(60))
     start_date = db.Column(db.DateTime(timezone=True))
     estimated_end_date = db.Column(db.DateTime(timezone=True))
-    has_door_access = db.Column(db.Integer, default=False)
-    has_git_access = db.Column(db.Integer, default=False)
-    has_git_lfs_access = db.Column(db.Integer, default=False)
     active = db.Column(db.Integer, default=True)
+    user_type_id = db.Column(db.Integer, db.ForeignKey("user_type.id"), nullable=True)
 
 
 class StudentAttribute(db.Model, ExportMixin):
@@ -76,6 +74,7 @@ class Hardware(db.Model, ExportMixin):
     purchase_date = db.Column(db.DateTime(timezone=True))
     comment = db.Column(db.Text)
     active = db.Column(db.Integer, default=True)
+    user_type_id = db.Column(db.Integer, db.ForeignKey("user_type.id"), nullable=True)
 
 
 
