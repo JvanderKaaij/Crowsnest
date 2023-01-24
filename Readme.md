@@ -83,6 +83,13 @@ I use the local Apache server to serve the frontend files. You can build it with
 npm run dev
 ```
 
+Point towards Port and Host in index.js:
+```
+//SETTINGS - Change this for deployment
+const port = 8047;
+const host = 'http://localhost';
+//END SETTINGS
+```
 
 ### MailJet
 

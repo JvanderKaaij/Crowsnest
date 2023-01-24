@@ -10,8 +10,8 @@ import Login from "./Login.vue";
 const router = createRouter({
   history: createWebHistory(),
   routes: [
-        { path: '/', name:'Vue', component: Home },
-        { path: '/login', name:'LoginPage', component: Login}
+        { path: '/', name:'LoginPage', component: Login },
+        { path: '/app', name:'Vue', component: Home}
     ]
 });
 

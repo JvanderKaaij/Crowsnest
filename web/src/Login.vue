@@ -39,7 +39,7 @@
         },
         OnSuccess(response){
             localStorage.logged_in = true;
-            this.$router.push('/');
+            this.$router.push('/app');
         },
       }
     }
