@@ -127,8 +127,6 @@ def edit_student():
 @app.route("/hardware", methods=['GET'])
 @login_required
 def hardware():
-    logging.error("user type id:")
-    logging.error(current_user.id)
     hardware = Hardware.query.filter(Hardware.user_type_id == current_user.id and Hardware.active==True)
     result = []
     for h in hardware:
@@ -196,7 +194,7 @@ def edit_hardware():
 @app.route("/attribute_types", methods=['GET'])
 @login_required
 def attribute_types():
-    all_attribute_types = AttributeType.query.all()
+    all_attribute_types = AttributeType.query.filter(AttributeType.user_type_id == current_user.id)
     result = []
     for s in all_attribute_types:
         result.append(s._asdict())
