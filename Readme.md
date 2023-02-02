@@ -91,6 +91,9 @@ const host = 'http://localhost';
 //END SETTINGS
 ```
 
+If refreshing the page gives a 404?
+Make sure the .htaccess file is present in the /dist folder!
+
 ### MailJet
 
 TODO:
