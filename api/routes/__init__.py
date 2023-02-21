@@ -67,7 +67,7 @@ def add_student():
             email=form.email.data,
             start_date=form.start_date.data,
             estimated_end_date=form.estimated_end_date.data,
-            user_type_id=current_user.id
+            user_type_id=current_user.user_type_id
         )
 
         db.session.add(new_student)
