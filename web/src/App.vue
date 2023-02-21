@@ -27,6 +27,7 @@ body{
 }
 
 .component-header{
+  font-size:24px;
   margin-top:10px;
   margin-bottom: 10px;
 }
@@ -81,7 +82,5 @@ select{
     padding:4px;
     background-color: var(--orange-red-crayola);
 }
-
-
 
 </style>

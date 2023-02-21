@@ -13,7 +13,9 @@
         <tr v-for="(item, index) in students">
           <StudentItem v-if=item.active :item="item"/>
         </tr>
-          <StudentNewItem :types="attribute_types"/>
+         <tr class="spacer"><td colspan="6"></td></tr>
+        <tr class="new-header"><td colspan="6">Add New Student</td></tr>
+          <tr><StudentNewItem :types="attribute_types"/></tr>
       </table>
     </div>
 </template>
@@ -43,5 +45,11 @@
 </script>
 
 <style scoped>
-
+  .new-header{
+    background-color: var(--blue-yonder);
+    color: var(--ghost-white);
+  }
+    .spacer{
+    background-color: #f9ffff;
+  }
 </style>

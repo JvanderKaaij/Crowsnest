@@ -87,4 +87,7 @@
   #hardware-list{
 
   }
+  .new{
+    background-color: var(--blue-yonder);
+  }
 </style>

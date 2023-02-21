@@ -1,5 +1,4 @@
 <template>
-  <tr class="new-item">
     <td class="new">
       <input type="text" placeholder="name" class="val-input" id="name" name="field-name" v-model="name">
       <div v-if='name_error_msg' class='error' ref="name_error">{{name_error_msg}}</div>
@@ -15,7 +14,6 @@
     </td>
 
     <td class="new"><button @click="AddNew">Add</button></td>
-  </tr>
 </template>
 
 <script>
@@ -82,5 +80,7 @@
 </script>
 
 <style scoped>
-
+  .new{
+    background-color: var(--blue-yonder);
+  }
 </style>
