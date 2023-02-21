@@ -109,9 +109,6 @@ def edit_student():
             'email':form.email.data,
             'start_date':form.start_date.data,
             'estimated_end_date':form.estimated_end_date.data,
-            'has_door_access':form.has_door_access.data,
-            'has_git_access':form.has_git_access.data,
-            'has_git_lfs_access':form.has_git_lfs_access.data,
             'active':form.active.data
         }
 
