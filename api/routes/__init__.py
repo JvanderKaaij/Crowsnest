@@ -2,14 +2,17 @@ import json
 import os
 import logging
 import datetime
+import sys
 
 from runtime import app, db, bcrypt
 from models import User, Student, Hardware, StudentAttribute, AttributeType, Attribute
-from forms import StudentForm, HardwareForm, AttributeForm, AddAttributeForm
+from forms import StudentForm, HardwareForm, AttributeForm
 
 from flask import request, redirect
 from flask_login import login_user, login_required, current_user, logout_user
 from mailjet_rest import Client
+
+logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
 
 @app.route('/')
 def root():
@@ -35,8 +38,6 @@ def logout():
 @app.route("/students", methods=['GET'])
 @login_required
 def students():
-    logging.error("user type id:")
-    logging.error(current_user.user_type_id)
     students = Student.query.filter(Student.user_type_id == current_user.user_type_id and Student.active==True)
     result = []
     for s in students:
@@ -70,6 +71,8 @@ def add_student():
             user_type_id=current_user.user_type_id
         )
 
+        logging.debug(form.new_attributes)
+
         db.session.add(new_student)
         db.session.commit()
         db.session.refresh(new_student)
@@ -78,6 +81,7 @@ def add_student():
         add_empty_attributes(new_student.id)
         response['success'] = True
         response['message'] = 'student added'
+        response['new_student_id'] = new_student.id
     else:
         response['message'] = 'failed'
         response['errors'] = form.errors
@@ -102,8 +106,6 @@ def edit_student():
     form = StudentForm(request.form)
     response = {'success': False, 'message': '', 'errors': {}}
     if form.validate():
-        logging.error(form)
-
         student = {
             'name':form.name.data,
             'email':form.email.data,
@@ -112,7 +114,6 @@ def edit_student():
             'active':form.active.data
         }
 
-        logging.error(form.id.data)
         db.session.query(Student).filter(Student.id == form.id.data).update(student)
         db.session.commit()
         response['success'] = True
@@ -123,18 +124,18 @@ def edit_student():
 
     return response
 
+
 @app.route("/hardware", methods=['GET'])
 @login_required
 def hardware():
     hardware = Hardware.query.filter(Hardware.user_type_id == current_user.user_type_id and Hardware.active==True)
     result = []
     for h in hardware:
-        logging.error("hardware user type id:")
-        logging.error(h.user_type_id)
         as_dict = h._asdict()
         if h.student is not None: as_dict['lend_to_student'] = h.student._asdict()
         result.append(as_dict)
     return result
+
 
 @app.route("/add_hardware", methods=['POST'])
 @login_required
@@ -161,13 +162,12 @@ def add_hardware():
 
     return response
 
+
 @app.route("/edit_hardware", methods=['POST'])
 @login_required
 def edit_hardware():
     form = HardwareForm(request.form)
     response = {'success': False, 'message': '', 'errors': {}}
-    logging.error("test")
-    logging.error(form.id.data)
     if form.validate():
         hardware = {
             'name':form.name.data,
@@ -178,7 +178,6 @@ def edit_hardware():
             'active': form.active.data
         }
 
-        logging.error(form.id.data)
         db.session.query(Hardware).filter(Hardware.id == form.id.data).update(hardware)
         db.session.commit()
         response['success'] = True
@@ -199,6 +198,7 @@ def attribute_types():
         result.append(s._asdict())
     return result
 
+
 @app.route("/attributes", methods=['POST'])
 @login_required
 def attributes():
@@ -213,6 +213,7 @@ def attributes():
 
     return result
 
+
 @app.route("/edit_attribute", methods=['POST'])
 @login_required
 def edit_attribute():
@@ -223,7 +224,6 @@ def edit_attribute():
             'content':form.content.data
         }
 
-        logging.error(form.id.data)
         db.session.query(Attribute).filter(Attribute.id == form.id.data).update(attribute)
         db.session.commit()
         response['success'] = True
@@ -234,10 +234,11 @@ def edit_attribute():
 
     return response
 
+
 @app.route("/add_attribute", methods=['POST'])
 @login_required
 def add_attribute():
-    form = AddAttributeForm(request.form)
+    form = AttributeForm(request.form)
     response = {'success': False, 'message': '', 'errors': {}}
     if form.validate():
         new_attr = Attribute(
@@ -260,6 +261,7 @@ def add_attribute():
 
     return response
 
+
 @app.cli.command("check_expired_users")
 def check_expired_users():
     current = datetime.datetime.today()
@@ -273,6 +275,7 @@ def format_message(expired_students):
     for st in expired_students:
         result += "{name} expired on {end_date} <br>\n".format(name=st.name, mail=st.email, end_date=st.estimated_end_date)
     return result
+
 
 def send_mail(expired_students):
     api_key = os.environ['MJ_APIKEY_PUBLIC']

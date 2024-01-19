@@ -1,7 +1,15 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, DateField, BooleanField,TextAreaField, IntegerField
+from wtforms import StringField, DateField, BooleanField,TextAreaField, IntegerField, FieldList, FormField
 from wtforms import validators
 from datetime import date, datetime
+
+
+class AttributeForm(FlaskForm):
+    class Meta:
+        csrf = False
+    id = IntegerField('id')
+    content = StringField('content')
+    attribute_type_id = IntegerField('attribute_type_id', validators=[validators.Optional()])
 
 
 class StudentForm(FlaskForm):
@@ -16,6 +24,8 @@ class StudentForm(FlaskForm):
     has_git_access = IntegerField('has_git_access',default=False)
     has_git_lfs_access = IntegerField('has_git_lfs_access',default=False)
     active = IntegerField('active', default=True)
+    new_attributes = FieldList(FormField(AttributeForm), min_entries=1)
+
 
 class HardwareForm(FlaskForm):
     class Meta:
@@ -27,18 +37,3 @@ class HardwareForm(FlaskForm):
     student_id = IntegerField('student_id', validators=[validators.Optional()])
     comment = TextAreaField('comment')
     active = IntegerField('active', default=True)
-
-
-class AttributeForm(FlaskForm):
-    class Meta:
-        csrf = False
-    id = IntegerField('id')
-    content = StringField('content')
-    attribute_type_id = IntegerField('attribute_type_id', validators=[validators.Optional()])
-
-class AddAttributeForm(FlaskForm):
-    class Meta:
-        csrf = False
-    student_id = IntegerField('student_id')
-    content = StringField('content')
-    attribute_type_id = IntegerField('attribute_type_id')

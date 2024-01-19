@@ -8,7 +8,9 @@ from flask_wtf.csrf import generate_csrf
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = os.environ['COOKIE_SECRET']
-app.config["SQLALCHEMY_DATABASE_URI"] = os.environ['DATABASE_URL']
+app.config["SQLALCHEMY_DATABASE_URI"] = f"mysql://root:{os.environ['MYSQL_ROOT_PASSWORD']}@db:3306/{os.environ['MYSQL_DATABASE']}"
+
+print(app.config["SQLALCHEMY_DATABASE_URI"] )
 
 db = SQLAlchemy(app)
 

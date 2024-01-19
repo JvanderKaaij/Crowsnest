@@ -1,24 +1,51 @@
 version: "3.9"
 services:
+  web:
+    image: web/web
+    build: ./web
+    container_name: crowsnest-web
+    env_file:
+      - config.env
+    networks:
+      - crowsnest-network
+    volumes:
+      - ./web/dist/:/usr/local/apache2/htdocs/
+      - ./web/config/:/usr/local/apache2/conf/
+    ports:
+      - "8048:80"
+
   api:
     image: api/api
     build: ./api
+    container_name: crowsnest-api
+    env_file:
+      - config.env
+    networks:
+      - crowsnest-network
     volumes:
       - ./api/:/usr/src/app/
-    environment:
-      - DATABASE_URL=mysql+mysqldb://root:${SQL_ROOT_PASS}@db:3306/test_db #db is name of db host, but points to the local ip
-      - COOKIE_SECRET=${COOKIE_SECRET}
-      - MJ_APIKEY_PUBLIC=${MAIL_APIKEY_PUBLIC}
-      - MJ_APIKEY_PRIVATE=${MAIL_APIKEY_PRIVATE}
-
+#      - /mnt/docker-drive/crowsnest/web-data:/usr/src/app/
     ports:
       - "8047:5000"
 
   db:
     image: db/mysql
     build: ./db
-    environment:
-      - MYSQL_ROOT_PASSWORD=${SQL_ROOT_PASS}
-      - MYSQL_ALLOW_EMPTY_PASSWORD=false
+    container_name: crowsnest-db
+    env_file:
+      - config.env
+    networks:
+      - crowsnest-network
+    volumes:
+      - ./db/dev/:/var/lib/mysql
+#      - /mnt/docker-drive/crowsnest/db-data:/var/lib/mysql
     ports:
-      - "6603:3306"
+      - "3306:3306" # Could be disabled for release
+
+volumes:
+  db-data:
+  web-data:
+
+networks:
+   crowsnest-network:
+    external: false

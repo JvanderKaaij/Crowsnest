@@ -13,8 +13,8 @@
         <tr v-for="(item, index) in students">
           <StudentItem v-if=item.active :item="item"/>
         </tr>
-         <tr class="spacer"><td colspan="6"></td></tr>
-        <tr class="new-header"><td colspan="6">Add New Student</td></tr>
+          <tr class="spacer"><td :colspan="getAttributeAmount()"></td></tr>
+          <tr class="new-header" id="one"><td :colspan="getAttributeAmount()">Add New Student</td></tr>
           <tr><StudentNewItem :types="attribute_types"/></tr>
       </table>
     </div>
@@ -37,6 +37,9 @@
         },
         methods:{
             ...mapActions(["InitAttributeTypes"]),
+          getAttributeAmount() {
+            return 6 + this.attribute_types?.length ?? 0;
+          }
         },
         mounted() {
           this.$store.dispatch('InitAttributeTypes')

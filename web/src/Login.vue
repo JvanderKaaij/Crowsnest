@@ -5,9 +5,9 @@
          <div class="center-group">
             <div class="container">
               <div class="grid-container">
-                <div>Username</div>
+                <div>Username:</div>
                 <div><input v-model="usernameLogin" type="username" class="form-control item-user" placeholder="Username" required></div>
-                <div>Password</div>
+                <div>Password:</div>
                 <div><input v-model="passwordLogin" type="password" class="form-control item-password" placeholder="Password" required></div>
               </div>
               <input type="submit" class="btn btn-primary" @click="doLogin">

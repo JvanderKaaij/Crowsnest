@@ -1,8 +1,9 @@
 const path = require('path');
 const { VueLoaderPlugin } = require('vue-loader');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyPlugin = require("copy-webpack-plugin");
 
-module.exports = {
+module.exports  = {
     entry: './src/index.js',
     output: {
         filename: 'main.js',
@@ -29,13 +30,11 @@ module.exports = {
             filename: 'index.html',
             template: 'index.html',
             inject:true
-        })
-    ],
-    devServer: {
-        static: path.join(__dirname, 'dist'),
-        compress: true,
-        host: 'localhost',
-        historyApiFallback: true, // is it enabled ?
-        port: 9000
-    }
+        }),
+        new CopyPlugin({
+          patterns: [
+            { from: ".htaccess", to: "." }
+          ]}
+        )
+    ]
 };
