@@ -43,7 +43,7 @@
           this.estimated_end_date = this.estimated_end_date.toJSON().split('T')[0]
         },
         AddNew(){
-          console.log(this.types);
+
           var send_data = {
             name:this.name,
             email:this.email,
@@ -53,24 +53,30 @@
           };
           send_data.new_attributes = [];
           this.$refs.attributeItems.forEach((attributeItemComponent) => {
-            send_data.new_attributes.push({
-              id:attributeItemComponent.type.id,
-              content:attributeItemComponent.content
-            });
+            if(attributeItemComponent.content){
+              send_data.new_attributes.push({
+                id:attributeItemComponent.type.id,
+                content:attributeItemComponent.content
+              });
+            }
           });
+
           this.$store.commit('AddStudent', {
             data: send_data,
             success:this.OnSuccess,
             onError:this.OnErrors
           });
         },
-        OnSuccess(new_student_id){
+        OnSuccess(){
           this.name=null;
           this.email=null;
           this.start_date="2020-1-1";
           this.estimated_end_date="2020-1-1";
           this.name_error_msg=null;
-          this.$store.dispatch('InitStudents');
+
+          this.$refs.attributeItems.forEach((attributeItemComponent) => {
+            attributeItemComponent.content = "";
+          });
         },
         OnErrors(errors){
           Object.entries(errors).forEach((e)=>{

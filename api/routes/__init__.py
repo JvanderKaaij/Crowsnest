@@ -1,4 +1,3 @@
-import json
 import os
 import logging
 import datetime
@@ -8,11 +7,12 @@ from runtime import app, db, bcrypt
 from models import User, Student, Hardware, StudentAttribute, AttributeType, Attribute
 from forms import StudentForm, HardwareForm, AttributeForm
 
-from flask import request, redirect
+from flask import request, redirect, jsonify
 from flask_login import login_user, login_required, current_user, logout_user
 from mailjet_rest import Client
 
 logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
+
 
 @app.route('/')
 def root():
@@ -30,10 +30,12 @@ def login():
 
     return 'false'
 
+
 @app.route('/logout', methods=['POST'])
 def logout():
     logout_user()
     return redirect('/')
+
 
 @app.route("/students", methods=['GET'])
 @login_required
@@ -60,7 +62,10 @@ def student_attributes(id):
 @app.route("/add_student", methods=['POST'])
 @login_required
 def add_student():
-    form = StudentForm(request.form)
+    json = request.get_json()
+    data = json.get('data')
+    form = StudentForm(data=data)
+
     response = {'success': False, 'message': '', 'errors': {}}
     if form.validate():
         new_student = Student(
@@ -71,17 +76,26 @@ def add_student():
             user_type_id=current_user.user_type_id
         )
 
-        logging.debug(form.new_attributes)
-
         db.session.add(new_student)
         db.session.commit()
         db.session.refresh(new_student)
 
-        # this should be done differently; every item should just be present on the front-end and only updated in the backend when not empty
-        add_empty_attributes(new_student.id)
+        logging.debug("data length: ")
+        new_attributes = data.get("new_attributes")
+        logging.debug(len(new_attributes))
+        logging.debug(new_attributes)
+
+        for attribute in new_attributes:
+            new_attr = Attribute(
+                content=attribute.get("content"),
+                attribute_type_id=attribute.get("id")
+            )
+            add_attribute_action(new_attr, new_student.id)
+
         response['success'] = True
         response['message'] = 'student added'
         response['new_student_id'] = new_student.id
+        response['attributes'] = student_attributes(new_student.id)
     else:
         response['message'] = 'failed'
         response['errors'] = form.errors
@@ -245,21 +259,26 @@ def add_attribute():
             content=form.content.data,
             attribute_type_id=form.attribute_type_id.data
         )
-        db.session.add(new_attr)
-        db.session.commit()
-        db.session.refresh(new_attr)
-
-        new_stud_attr = StudentAttribute(
-            student_id=form.student_id.data,
-            attribute_id=new_attr.id
-        )
-        db.session.add(new_stud_attr)
-        db.session.commit()
+        add_attribute_action(new_attr, form.student_id.data)
 
         response['success'] = True
         response['message'] = 'attribute created'
 
     return response
+
+
+def add_attribute_action(attribute, student_id):
+    db.session.add(attribute)
+    db.session.commit()
+    db.session.refresh(attribute)
+    logging.debug("added attribute -> now coupling to student")
+    new_stud_attr = StudentAttribute(
+        student_id=student_id,
+        attribute_id=attribute.id
+    )
+    db.session.add(new_stud_attr)
+    db.session.commit()
+    return attribute
 
 
 @app.cli.command("check_expired_users")

@@ -29,6 +29,7 @@
       props:['item','add'],
       data(){
         return{
+            isMounted: false,
             name_error_msg:null,
             email_error_msg:null
         }
@@ -36,7 +37,9 @@
       methods:{
         ...mapMutations(['RemoveStudent']),
          signalChange: function(evt){
-            this.$store.commit('EditStudent', {data:this.item, success:this.OnSuccess, onError:this.OnErrors});
+            if(isMounted){
+              this.$store.commit('EditStudent', {data:this.item, success:this.OnSuccess, onError:this.OnErrors});
+            }
           },
           OnSuccess(){
             console.log("Success");
@@ -51,18 +54,18 @@
               this[select] = value[0];
             });
           },
-          OnAttributesSuccess(results){
-            console.log("Success");
-          },
           GetPossibleAttribute(type_id){
-              return this.item?.attributes?.find(x => x.attribute_type_id === type_id);
+            console.log(this.item.attributes)
+            return this.item?.attributes?.find(x => x.attribute_type_id === type_id);
           }
       },
       computed: {
           ...mapState(['students','attribute_types'])
       },
       created(){
-        this.$store.dispatch('GetAttributes', {student_id: this.item.id, success:this.OnAttributesSuccess});
+      },
+      mounted(){
+        this.isMounted = true;
       }
     }
 </script>

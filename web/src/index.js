@@ -50,18 +50,19 @@ const store = createStore({
                 x.estimated_end_date = ParseDate(x.estimated_end_date);
             })
             state.students = data;
+            console.log("on init")
+            console.log(state.students)
         },
         AddStudent(state, data){
-            var form_data = ToFormData(data.data);
+            //THE WAY TO DO IT: converted to just sending json - advisable for the rest
             axios
-            .post(hostURL+'/add_student', form_data, {
-                headers: {
-                  'Content-Type': 'multipart/form-data'
-                }
-              })
+            .post(hostURL+'/add_student', data)
             .then(response => {
                 if(response.data.success){
-                    state.students.push(data.data);
+                    var user = data.data
+                    user.id = response.data.new_student_id
+                    user.attributes = response.data.attributes //also update attributes
+                    state.students.push(user);
                     data.success();
                 }else{
                     data.onError(response.data.errors);
