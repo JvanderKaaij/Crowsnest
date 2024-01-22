@@ -59,4 +59,7 @@
 </script>
 
 <style scoped>
+    td{
+      vertical-align: middle;
+    }
 </style>

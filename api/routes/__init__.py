@@ -13,7 +13,6 @@ from mailjet_rest import Client
 
 logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
 
-
 @app.route('/')
 def root():
     return "welcome"
@@ -80,10 +79,7 @@ def add_student():
         db.session.commit()
         db.session.refresh(new_student)
 
-        logging.debug("data length: ")
         new_attributes = data.get("new_attributes")
-        logging.debug(len(new_attributes))
-        logging.debug(new_attributes)
 
         for attribute in new_attributes:
             new_attr = Attribute(
@@ -271,7 +267,6 @@ def add_attribute_action(attribute, student_id):
     db.session.add(attribute)
     db.session.commit()
     db.session.refresh(attribute)
-    logging.debug("added attribute -> now coupling to student")
     new_stud_attr = StudentAttribute(
         student_id=student_id,
         attribute_id=attribute.id

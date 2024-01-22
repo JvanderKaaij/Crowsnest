@@ -70,6 +70,11 @@ select{
   border: 1px solid;
 }
 
+.checkbox-input{
+  width:20px;
+  height:20px;
+}
+
 .error{
     color:white;
     min-height: 24px;

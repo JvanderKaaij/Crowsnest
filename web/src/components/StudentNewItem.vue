@@ -75,7 +75,7 @@
           this.name_error_msg=null;
 
           this.$refs.attributeItems.forEach((attributeItemComponent) => {
-            attributeItemComponent.content = "";
+            attributeItemComponent.Reset();
           });
         },
         OnErrors(errors){
@@ -92,5 +92,8 @@
 <style scoped>
   .new{
     background-color: var(--blue-yonder);
+  }
+  td {
+    vertical-align: middle;
   }
 </style>

@@ -16,6 +16,7 @@ class AttributeForm(FlaskForm):
         csrf = False
     id = IntegerField('id')
     content = StringField('content')
+    student_id = IntegerField('student_id', validators=[validators.Optional()])
     attribute_type_id = IntegerField('attribute_type_id', validators=[validators.Optional()])
 
 

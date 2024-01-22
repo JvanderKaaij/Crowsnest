@@ -84,10 +84,11 @@
 </script>
 
 <style scoped>
-  #hardware-list{
-
-  }
   .new{
     background-color: var(--blue-yonder);
+  }
+
+  td{
+      vertical-align: middle;
   }
 </style>

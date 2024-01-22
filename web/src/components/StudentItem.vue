@@ -37,7 +37,7 @@
       methods:{
         ...mapMutations(['RemoveStudent']),
          signalChange: function(evt){
-            if(isMounted){
+            if(this.isMounted){
               this.$store.commit('EditStudent', {data:this.item, success:this.OnSuccess, onError:this.OnErrors});
             }
           },
@@ -71,5 +71,7 @@
 </script>
 
 <style scoped>
-
+  td {
+    vertical-align: middle;
+  }
 </style>
