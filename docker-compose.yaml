@@ -1,4 +1,4 @@
-version: "3.9"
+version: "3"
 services:
   web:
     image: web/web
@@ -23,8 +23,8 @@ services:
     networks:
       - crowsnest-network
     volumes:
-      - ./api/:/usr/src/app/
-#      - /mnt/docker-drive/crowsnest/web-data:/usr/src/app/
+#      - ./api/:/usr/src/app/
+      - /mnt/docker-drive/crowsnest/web-data:/usr/src/app/
     ports:
       - "8047:5000"
 
@@ -37,10 +37,10 @@ services:
     networks:
       - crowsnest-network
     volumes:
-      - ./db/dev/:/var/lib/mysql
-#      - /mnt/docker-drive/crowsnest/db-data:/var/lib/mysql
-    ports:
-      - "3306:3306" # Could be disabled for release
+#      - ./db/dev/:/var/lib/mysql
+      - /mnt/docker-drive/crowsnest/db-data:/var/lib/mysql
+#    ports:
+#      - "3306:3306" # Could be disabled for release
 
 volumes:
   db-data:
