@@ -4,7 +4,7 @@ from models import *
 with app.app_context():
     db.create_all()
 
-    hash_pass = bcrypt.generate_password_hash('E2LFdU8R^z%e4z')
+    hash_pass = bcrypt.generate_password_hash('password')
 
     admin_type = UserType(name="admin")
     db.session.add(admin_type)
