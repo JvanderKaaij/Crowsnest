@@ -33,7 +33,8 @@ module.exports  = {
         }),
         new CopyPlugin({
           patterns: [
-            { from: ".htaccess", to: "." }
+              { from: ".htaccess", to: "." },
+              { from: "favicon.ico", to: "." }
           ]}
         )
     ]

@@ -1,17 +1,23 @@
 <template>
     <div id="home-page">
-      <div class="header"><button @click="doLogout()">Logout</button></div>
-
-      <Hardware></Hardware>
-      <Students></Students>
-      <div v-if=modal_popup_active class="modal-container">
-        <div class="modal">
-          <div class="header-text">Alert!</div>
-          <div class="modal-text">{{ modal_popup_active }}</div>
-          <div class="button-container">
-            <button @click="modal_popup_agree()">Yes</button>
-            <span class="spacer"> </span>
-            <button @click="modal_popup_deny()">No</button>
+      <div class="home-page-container">
+        <div class="header">
+          <span class="logo">Crowsnest</span>
+          <button @click="doLogout()">Logout</button>
+        </div>
+        <div class="content">
+          <Hardware></Hardware>
+          <Students></Students>
+        </div>
+        <div v-if=modal_popup_active class="modal-container">
+          <div class="modal">
+            <div class="header-text">Alert!</div>
+            <div class="modal-text">{{ modal_popup_active }}</div>
+            <div class="button-container">
+              <button @click="modal_popup_agree()">Yes</button>
+              <span class="spacer"> </span>
+              <button @click="modal_popup_deny()">No</button>
+            </div>
           </div>
         </div>
       </div>
@@ -42,6 +48,11 @@
 </script>
 
 <style scoped>
+  #home-page{
+    display: flex;
+    justify-content: center;
+  }
+
   .modal-container{
     position:absolute;
     display: flex;
@@ -62,7 +73,6 @@
     position: relative;
     display:inline-block;
     margin: 0 auto;
-
   }
 
   .modal-text{
@@ -79,6 +89,22 @@
     text-align: center;
   }
 
+  .header{
+    display: flex;
+    justify-content: flex-end;
+    padding: 10px;
+    margin-bottom: 50px;
+    align-items: center;
+    background-color: var(--blue-yonder);
+    height:60px;
+  }
+
+  .logo{
+    margin-right: auto;
+    font-size: 25px;
+    color: var(--ghost-white);
+  }
+
   .header-text{
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
@@ -93,6 +119,7 @@
     width: 10px;
     display: inline-block;
   }
+
   .button-container button{
     min-width:120px;
     padding:10px;

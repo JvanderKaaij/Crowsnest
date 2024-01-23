@@ -21,6 +21,7 @@
 }
 
 body{
+  margin:0;
   background-color: var(--ghost-white);
   font-family: Verdana, sans-serif;
   color: var(--black-coral);
@@ -57,14 +58,20 @@ td{
 }
 
 select{
+  border-radius: 5px;
+  box-sizing: border-box;
   min-width:110px;
+  height: 48px;
+  font-size: 15px;
+  padding-left: 10px;
+  border: 1px solid;
 }
 
 .val-input{
   border-radius: 5px;
   box-sizing: border-box;
-  padding-left:10px;
-  width:100%;
+  padding-left: 10px;
+  width: 100%;
   height: 48px;
   font-size: 15px;
   border: 1px solid;
@@ -86,6 +93,11 @@ select{
     margin-top:2px;
     padding:4px;
     background-color: var(--orange-red-crayola);
+}
+
+.align-center{
+  display: flex;
+  justify-content: center;
 }
 
 </style>

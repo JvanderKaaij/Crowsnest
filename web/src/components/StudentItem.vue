@@ -42,12 +42,10 @@
             }
           },
           OnSuccess(){
-            console.log("Success");
             this.name_error_msg=null;
             this.email_error_msg=null;
           },
           OnErrors(errors) {
-            console.log("Error");
             Object.entries(errors).forEach((e) => {
               const [key, value] = e;
               const select = key + '_error_msg';
@@ -55,7 +53,6 @@
             });
           },
           GetPossibleAttribute(type_id){
-            console.log(this.item.attributes)
             return this.item?.attributes?.find(x => x.attribute_type_id === type_id);
           }
       },

@@ -50,8 +50,6 @@ const store = createStore({
                 x.estimated_end_date = ParseDate(x.estimated_end_date);
             })
             state.students = data;
-            console.log("on init")
-            console.log(state.students)
         },
         AddStudent(state, data){
             //THE WAY TO DO IT: converted to just sending json - advisable for the rest
@@ -125,7 +123,6 @@ const store = createStore({
         EditHardware(state, data){
             data.data.purchase_date = ParseDate(data.data.purchase_date);
             var form_data = ToFormData(data.data);
-            console.log(form_data);
             axios.post(hostURL+'/edit_hardware', form_data).then(response => {
                 if(response.data.success){
                     if(data.success){
