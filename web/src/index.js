@@ -17,7 +17,7 @@ const router = createRouter({
 
 //SETTINGS - Change this for deployment
 const port = 8047;
-const host = 'http://localhost';
+const host = window.location;
 //END SETTINGS
 const hostURL = host+':'+port;
 
