@@ -1,0 +1,49 @@
+version: "3"
+services:
+  web:
+    image: web/web
+    build: ./web
+    container_name: crowsnest-web
+    env_file:
+      - secret.env
+    networks:
+      - crowsnest-network
+    volumes:
+      - ./web/dist/:/usr/local/apache2/htdocs/
+      - ./web/config/:/usr/local/apache2/conf/
+    ports:
+      - "8048:80"
+
+  api:
+    image: api/api
+    build: ./api
+    container_name: crowsnest-api
+    env_file:
+      - secret.env
+    networks:
+      - crowsnest-network
+    volumes:
+      - ./api/:/usr/src/app/
+    ports:
+      - "8047:5000"
+
+  db:
+    image: db/mysql
+    build: ./db
+    container_name: crowsnest-db
+    env_file:
+      - secret.env
+    networks:
+      - crowsnest-network
+    volumes:
+      - ./db/dev/:/var/lib/mysql
+    ports:
+      - "3306:3306"
+
+volumes:
+  db-data:
+  web-data:
+
+networks:
+   crowsnest-network:
+    external: false

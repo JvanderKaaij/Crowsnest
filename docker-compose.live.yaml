@@ -5,7 +5,7 @@ services:
     build: ./web
     container_name: crowsnest-web
     env_file:
-      - config.env
+      - secret.env
     networks:
       - crowsnest-network
     volumes:
@@ -19,12 +19,11 @@ services:
     build: ./api
     container_name: crowsnest-api
     env_file:
-      - config.env
+      - secret.env
     networks:
       - crowsnest-network
     volumes:
-#      - ./api/:/usr/src/app/
-      - /mnt/docker-drive/crowsnest/web-data/api:/usr/src/app/
+      - ./api/:/usr/src/app/
     ports:
       - "8047:5000"
 
@@ -33,14 +32,11 @@ services:
     build: ./db
     container_name: crowsnest-db
     env_file:
-      - config.env
+      - secret.env
     networks:
       - crowsnest-network
     volumes:
-#      - ./db/dev/:/var/lib/mysql
       - /mnt/docker-drive/crowsnest/db-data:/var/lib/mysql
-#    ports:
-#      - "3306:3306" # Could be disabled for release
 
 volumes:
   db-data:
