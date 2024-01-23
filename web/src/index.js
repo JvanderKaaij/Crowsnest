@@ -17,9 +17,10 @@ const router = createRouter({
 
 //SETTINGS - Change this for deployment
 const port = 8047;
-const host = window.location;
+const host = window.location.hostname;
+const protocol = window.location.protocol;
 //END SETTINGS
-const hostURL = host+':'+port;
+const hostURL = `${protocol}//${host}:${port}`;
 
 function ToFormData(data){
     var form_data = new FormData();

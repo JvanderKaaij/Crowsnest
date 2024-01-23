@@ -38,13 +38,15 @@
            }
         },
         OnSuccess(response){
-            localStorage.logged_in = true;
-            this.$router.push('/app');
+          localStorage.logged_in = true;
+          this.$router.push('/app');
         },
+        OnError(response){
+          console.log("login error here");
+        }
       }
     }
 </script>
-
 
 <style scoped>
 
