@@ -52,14 +52,17 @@
             active:1
           };
           send_data.new_attributes = [];
-          this.$refs.attributeItems.forEach((attributeItemComponent) => {
-            if(attributeItemComponent.content){
-              send_data.new_attributes.push({
-                id:attributeItemComponent.type.id,
-                content:attributeItemComponent.content
-              });
-            }
-          });
+
+          if (this.$refs.attributeItems && Array.isArray(this.$refs.attributeItems)) {
+            this.$refs.attributeItems.forEach((attributeItemComponent) => {
+              if (attributeItemComponent.content) {
+                send_data.new_attributes.push({
+                  id: attributeItemComponent.type.id,
+                  content: attributeItemComponent.content
+                });
+              }
+            });
+          }
 
           this.$store.commit('AddStudent', {
             data: send_data,
@@ -73,10 +76,11 @@
           this.start_date="2020-1-1";
           this.estimated_end_date="2020-1-1";
           this.name_error_msg=null;
-
-          this.$refs.attributeItems.forEach((attributeItemComponent) => {
-            attributeItemComponent.Reset();
-          });
+          if (this.$refs.attributeItems && Array.isArray(this.$refs.attributeItems)) {
+            this.$refs.attributeItems.forEach((attributeItemComponent) => {
+              attributeItemComponent.Reset();
+            });
+          }
         },
         OnErrors(errors){
           Object.entries(errors).forEach((e)=>{
