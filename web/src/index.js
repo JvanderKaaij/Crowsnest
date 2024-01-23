@@ -181,8 +181,11 @@ const store = createStore({
                     password: data.data.password
                 })
                 .then(response => {
+                    console.log(response);
                     if (response.data == true) {
                         data.success();
+                    }else{
+                        data.error();
                     }
                 })
         },

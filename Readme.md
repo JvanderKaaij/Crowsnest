@@ -75,7 +75,7 @@ docker exec -it [container_name] /bin/sh
 
 Run the python script to add a new user:
 ```
-python user_setup.py {username} {password} {user_type}
+python user_setup.py {string:username} {string:password} {string:user_type}
 ```
 
 Note that the user_type may already exist - or is created new when it doesn't
