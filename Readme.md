@@ -16,14 +16,22 @@ How to run in development mode
 Create a folder /config and add a file in there called config.env
 In that config file make sure the following settings are present:
 
-Start the database and Flask backend.
+Start the full service for development:
+
 ```
-docker-compose up
+docker-compose -f docker-compose.dev.yaml up
 ```
+
+or for live:
+
+```
+docker-compose -f docker-compose.live.yaml up
+```
+
 If you run this application for the first time and want to setup the database. Make sure you shell into the api container and run:
 
 ```
-python setup.py
+python dev_data_setup.py
 ```
 This will create a database structure that relates to your SQLAlchemy models and 
 
@@ -42,7 +50,6 @@ npm install
 npm run dev
 ```
 
-
 How to run in production mode
 ----------
 ### Backend
@@ -57,10 +64,6 @@ MYSQL_PASSWORD={password}
 MYSQL_DATABASE={db}
 MJ_APIKEY_PUBLIC={public_key}
 MJ_APIKEY_PRIVATE={private_key}
-```
-
-```
-docker-compose up
 ```
 
 ### New Crowsnest Admin User
@@ -79,18 +82,12 @@ Note that the user_type may already exist - or is created new when it doesn't
 
 ### Frontend
 
-I use the local Apache server to serve the frontend files. You can build it with the dev commands and point the Apache server to the /dist folder.
+served files are in /dist folder
+
+to rebuild (during development for instance):
 
 ```
 npm run dev
-```
-
-Point towards Port and Host in index.js:
-```
-//SETTINGS - Change this for deployment
-const port = 8047;
-const host = 'http://localhost';
-//END SETTINGS
 ```
 
 If refreshing the page gives a 404?
