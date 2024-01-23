@@ -18,10 +18,9 @@ In that config file make sure the following settings are present:
 
 Start the database and Flask backend.
 ```
-docker-compose --env-file config/config.env up
+docker-compose up
 ```
 If you run this application for the first time and want to setup the database. Make sure you shell into the api container and run:
-
 
 ```
 python setup.py
@@ -48,17 +47,20 @@ How to run in production mode
 ----------
 ### Backend
 
-Create a folder /config and add a file in there called config.env
+Create a folder /config and add a file in there called secret.env
 In that config file make sure the following settings are present:
 ```
-SQL_ROOT_PASS={password}
 COOKIE_SECRET={secret}
-MAIL_APIKEY_PUBLIC={Mailjet Public Key}
-MAIL_APIKEY_PRIVATE={Mailjet Private Key}
+MYSQL_ROOT_PASSWORD={password}
+MYSQL_USER={username}
+MYSQL_PASSWORD={password}
+MYSQL_DATABASE={db}
+MJ_APIKEY_PUBLIC={public_key}
+MJ_APIKEY_PRIVATE={private_key}
 ```
 
 ```
-docker-compose --env-file config/config.env up
+docker-compose up
 ```
 
 ### New Crowsnest Admin User
