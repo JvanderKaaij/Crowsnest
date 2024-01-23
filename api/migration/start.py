@@ -23,4 +23,3 @@ with app.app_context():
     db.session.add(vislab)
 
     db.session.commit()
-

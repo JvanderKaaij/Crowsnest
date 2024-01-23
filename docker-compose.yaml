@@ -24,7 +24,7 @@ services:
       - crowsnest-network
     volumes:
 #      - ./api/:/usr/src/app/
-      - /mnt/docker-drive/crowsnest/web-data:/usr/src/app/
+      - /mnt/docker-drive/crowsnest/web-data/api:/usr/src/app/
     ports:
       - "8047:5000"
 
