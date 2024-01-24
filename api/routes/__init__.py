@@ -49,11 +49,11 @@ def students():
 
 
 def student_attributes(id):
-    attribute_for_student = StudentAttribute.query.filter(StudentAttribute.student_id==id).all()
+    attribute_for_student = Attribute.query.filter(Attribute.student_id==id).all()
     result = []
     for s in attribute_for_student:
-        attr = s.attribute._asdict()
-        if s.attribute.type is not None: attr['type'] = s.attribute.type._asdict()
+        attr = s._asdict()
+        if s.type is not None: attr['type'] = s.type._asdict()
         result.append(attr)
     return result
 
@@ -83,10 +83,13 @@ def add_student():
 
         for attribute in new_attributes:
             new_attr = Attribute(
+                student_id=new_student.id,
                 content=attribute.get("content"),
                 attribute_type_id=attribute.get("id")
             )
-            add_attribute_action(new_attr, new_student.id)
+            db.session.add(new_attr)
+            db.session.commit()
+            db.session.refresh(new_attr)
 
         response['success'] = True
         response['message'] = 'student added'
@@ -101,14 +104,10 @@ def add_student():
 def add_empty_attributes(student_id):
     types = AttributeType.query.all()
     for t in types:
-        attribute = Attribute(content="", attribute_type_id=t.id)
+        attribute = Attribute(content="", attribute_type_id=t.id, student_id=student_id)
         db.session.add(attribute)
         db.session.commit()
         db.session.refresh(attribute)
-        attr_student = StudentAttribute(student_id=student_id, attribute_id=attribute.id)
-        db.session.add(attr_student)
-        db.session.commit()
-
 
 @app.route("/edit_student", methods=['POST'])
 @login_required
@@ -213,7 +212,7 @@ def attribute_types():
 @login_required
 def attributes():
     sid = request.args.get("student_id")
-    attributes = StudentAttribute.query.filter(StudentAttribute.student_id == sid)
+    attributes = Attribute.query.filter(Attribute.student_id == sid)
 
     result = []
     for attr in attributes:
@@ -251,30 +250,20 @@ def add_attribute():
     form = AttributeForm(request.form)
     response = {'success': False, 'message': '', 'errors': {}}
     if form.validate():
+        logging.debug(form.student_id.data)
         new_attr = Attribute(
+            student_id=form.student_id.data,
             content=form.content.data,
             attribute_type_id=form.attribute_type_id.data
         )
-        add_attribute_action(new_attr, form.student_id.data)
+        db.session.add(new_attr)
+        db.session.commit()
+        db.session.refresh(new_attr)
 
         response['success'] = True
         response['message'] = 'attribute created'
 
     return response
-
-
-def add_attribute_action(attribute, student_id):
-    db.session.add(attribute)
-    db.session.commit()
-    db.session.refresh(attribute)
-    new_stud_attr = StudentAttribute(
-        student_id=student_id,
-        attribute_id=attribute.id
-    )
-    db.session.add(new_stud_attr)
-    db.session.commit()
-    return attribute
-
 
 @app.cli.command("check_expired_users")
 def check_expired_users():

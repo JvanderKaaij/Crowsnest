@@ -52,6 +52,7 @@ class Attribute(db.Model, ExportMixin):
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.String(60))
     attribute_type_id = db.Column(db.Integer, db.ForeignKey("attribute_type.id"))
+    student_id = db.Column(db.ForeignKey("student.id"))
     type = db.relationship('AttributeType')
 
 
