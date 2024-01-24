@@ -41,13 +41,7 @@ export default {
     color: var(--ghost-white);
   }
 
-  .header-text{
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
-    background-color: var(--orange-red-crayola);
-    color: var(--ghost-white);
-    text-align: center;
-    font-size:19px;
-    padding:10px;
+  button{
+    margin-right:10px;
   }
 </style>

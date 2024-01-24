@@ -5,7 +5,6 @@
 </template>
 
 <script setup>
-
 </script>
 
 <style>
@@ -99,5 +98,11 @@ select{
   display: flex;
   justify-content: center;
 }
+
+button{
+    min-width:120px;
+    padding:10px;
+  }
+
 
 </style>
