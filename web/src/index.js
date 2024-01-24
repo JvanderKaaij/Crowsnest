@@ -6,12 +6,14 @@ import { createStore } from "vuex";
 import App from "./App.vue";
 import Home from "./Home.vue";
 import Login from "./Login.vue";
+import Settings from "./Settings.vue";
 
 const router = createRouter({
   history: createWebHistory(),
   routes: [
         { path: '/', name:'LoginPage', component: Login },
-        { path: '/app', name:'Vue', component: Home}
+        { path: '/app', name:'Vue', component: Home},
+        { path: '/settings', name:'Settings', component: Settings}
     ]
 });
 
