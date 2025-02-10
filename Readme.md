@@ -16,8 +16,7 @@ How to run in development mode
 Start the full service for development:
 
 ```
-docker-compose -f docker-compose.dev.yaml build
-docker-compose -f docker-compose.dev.yaml up
+docker compose -f docker-compose.dev.yaml up
 ```
 
 If you run this application for the first time and want to setup the database. Make sure you shell into the api container and run:
@@ -40,7 +39,7 @@ Start a webpack dev-server with a hotreload Vuejs framework.
 
 ```
 npm install
-npm run dev
+npm run build
 ```
 
 How to run in production mode
@@ -63,7 +62,7 @@ MJ_APIKEY_PRIVATE={private_key}
 run on live:
 
 ```
-docker-compose -f docker-compose.live.yaml up
+docker compose -f docker-compose.live.yaml up
 ```
 
 ### New Crowsnest Admin User
