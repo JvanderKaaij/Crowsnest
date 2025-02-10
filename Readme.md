@@ -13,24 +13,17 @@ How to run in development mode
 
 ### Backend
 
-Create a folder /config and add a file in there called config.env
-In that config file make sure the following settings are present:
-
 Start the full service for development:
 
 ```
+docker-compose -f docker-compose.dev.yaml build
 docker-compose -f docker-compose.dev.yaml up
-```
-
-or for live:
-
-```
-docker-compose -f docker-compose.live.yaml up
 ```
 
 If you run this application for the first time and want to setup the database. Make sure you shell into the api container and run:
 
 ```
+docker exec -it crowsnest-api sh
 python dev_data_setup.py
 ```
 This will create a database structure that relates to your SQLAlchemy models and 
@@ -54,7 +47,8 @@ How to run in production mode
 ----------
 ### Backend
 
-Create a folder /config and add a file in there called secret.env
+
+Create a file named secret.env in the root of the project.
 In that config file make sure the following settings are present:
 ```
 COOKIE_SECRET={secret}
@@ -64,6 +58,12 @@ MYSQL_PASSWORD={password}
 MYSQL_DATABASE={db}
 MJ_APIKEY_PUBLIC={public_key}
 MJ_APIKEY_PRIVATE={private_key}
+```
+
+run on live:
+
+```
+docker-compose -f docker-compose.live.yaml up
 ```
 
 ### New Crowsnest Admin User

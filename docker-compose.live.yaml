@@ -1,18 +1,5 @@
 version: "3"
 services:
-  web:
-    image: web/web
-    build: ./web
-    container_name: crowsnest-web
-    env_file:
-      - secret.env
-    networks:
-      - crowsnest-network
-    volumes:
-      - ./web/dist/:/usr/local/apache2/htdocs/
-      - ./web/config/:/usr/local/apache2/conf/
-    ports:
-      - "8048:80"
 
   api:
     image: api/api
