@@ -12,7 +12,7 @@ services:
     volumes:
       - ./api/:/usr/src/app/
     ports:
-      - "8047:5000"
+      - "7000:5000"
 
   db:
     image: db/mysql
