@@ -18,7 +18,7 @@ const router = createRouter({
 });
 
 //SETTINGS - Change this for deployment
-const port = 8047;
+const port = 7000;
 const host = window.location.hostname;
 const protocol = window.location.protocol;
 //END SETTINGS
