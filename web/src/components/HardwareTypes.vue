@@ -12,7 +12,7 @@
         <td><input type="text" class="val-input" v-model="item.name" @change="Update(item)"></td>
         <td><input type="text" class="val-input" v-model="item.description" @change="Update(item)"></td>
         <td>
-          <img v-if="item.image_data" :src="getImageUrl(item.id)" style="max-width: 100px; max-height: 100px;" />
+          <img v-if="item.image_url" :src="item.image_url" style="max-width: 100px; max-height: 100px;" />
           <input type="file" @change="UpdateImage(item, $event)" accept="image/*">
         </td>
         <td>
