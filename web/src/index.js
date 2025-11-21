@@ -43,7 +43,8 @@ const store = createStore({
     state(){
         return {
             students: [],
-            hardware: []
+            hardware: [],
+            hardware_types: []
         }
     },
     mutations:{

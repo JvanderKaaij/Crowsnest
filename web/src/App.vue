@@ -33,7 +33,7 @@ body{
 }
 
 table{
-  min-width: 70rem;
+  width:100%;
   border-collapse: collapse;
 }
 
