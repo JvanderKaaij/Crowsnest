@@ -4,15 +4,24 @@
       <table>
         <tr>
           <td class="t-header">Name</td>
+          <td class="t-header">Description</td>
+          <td class="t-header">Actions</td>
         </tr>
         <tr v-for="item in hardware_types">
-          <td>{{item.name}}</td>
+          <td><input type="text" class="val-input" v-model="item.name" @change="Update(item)"></td>
+          <td><input type="text" class="val-input" v-model="item.description" @change="Update(item)"></td>
+          <td><button @click="Remove(item)">Delete</button></td>
         </tr>
-        <tr class="spacer"><td colspan="1"></td></tr>
-        <tr class="new-header"><td colspan="1">Add New Hardware Type</td></tr>
+        <tr class="spacer"><td colspan="3"></td></tr>
+        <tr class="new-header"><td colspan="3">Add New Hardware Type</td></tr>
         <tr>
             <td class="new">
                 <input type="text" placeholder="name" class="val-input" v-model="name">
+            </td>
+            <td class="new">
+                <input type="text" placeholder="description" class="val-input" v-model="description">
+            </td>
+            <td class="new">
                 <button @click="AddNew">Add</button>
             </td>
         </tr>
@@ -27,7 +36,8 @@
       name: 'HardwareTypes',
       data () {
         return {
-          name: null
+          name: null,
+          description: null
         }
       },
       computed: {
@@ -36,15 +46,26 @@
       methods: {
           AddNew(){
               this.$store.commit('AddHardwareType', {
-                  data: {name: this.name},
+                  data: {name: this.name, description: this.description},
                   success: () => {
                       this.name = null;
+                      this.description = null;
                       this.$store.dispatch('InitHardwareTypes');
                   },
                   onError: (errors) => {
                       console.log(errors);
                   }
               })
+          },
+          Update(item){
+              this.$store.commit('EditHardwareType', {
+                  data: item,
+                  success: () => {},
+                  onError: (errors) => { console.log(errors); }
+              })
+          },
+          Remove(item){
+              this.$store.commit('RemoveHardwareType', item);
           }
       }
     }
@@ -63,7 +84,8 @@
   }
   .new{
     background-color: var(--blue-yonder);
-    display: flex;
-    gap: 10px;
+  }
+  td{
+      vertical-align: middle;
   }
 </style>

@@ -6,6 +6,7 @@
         </div>
         <div class="content">
           <Hardware/>
+          <HardwareTypes/>
           <Students/>
         </div>
       </div>
@@ -16,12 +17,13 @@
 <script>
     import Hardware from "./components/Hardware.vue";
     import Students from "./components/Students.vue";
+    import HardwareTypes from "./components/HardwareTypes.vue";
     import Header from "./components/Header.vue";
     import Modal from "./components/Modal.vue";
     import {mapActions, mapState} from "vuex"
     export default {
         name: 'Home',
-        components: {Hardware, Students, Header, Modal},
+        components: {Hardware, Students, Header, Modal, HardwareTypes},
         methods:{
           ...mapActions(["InitStudents", "InitHardware"]),
 
@@ -29,6 +31,7 @@
         mounted() {
           this.$store.dispatch('InitStudents');
           this.$store.dispatch('InitHardware');
+          this.$store.dispatch('InitHardwareTypes');
         }
     }
 </script>

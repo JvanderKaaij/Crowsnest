@@ -39,7 +39,8 @@ class HardwareForm(FlaskForm):
     class Meta:
         csrf = False
     id = IntegerField('id')
-    name = StringField('name', validators=[validators.DataRequired(), validators.Length(min=3, max=90)])
+    name = StringField('name', validators=[validators.Optional(), validators.Length(min=3, max=90)])
+    hardware_type_id = IntegerField('hardware_type_id', validators=[validators.Optional()])
     identity = StringField('identity')
     purchase_date = DateField('purchase_date',default=datetime(1970, 1, 1))
     student_id = IntegerField('student_id', validators=[validators.Optional()])
@@ -53,3 +54,4 @@ class HardwareTypeForm(FlaskForm):
     id = IntegerField('id')
     name = StringField('name', validators=[validators.DataRequired(), validators.Length(min=3, max=90)])
     description = TextAreaField('description')
+    active = IntegerField('active', default=True)

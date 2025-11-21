@@ -197,7 +197,45 @@ const store = createStore({
                 .then(response => {
                     router.push('/');
                 })
-        }
+        },
+        InitHardwareTypes(state, data){
+            state.hardware_types = data;
+        },
+        AddHardwareType(state, data){
+            var form_data = ToFormData(data.data);
+            axios
+            .post(hostURL+'/add_hardware_type', form_data)
+            .then(response => {
+                if(response.data.success){
+                    data.success();
+                }else{
+                    data.onError(response.data.errors);
+                }
+            });
+        },
+        EditHardwareType(state, data){
+            var form_data = ToFormData(data.data);
+            axios.post(hostURL+'/edit_hardware_type', form_data).then(response => {
+                if(response.data.success){
+                    if(data.success){
+                        data.success();
+                    }
+                }else{
+                    data.onError(response.data.errors);
+                }
+            });
+        },
+        RemoveHardwareType(state, hardware_type){
+            state.modal_popup_active = 'Are you sure?';
+            state.modal_popup_agree = () => {
+                var type = state.hardware_types.find(e => e.id === hardware_type.id);
+                type['active'] = 0;
+                this.commit('EditHardwareType', {data:type, success:()=>{state.modal_popup_active = null;}});
+            }
+            state.modal_popup_deny = () => {
+                state.modal_popup_active = null;
+            }
+        },
     },
     actions:{
         async InitStudents(context){
@@ -243,7 +281,19 @@ const store = createStore({
                     router.push('/');
                 }
             });
-        }
+        },
+        async InitHardwareTypes(context){
+            axios
+            .get(hostURL+'/hardware_types')
+            .then(response => {
+                console.log(response.data);
+                context.commit('InitHardwareTypes', response.data);
+            }).catch(error =>{
+                if(error.response.status === 401){
+                    router.push('/');
+                }
+            });
+        },
     },
     getters:{
         //can be used as a return state with extra functionality

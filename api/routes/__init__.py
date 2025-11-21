@@ -4,7 +4,7 @@ import datetime
 import sys
 
 from runtime import app, db, bcrypt
-from models import User, Student, Hardware, StudentAttribute, AttributeType, Attribute
+from models import User, Student, Hardware, StudentAttribute, AttributeType, Attribute, HardwareType
 from forms import StudentForm, HardwareForm, AttributeForm, HardwareTypeForm
 
 from flask import request, redirect, jsonify
@@ -322,8 +322,9 @@ def public_hardware(user_type_id):
 @app.route("/hardware_types", methods=['GET'])
 @login_required
 def hardware_types():
-    types = HardwareType.query.filter(HardwareType.user_type_id == current_user.user_type_id)
+    types = HardwareType.query.filter(HardwareType.user_type_id == current_user.user_type_id, HardwareType.active == True)
     result = []
+    print(f"Hardware TYPES: {current_user.user_type_id}")
     for t in types:
         result.append(t._asdict())
     return result
@@ -359,7 +360,8 @@ def edit_hardware_type():
     if form.validate():
         hardware_type = {
             'name': form.name.data,
-            'description': form.description.data
+            'description': form.description.data,
+            'active': form.active.data
         }
         db.session.query(HardwareType).filter(HardwareType.id == form.id.data).update(hardware_type)
         db.session.commit()
