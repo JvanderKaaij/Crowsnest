@@ -40,6 +40,14 @@ with app.app_context():
 
     db.session.commit()
 
+    ht_one = HardwareType(name="Hammer", description="A tool for hitting things", user_type_id=1)
+    db.session.add(ht_one)
+    
+    ht_two = HardwareType(name="Bucket", description="A container for holding things", user_type_id=1)
+    db.session.add(ht_two)
+
+    db.session.commit()
+
     attr_type = AttributeType(name="Ports", multiple=True, element_type="int", user_type_id=1)
     db.session.add(attr_type)
 

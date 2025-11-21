@@ -5,7 +5,7 @@ import sys
 
 from runtime import app, db, bcrypt
 from models import User, Student, Hardware, StudentAttribute, AttributeType, Attribute
-from forms import StudentForm, HardwareForm, AttributeForm
+from forms import StudentForm, HardwareForm, AttributeForm, HardwareTypeForm
 
 from flask import request, redirect, jsonify
 from flask_login import login_user, login_required, current_user, logout_user
@@ -307,6 +307,7 @@ def send_mail(expired_students):
 
 @app.route("/public/hardware/<int:user_type_id>", methods=['GET'])
 def public_hardware(user_type_id):
+
     hardware = Hardware.query.filter(Hardware.user_type_id == user_type_id, Hardware.active==True)
     result = []
     for h in hardware:
@@ -316,3 +317,56 @@ def public_hardware(user_type_id):
             'available': h.student_id is None
         })
     return jsonify(result)
+
+
+@app.route("/hardware_types", methods=['GET'])
+@login_required
+def hardware_types():
+    types = HardwareType.query.filter(HardwareType.user_type_id == current_user.user_type_id)
+    result = []
+    for t in types:
+        result.append(t._asdict())
+    return result
+
+
+@app.route("/add_hardware_type", methods=['POST'])
+@login_required
+def add_hardware_type():
+    form = HardwareTypeForm(request.form)
+    response = {'success': False, 'message': '', 'errors': {}}
+    if form.validate():
+        new_type = HardwareType(
+            name=form.name.data,
+            description=form.description.data,
+            user_type_id=current_user.user_type_id
+        )
+        db.session.add(new_type)
+        db.session.commit()
+        response['success'] = True
+        response['message'] = 'hardware type added'
+    else:
+        response['message'] = 'failed'
+        response['errors'] = form.errors
+
+    return response
+
+
+@app.route("/edit_hardware_type", methods=['POST'])
+@login_required
+def edit_hardware_type():
+    form = HardwareTypeForm(request.form)
+    response = {'success': False, 'message': '', 'errors': {}}
+    if form.validate():
+        hardware_type = {
+            'name': form.name.data,
+            'description': form.description.data
+        }
+        db.session.query(HardwareType).filter(HardwareType.id == form.id.data).update(hardware_type)
+        db.session.commit()
+        response['success'] = True
+        response['message'] = 'hardware type changed'
+    else:
+        response['message'] = 'failed'
+        response['errors'] = form.errors
+
+    return response

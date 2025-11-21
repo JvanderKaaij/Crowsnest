@@ -76,6 +76,12 @@ class Hardware(db.Model, ExportMixin):
     comment = db.Column(db.Text)
     active = db.Column(db.Integer, default=True)
     user_type_id = db.Column(db.Integer, db.ForeignKey("user_type.id"), nullable=True)
+    hardware_type_id = db.Column(db.Integer, db.ForeignKey("hardware_type.id"), nullable=True)
+    hardware_type = db.relationship("HardwareType")
 
 
-
+class HardwareType(db.Model, ExportMixin):
+    __tablename__ = "hardware_type"
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(60))
+    description = db.Column(db.Text)

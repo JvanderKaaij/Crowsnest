@@ -45,3 +45,11 @@ class HardwareForm(FlaskForm):
     student_id = IntegerField('student_id', validators=[validators.Optional()])
     comment = TextAreaField('comment')
     active = IntegerField('active', default=True)
+
+
+class HardwareTypeForm(FlaskForm):
+    class Meta:
+        csrf = False
+    id = IntegerField('id')
+    name = StringField('name', validators=[validators.DataRequired(), validators.Length(min=3, max=90)])
+    description = TextAreaField('description')
