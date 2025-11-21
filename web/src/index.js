@@ -203,9 +203,13 @@ const store = createStore({
             state.hardware_types = data;
         },
         AddHardwareType(state, data){
-            var form_data = ToFormData(data.data);
+            var form_data = data.data instanceof FormData ? data.data : ToFormData(data.data);
             axios
-            .post(hostURL+'/add_hardware_type', form_data)
+            .post(hostURL+'/add_hardware_type', form_data, {
+                headers: {
+                  'Content-Type': 'multipart/form-data'
+                }
+              })
             .then(response => {
                 if(response.data.success){
                     data.success();
@@ -215,8 +219,12 @@ const store = createStore({
             });
         },
         EditHardwareType(state, data){
-            var form_data = ToFormData(data.data);
-            axios.post(hostURL+'/edit_hardware_type', form_data).then(response => {
+            var form_data = data.data instanceof FormData ? data.data : ToFormData(data.data);
+            axios.post(hostURL+'/edit_hardware_type', form_data, {
+                headers: {
+                  'Content-Type': 'multipart/form-data'
+                }
+              }).then(response => {
                 if(response.data.success){
                     if(data.success){
                         data.success();

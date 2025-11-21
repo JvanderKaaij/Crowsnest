@@ -7,7 +7,8 @@ from runtime import app, db, bcrypt
 from models import User, Student, Hardware, StudentAttribute, AttributeType, Attribute, HardwareType
 from forms import StudentForm, HardwareForm, AttributeForm, HardwareTypeForm
 
-from flask import request, redirect, jsonify
+from flask import request, redirect, jsonify, send_file
+import io
 from flask_login import login_user, login_required, current_user, logout_user
 from mailjet_rest import Client
 
@@ -307,7 +308,6 @@ def send_mail(expired_students):
 
 @app.route("/public/hardware/<int:user_type_id>", methods=['GET'])
 def public_hardware(user_type_id):
-
     hardware = Hardware.query.filter(Hardware.user_type_id == user_type_id, Hardware.active==True)
     result = []
     for h in hardware:
@@ -322,12 +322,21 @@ def public_hardware(user_type_id):
 @app.route("/hardware_types", methods=['GET'])
 @login_required
 def hardware_types():
-    types = HardwareType.query.filter(HardwareType.user_type_id == current_user.user_type_id, HardwareType.active == True)
+    types = HardwareType.query.filter(
+        HardwareType.user_type_id == current_user.user_type_id,
+        HardwareType.active == True
+    ).all()
+
     result = []
-    print(f"Hardware TYPES: {current_user.user_type_id}")
     for t in types:
-        result.append(t._asdict())
-    return result
+        result.append({
+            "id": t.id,
+            "name": t.name,
+            "description": t.description,
+            "active": t.active,
+        })
+
+    return jsonify(result)
 
 
 @app.route("/add_hardware_type", methods=['POST'])
@@ -336,9 +345,20 @@ def add_hardware_type():
     form = HardwareTypeForm(request.form)
     response = {'success': False, 'message': '', 'errors': {}}
     if form.validate():
+        image_data = None
+        image_mime_type = None
+        
+        if 'image' in request.files:
+            image_file = request.files['image']
+            if image_file and image_file.filename != '':
+                image_data = image_file.read()
+                image_mime_type = image_file.content_type
+        
         new_type = HardwareType(
             name=form.name.data,
             description=form.description.data,
+            image_data=image_data,
+            image_mime_type=image_mime_type,
             user_type_id=current_user.user_type_id
         )
         db.session.add(new_type)
@@ -363,6 +383,13 @@ def edit_hardware_type():
             'description': form.description.data,
             'active': form.active.data
         }
+        
+        if 'image' in request.files:
+            image_file = request.files['image']
+            if image_file and image_file.filename != '':
+                hardware_type['image_data'] = image_file.read()
+                hardware_type['image_mime_type'] = image_file.content_type
+        
         db.session.query(HardwareType).filter(HardwareType.id == form.id.data).update(hardware_type)
         db.session.commit()
         response['success'] = True
@@ -372,3 +399,13 @@ def edit_hardware_type():
         response['errors'] = form.errors
 
     return response
+
+@app.route("/hardware_type_image/<int:type_id>", methods=['GET'])
+def hardware_type_image(type_id):
+    hardware_type = HardwareType.query.get(type_id)
+    if hardware_type and hardware_type.image_data:
+        return send_file(
+            io.BytesIO(hardware_type.image_data),
+            mimetype=hardware_type.image_mime_type or 'image/jpeg'
+        )
+    return '', 404

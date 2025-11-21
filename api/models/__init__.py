@@ -85,5 +85,7 @@ class HardwareType(db.Model, ExportMixin):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(60))
     description = db.Column(db.Text)
+    image_data = db.Column(db.LargeBinary)
+    image_mime_type = db.Column(db.String(50))
     active = db.Column(db.Integer, default=True)
     user_type_id = db.Column(db.Integer, db.ForeignKey("user_type.id"), nullable=True)

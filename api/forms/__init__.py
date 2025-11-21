@@ -54,4 +54,5 @@ class HardwareTypeForm(FlaskForm):
     id = IntegerField('id')
     name = StringField('name', validators=[validators.DataRequired(), validators.Length(min=3, max=90)])
     description = TextAreaField('description')
+    image_url = StringField('image_url')
     active = IntegerField('active', default=True)

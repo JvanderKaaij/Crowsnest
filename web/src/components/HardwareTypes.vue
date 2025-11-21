@@ -5,20 +5,25 @@
       <tr>
         <td class="t-header">Name</td>
         <td class="t-header">Description</td>
+        <td class="t-header">Image</td>
         <td class="t-header">Actions</td>
       </tr>
       <tr v-for="item in activeHardwareTypes" :key="item.id">
         <td><input type="text" class="val-input" v-model="item.name" @change="Update(item)"></td>
         <td><input type="text" class="val-input" v-model="item.description" @change="Update(item)"></td>
         <td>
+          <img v-if="item.image_data" :src="getImageUrl(item.id)" style="max-width: 100px; max-height: 100px;" />
+          <input type="file" @change="UpdateImage(item, $event)" accept="image/*">
+        </td>
+        <td>
           <button @click="RemoveHardwareType(item)">Delete</button>
         </td>
       </tr>
       <tr class="spacer">
-        <td colspan="3"></td>
+        <td colspan="4"></td>
       </tr>
       <tr class="new-header">
-        <td colspan="3">Add New Hardware Type</td>
+        <td colspan="4">Add New Hardware Type</td>
       </tr>
       <tr>
         <td class="new">
@@ -26,6 +31,9 @@
         </td>
         <td class="new">
           <input type="text" placeholder="description" class="val-input" v-model="description">
+        </td>
+        <td class="new">
+          <input type="file" ref="imageInput" @change="HandleImageUpload" accept="image/*">
         </td>
         <td class="new">
           <button @click="AddNew">Add</button>
@@ -43,7 +51,8 @@ export default {
   data() {
     return {
       name: null,
-      description: null
+      description: null,
+      imageFile: null
     }
   },
   computed: {
@@ -54,18 +63,56 @@ export default {
   },
   methods: {
     ...mapMutations(['RemoveHardwareType']),
+    getImageUrl(typeId) {
+      return `http://localhost:8047/hardware_type_image/${typeId}`;
+    },
+    HandleImageUpload(event) {
+      this.imageFile = event.target.files[0];
+    },
     AddNew() {
+      const formData = new FormData();
+      formData.append('name', this.name);
+      formData.append('description', this.description);
+      if (this.imageFile) {
+        formData.append('image', this.imageFile);
+      }
+      
       this.$store.commit('AddHardwareType', {
-        data: {name: this.name, description: this.description},
+        data: formData,
         success: () => {
           this.name = null;
           this.description = null;
+          this.imageFile = null;
+          if (this.$refs.imageInput) {
+            this.$refs.imageInput.value = '';
+          }
           this.$store.dispatch('InitHardwareTypes');
         },
         onError: (errors) => {
           console.log(errors);
         }
       })
+    },
+    UpdateImage(item, event) {
+      const file = event.target.files[0];
+      if (file) {
+        const formData = new FormData();
+        formData.append('id', item.id);
+        formData.append('name', item.name);
+        formData.append('description', item.description);
+        formData.append('active', item.active);
+        formData.append('image', file);
+        
+        this.$store.commit('EditHardwareType', {
+          data: formData,
+          success: () => {
+            this.$store.dispatch('InitHardwareTypes');
+          },
+          onError: (errors) => {
+            console.log(errors);
+          }
+        });
+      }
     },
     Update(item) {
       this.$store.commit('EditHardwareType', {
