@@ -3,6 +3,7 @@ from models import *
 
 with app.app_context():
     db.create_all()
+    print("Seeding DB")
     hash_pass = bcrypt.generate_password_hash('test')
 
     admin_type = UserType(name="admin")
