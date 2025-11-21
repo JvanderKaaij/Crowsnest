@@ -312,7 +312,6 @@ def public_hardware(user_type_id):
     for h in hardware:
         result.append({
             'name': h.name,
-            'comment': h.comment,
-            'available': h.student_id is None
+            'comment': h.comment
         })
     return jsonify(result)

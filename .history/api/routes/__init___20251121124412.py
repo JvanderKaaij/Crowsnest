@@ -310,9 +310,7 @@ def public_hardware(user_type_id):
     hardware = Hardware.query.filter(Hardware.user_type_id == user_type_id, Hardware.active==True)
     result = []
     for h in hardware:
-        result.append({
-            'name': h.name,
-            'comment': h.comment,
-            'available': h.student_id is None
-        })
+        as_dict = h._asdict()
+        if h.student is not None: as_dict['lend_to_student'] = h.student._asdict()
+        result.append(as_dict)
     return jsonify(result)
